@@ -1,0 +1,50 @@
+<style>
+    .mat-mdc-row .mat-mdc-cell {
+      border-bottom: 1px solid transparent;
+      border-top: 1px solid transparent;
+      cursor: pointer;
+    }
+    
+    .mat-mdc-row:hover .mat-mdc-cell {
+      border-color: currentColor;
+    }
+    </style>
+    <table mat-table [dataSource]="companies" class="mat-elevation-z8 demo-table">
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let i = index"><a routerLink="companies/">{{i + 1}}</a></td>
+      </ng-container>
+    
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{element.description}}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="net-worth">
+        <th mat-header-cell *matHeaderCellDef>Net worth</th>
+        <td mat-cell *matCellDef="let element">{{element.net_value}}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="reputation">
+        <th mat-header-cell *matHeaderCellDef>Reputation</th>
+        <td mat-cell *matCellDef="let element">{{element.reputation}}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="avg-salary">
+        <th mat-header-cell *matHeaderCellDef>Average Salary of an Employee</th>
+        <td mat-cell *matCellDef="let element;">{{element.avg_salary}}</td>
+        
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+          mat-row
+          (click)="goToDetails(element.id)"
+          *matRowDef="let row; columns: displayedColumns; let element;"
+      ></tr>
+</table>

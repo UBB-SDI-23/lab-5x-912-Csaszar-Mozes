@@ -1,0 +1,20 @@
+<style>
+  nav {
+    display: flex;
+    position: sticky;
+    background-color: blue;
+  }
+
+  nav a {
+    margin-right: 20px;
+    color: aliceblue;
+  }
+</style>
+
+<nav>
+  <a routerLink="">Home</a>
+  <a routerLink="companies">Companies</a>
+  <a routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</a>
+</nav>
+
+<router-outlet></router-outlet>

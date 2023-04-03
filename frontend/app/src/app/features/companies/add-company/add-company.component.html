@@ -1,0 +1,59 @@
+<style>
+    .example-form {
+      min-width: 150px;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .example-full-width {
+      width: 100%;
+    }
+    </style>
+    <form class="example-form">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Name" floatLabel="always" [formControl]="nameFormControl">
+        <mat-label>Name</mat-label>
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Name is <strong>&nbsp;required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <textarea matInput label="Description" [formControl]="descriptionFormControl"></textarea>
+          <mat-label>Description</mat-label>
+          <mat-error *ngIf="descriptionFormControl.hasError('required')">
+              Description is <strong>&nbsp;required</strong>
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <mat-label>Net Worth</mat-label>
+          <input matInput placeholder="Net worth" [formControl]="netWorthFormControl">
+          <mat-error *ngIf="netWorthFormControl.hasError('required')">
+              Net worth is <strong>&nbsp;required</strong>
+          </mat-error>
+          <mat-error *ngIf="netWorthFormControl.hasError('pattern')">
+              Net worth has to be <strong>&nbsp;a positive number</strong>
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+      <mat-label>Reputation</mat-label>
+      <input matInput placeholder="Reputation" [formControl]="reputationFormControl">
+      <mat-error *ngIf="reputationFormControl.hasError('required')">
+          Reputation is <strong>&nbsp;required</strong>
+      </mat-error>
+      <mat-error *ngIf="reputationFormControl.hasError('pattern')">
+          Reputation has to be<strong>&nbsp;an integer between 0 and 100</strong>
+      </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <mat-label>Start Year</mat-label>
+          <input matInput placeholder="Start Year" [formControl]="startYearFormControl">
+          <mat-error *ngIf="startYearFormControl.hasError('required')">
+              Start year is <strong>&nbsp;required</strong>
+          </mat-error>
+          <mat-error *ngIf="startYearFormControl.hasError('pattern')">
+              Start year has to be <strong>&nbsp;a positive number</strong>
+          </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="add()">Add</button>
+      <button mat-raised-button color="warn" (click)="cancel()">Back</button>
+</form>
