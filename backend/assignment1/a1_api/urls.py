@@ -1,10 +1,16 @@
 
 from django.urls import path, include
-from .views import (
-    PersonListApiView, PersonDetailApiView, LocationListApiView, LocationDetailApiView, CompanyListApiView,
-    CompanyDetailApiView, CompanyFilterApiView, PersonCompanyListApiView, PersonCompanyDetailApiView,
-    CompanyByAvgSalaryApiView, CompanyNrLocationsApiView
-)
+from views.PersonListApiView import *
+from views.PersonDetailApiView import *
+from views.LocationListApiView import *
+from views.LocationDetailApiVew import *
+from views.CompanyListApiView import *
+from views.CompanyDetailApiView import *
+from views.CompanyFilterApiView import *
+from views.PersonCompanyListApiView import *
+from views.PersonCompanyDetailApiView import *
+from views.CompanyByAvgSalaryApiView import *
+from views.CompanyNrLoacationsApiView import *
 
 
 
