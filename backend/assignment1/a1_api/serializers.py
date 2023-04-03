@@ -4,10 +4,9 @@ import django.db.models as models
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    nr_people_working_here = serializers.IntegerField()
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_people_working_here"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations"]
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -17,10 +16,9 @@ class LocationSerializer(serializers.ModelSerializer):
 
 
 class PersonSerializer(serializers.ModelSerializer):
-    nr_companies = serializers.IntegerField()
     class Meta:
         model = Person
-        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "nr_companies"]
+        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "nr_workplaces"]
 
 
 class PersonWorkingAtCompanySerializer(serializers.ModelSerializer):
