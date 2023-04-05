@@ -7,7 +7,7 @@ import { Company, CompanyDetail } from "../models/models";
     providedIn: 'root'
 })
 export class APIService {
-    static url: string = 'http://ec2-13-49-134-0.eu-north-1.compute.amazonaws.com/';
+    static url: string = '/api/';
 
     constructor(private http: HttpClient) {}
 

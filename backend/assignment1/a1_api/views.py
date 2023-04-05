@@ -13,6 +13,7 @@ import django.db.models as models
 class LocationsView(APIView):
     # add permission to check if user is authenticated
     #permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LocationSerializer
 
     def get_object(self, loc_id):
         '''
