@@ -7,7 +7,7 @@ from .models import Person, Company, Location, PersonWorkingAtCompany
 
 # Create your tests here.
 class TestPeopleView(APITestCase):
-    url = '/people/'
+    url = '/api/people/'
 
     def setUp(self) -> None:
         Person.objects.create(
@@ -30,7 +30,7 @@ class TestPeopleView(APITestCase):
 
 
 class TestPeopleIDView(APITestCase):
-    url = '/people/1/'
+    url = '/api/people/1/'
 
     def setUp(self) -> None:
         Person.objects.create(
@@ -39,14 +39,14 @@ class TestPeopleIDView(APITestCase):
     def test_get(self):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.get('/people/2/')
+        result = self.client.get('/api/people/2/')
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
     def test_put(self):
         result = self.client.put(self.url, {"first_name": "Ifrim","last_name": "Miculescu",
                                             "email": "ifrimm23@yahoo.ro","age": 25,"worker_id": 14720})
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put('/people/2/', {"first_name": "Ifrim", "last_name": "Miculescu",
+        result = self.client.put('/api/people/2/', {"first_name": "Ifrim", "last_name": "Miculescu",
                                             "email": "ifrimm23@yahoo.ro", "age": 25, "worker_id": 14720})
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
@@ -58,7 +58,7 @@ class TestPeopleIDView(APITestCase):
 
 
 class TestCompaniesView(APITestCase):
-    url = '/companies/'
+    url = '/api/companies/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -86,7 +86,7 @@ class TestCompaniesView(APITestCase):
 
 
 class TestCompaniesIDView(APITestCase):
-    url = '/companies/1/'
+    url = '/api/companies/1/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -95,7 +95,7 @@ class TestCompaniesIDView(APITestCase):
     def test_get(self):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.get('/companies/2/')
+        result = self.client.get('/api/companies/2/')
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
     def test_put(self):
@@ -103,7 +103,7 @@ class TestCompaniesIDView(APITestCase):
                                             "description": "A self-serv restaurant catered towards students and physical laborers",
                                             "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put('/companies/2/', {"name": "Memo 10",
+        result = self.client.put('/api/companies/2/', {"name": "Memo 10",
                                             "description": "A self-serv restaurant catered towards students and physical laborers",
                                             "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
@@ -116,7 +116,7 @@ class TestCompaniesIDView(APITestCase):
 
 
 class TestLocationsView(APITestCase):
-    url = '/locations/'
+    url = '/api/locations/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -145,7 +145,7 @@ class TestLocationsView(APITestCase):
 
 
 class TestLocationsIDView(APITestCase):
-    url = '/locations/1/'
+    url = '/api/locations/1/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -158,14 +158,14 @@ class TestLocationsIDView(APITestCase):
     def test_get(self):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.get('/locations/2/')
+        result = self.client.get('/api/locations/2/')
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
     def test_put(self):
         result = self.client.put(self.url, {"country": "Romania","county": "Cluj",
                                             "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put('/locations/2/', {"country": "Romania","county": "Cluj",
+        result = self.client.put('/api/locations/2/', {"country": "Romania","county": "Cluj",
                                                     "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
@@ -177,7 +177,7 @@ class TestLocationsIDView(APITestCase):
 
 
 class TestPeopleCompaniesView(APITestCase):
-    url = '/pc/'
+    url = '/api/pc/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -209,7 +209,7 @@ class TestPeopleCompaniesView(APITestCase):
 
 
 class TestPeopleCompaniesIDView(APITestCase):
-    url = '/pc/1/'
+    url = '/api/pc/1/'
 
     def setUp(self) -> None:
         Company.objects.create(
@@ -225,13 +225,13 @@ class TestPeopleCompaniesIDView(APITestCase):
     def test_get(self):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.get('/pc/2/')
+        result = self.client.get('/api/pc/2/')
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
     def test_put(self):
         result = self.client.put(self.url, {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
         self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put('/pc/2/', {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
+        result = self.client.put('/api/pc/2/', {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
         self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
 
     def test_delete(self):
@@ -244,7 +244,7 @@ class TestPeopleCompaniesIDView(APITestCase):
 class TestAvgSalaryFunctionality(APITestCase):
 
     def test_avg_salary(self):
-        result = self.client.get('/companies/avg-salary/')
+        result = self.client.get('/api/companies/avg-salary/')
         # Test if request got through
         self.assertEqual(result.status_code, HTTP_200_OK)
         # Test number of returned elements
@@ -285,7 +285,7 @@ class TestAvgSalaryFunctionality(APITestCase):
                 person=Person.objects.all()[1], company=Company.objects.all()[2], salary=1, role="test"
             )
         setUp()
-        result = self.client.get('/companies/avg-salary/')
+        result = self.client.get('/api/companies/avg-salary/')
         #Test if request got through
         self.assertEqual(result.status_code, HTTP_200_OK)
         #Test number of returned elements
@@ -329,7 +329,7 @@ class TestNrLocationsFunctionality(APITestCase):
         )
 
     def test_avg_salary(self):
-        result = self.client.get('/companies/nr-locations/')
+        result = self.client.get('/api/companies/nr-locations/')
         #Test if request got through
         self.assertEqual(result.status_code, HTTP_200_OK)
         #Test number of returned elements
