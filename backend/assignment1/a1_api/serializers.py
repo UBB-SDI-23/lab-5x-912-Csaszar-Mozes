@@ -105,7 +105,7 @@ class CompanyByAvgSalarySerializer(serializers.ModelSerializer):
 
 
 class CompanyNrLocationsSerializer(serializers.ModelSerializer):
-    nr_locations = serializers.IntegerField(read_only=True)
+    nr_comp_locations = serializers.IntegerField(read_only=True)
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_locations"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_comp_locations"]

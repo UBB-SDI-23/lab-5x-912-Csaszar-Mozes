@@ -58,7 +58,7 @@ export class EditCompanyComponent implements OnInit {
         this.apiServ.getCompany(params['id']).subscribe(
           result => {
             result.people_working_here == undefined ? result.people_working_here = [] : "";
-            result.location_ids == undefined ? result.location_ids = [] : "";
+            result.locations == undefined ? result.locations = [] : "";
             this.company = result as CompanyDetail;
             this.nameFormControl.setValue(this.company.name);
             this.descriptionFormControl.setValue(this.company.description);
@@ -66,7 +66,7 @@ export class EditCompanyComponent implements OnInit {
             this.reputationFormControl.setValue(this.company.reputation);
             this.startYearFormControl.setValue(this.company.start_year);
 
-            this.locations = result.location_ids as Location[];
+            this.locations = result.locations as Location[];
             this.peopleWorkingHere = result.people_working_here as PCDetail[];
           }
         )

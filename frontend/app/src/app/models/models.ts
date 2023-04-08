@@ -81,5 +81,5 @@ export class CompanyDetail {
     net_value?: number;
     reputation?: number;
     people_working_here: Person[] = [];
-    location_ids: Location[] = [];
+    locations: Location[] = [];
 }
