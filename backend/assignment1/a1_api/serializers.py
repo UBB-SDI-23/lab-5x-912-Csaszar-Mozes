@@ -71,7 +71,7 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
         class Meta:
             model = PersonWorkingAtCompany
             fields = ['id', 'person', 'salary', 'role']
-    location_ids = LocationSerializer(read_only=True, many=True)
+    locations = LocationSerializer(read_only=True, many=True)
     people_working_here = PCforCompanyDetailSerializer(read_only=True, many=True)
 
     class Meta:
