@@ -12,7 +12,7 @@ class CompanySerializer(serializers.ModelSerializer):
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ["id", "country", "county", "city", "street", "number", "apartment", "company"]
+        fields = ["id", "country", "city", "street", "number", "apartment", "company"]
 
 
 class PersonSerializer(serializers.ModelSerializer):

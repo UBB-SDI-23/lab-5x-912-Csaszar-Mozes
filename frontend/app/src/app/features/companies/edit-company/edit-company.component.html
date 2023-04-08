@@ -8,7 +8,41 @@
 .example-full-width {
   width: 100%;
 }
+#TableContainer {
+    display: flex;
+    margin-left: 5%;
+    width: 90%;
+}
+#TableContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+#TableContainer > div > table {
+    width: 100%;
+}
+body {
+    height: 120%;
+}
+
+#TableContainer > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 30px;
+    font-size: 25px;
+}
+#TableContainer > div > div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position:absolute;
+    bottom: 0px;
+    left: 37%;
+}
 </style>
+<body>
 <form class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Name" floatLabel="always" [formControl]="nameFormControl">
@@ -57,98 +91,113 @@
     <button mat-raised-button color="primary" (click)="edit()">Edit</button>
     <button mat-raised-button color="warn" (click)="delete($event)">Delete</button>
     <br>
-
-
-    People working here: <br>
-    <table mat-table [dataSource]="peopleWorkingHere" class="mat-elevation-z8 demo-table">
-    <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let i = index">{{i + 1}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="role">
-        <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element">{{element.role}}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="salary">
-        <th mat-header-cell *matHeaderCellDef>Salary</th>
-        <td mat-cell *matCellDef="let element">{{element.salary}}</td>
-        </ng-container>
-    
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{element.person.first_name + " " + element.person.last_name}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="age">
-        <th mat-header-cell *matHeaderCellDef>Age</th>
-        <td mat-cell *matCellDef="let element">{{element.person.age}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>E-mail</th>
-        <td mat-cell *matCellDef="let element">{{element.person.email}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="worker_id">
-        <th mat-header-cell *matHeaderCellDef>Worker ID</th>
-        <td mat-cell *matCellDef="let element">{{element.person.worker_id}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="nr_workplaces">
-        <th mat-header-cell *matHeaderCellDef>Nr. Workplaces</th>
-        <td mat-cell *matCellDef="let element">{{element.person.nr_workplaces}}</td>
-    </ng-container>
-    
-    <tr mat-header-row *matHeaderRowDef="peopleColumns"></tr>
-    <tr
-        mat-row
-        *matRowDef="let row; columns: peopleColumns;"
-    ></tr>
-    </table>
-    
-    Company locations: <br>
-    <table mat-table [dataSource]="locations" class="mat-elevation-z8 demo-table">
-    <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let i = index">{{i + 1}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef>Country</th>
-        <td mat-cell *matCellDef="let element">{{element.country}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="county">
-        <th mat-header-cell *matHeaderCellDef>County</th>
-        <td mat-cell *matCellDef="let element">{{element.county}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef>City</th>
-        <td mat-cell *matCellDef="let element">{{element.city}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="street">
-        <th mat-header-cell *matHeaderCellDef>Street</th>
-        <td mat-cell *matCellDef="let element">{{element.street}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="number">
-        <th mat-header-cell *matHeaderCellDef>Number</th>
-        <td mat-cell *matCellDef="let element">{{element.number}}</td>
-    </ng-container>
-    
-    <ng-container matColumnDef="apartment">
-        <th mat-header-cell *matHeaderCellDef>Apartment</th>
-        <td mat-cell *matCellDef="let element">{{element.apartment}}</td>
-    </ng-container>
-    
-    <tr mat-header-row *matHeaderRowDef="locationsColumns"></tr>
-    <tr
-        mat-row
-        *matRowDef="let row; columns: locationsColumns;"
-    ></tr>
-    </table>
   </form>
+
+  <div id="TableContainer">
+    <div >
+        People working here:
+        <table mat-table [dataSource]="dataSourcePeople" class="mat-elevation-z8 demo-table">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let i = index">{{i + 1 + peoplePageNr * pageSize}}</td>
+            </ng-container>
+        
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef>Role</th>
+                <td mat-cell *matCellDef="let element">{{element.role}}</td>
+                </ng-container>
+            
+                <ng-container matColumnDef="salary">
+                <th mat-header-cell *matHeaderCellDef>Salary</th>
+                <td mat-cell *matCellDef="let element">{{element.salary}}</td>
+                </ng-container>
+            
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.person.first_name + " " + element.person.last_name}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="age">
+                <th mat-header-cell *matHeaderCellDef>Age</th>
+                <td mat-cell *matCellDef="let element">{{element.person.age}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>E-mail</th>
+                <td mat-cell *matCellDef="let element">{{element.person.email}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="worker_id">
+                <th mat-header-cell *matHeaderCellDef>Worker ID</th>
+                <td mat-cell *matCellDef="let element">{{element.person.worker_id}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="nr_workplaces">
+                <th mat-header-cell *matHeaderCellDef>Nr. Workplaces</th>
+                <td mat-cell *matCellDef="let element">{{element.person.nr_workplaces}}</td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="peopleColumns"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: peopleColumns;"
+            ></tr>
+        </table>
+        <div id="PageNavigationPeople">
+            <button mat-raised-button color="primary" (click)="decPeoplePageNr()" id="ButtonLeftPeople">&lt;</button> 
+            <span id="PageNrContainerPeople">Page:&nbsp;<span id="PageNrPeople">0</span></span>
+             <button mat-raised-button color="primary" (click)="incPeoplePageNr()" id="ButtonRightPeople">&gt;</button>
+          </div>
+    </div>
+    <div>
+        Company locations:
+        <table mat-table [dataSource]="dataSourceLocations" class="mat-elevation-z8 demo-table">
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let i = index">{{i + 1 + locationsPageNr * pageSize}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef>Country</th>
+            <td mat-cell *matCellDef="let element">{{element.country}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="county">
+            <th mat-header-cell *matHeaderCellDef>County</th>
+            <td mat-cell *matCellDef="let element">{{element.county}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef>City</th>
+            <td mat-cell *matCellDef="let element">{{element.city}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="street">
+            <th mat-header-cell *matHeaderCellDef>Street</th>
+            <td mat-cell *matCellDef="let element">{{element.street}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef>Number</th>
+            <td mat-cell *matCellDef="let element">{{element.number}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="apartment">
+            <th mat-header-cell *matHeaderCellDef>Apartment</th>
+            <td mat-cell *matCellDef="let element">{{element.apartment}}</td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="locationsColumns"></tr>
+        <tr
+            mat-row
+            *matRowDef="let row; columns: locationsColumns;"
+        ></tr>
+        </table>
+        <div id="PageNavigationLocations">
+            <button mat-raised-button color="primary" (click)="decLocationsPageNr()" id="ButtonLeftLocations">&lt;</button> 
+            <span id="PageNrContainerLocations">Page:&nbsp;<span id="PageNrLocations">0</span></span>
+             <button mat-raised-button color="primary" (click)="incLocationsPageNr()" id="ButtonRightLocations">&gt;</button>
+          </div>
+    </div>
+</div>
+</body>

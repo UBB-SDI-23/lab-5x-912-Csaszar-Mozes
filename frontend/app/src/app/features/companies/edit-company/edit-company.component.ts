@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
@@ -20,12 +21,58 @@ export class EditCompanyComponent implements OnInit {
   netWorthFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);
   reputationFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]?[0-9]$|^100$')]);
   startYearFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]); 
+  pageNrComponentLocation?: HTMLElement;
+  buttonLeftLocations?: HTMLElement;
+  buttonRightLocations?: HTMLElement;
+  pageNrComponentPeople?: HTMLElement;
+  buttonLeftPeople?: HTMLElement;
+  buttonRightPeople?: HTMLElement;
+  pageSize: number = 10;
+  peoplePageNr: number = 0;
+  locationsPageNr: number = 0;
+  dataSourceLocations: MatTableDataSource<Location> = new MatTableDataSource();
+  dataSourcePeople: MatTableDataSource<PCDetail> = new MatTableDataSource();
 
   peopleColumns: string[] = ["position", "role", "salary", "name", "age", "email", "worker_id"];
 
   locationsColumns: string[] = ["position", "country", "county", "city", "street", "number", "apartment"];
 
   constructor(private apiServ: APIService, private actRoute: ActivatedRoute, private router: Router) {}
+
+  refreshLocations() {
+    this.dataSourceLocations.data =  this.locations!.slice(this.locationsPageNr * this.pageSize, this.locationsPageNr * this.pageSize + this.pageSize);
+    this.pageNrComponentLocation!.innerHTML = this.locationsPageNr + '';
+  }
+  incLocationsPageNr() {
+    if((this.locationsPageNr + 1) * this.pageSize < this.locations.length) {
+      this.locationsPageNr += 1;
+      this.refreshLocations();
+    }
+    
+  }
+  decLocationsPageNr() {
+    if(this.locationsPageNr > 0) {
+      this.locationsPageNr -= 1;
+      this.refreshLocations();
+    }
+  }
+  refreshPeople() {
+    this.dataSourcePeople.data =  this.peopleWorkingHere!.slice(this.peoplePageNr * this.pageSize, this.peoplePageNr * this.pageSize + this.pageSize);
+    this.pageNrComponentPeople!.innerHTML = this.peoplePageNr + '';
+  }
+  incPeoplePageNr() {
+    if((this.peoplePageNr + 1) * this.pageSize < this.peopleWorkingHere.length) {
+      this.peoplePageNr += 1;
+      this.refreshPeople();
+    }
+    
+  }
+  decPeoplePageNr() {
+    if(this.peoplePageNr > 0) {
+      this.peoplePageNr -= 1;
+      this.refreshPeople();
+    }
+  }
 
   edit() {
     let data = new Company();
@@ -68,6 +115,12 @@ export class EditCompanyComponent implements OnInit {
 
             this.locations = result.locations as Location[];
             this.peopleWorkingHere = result.people_working_here as PCDetail[];
+
+            this.pageNrComponentLocation = document.getElementById("PageNrLocations") as HTMLElement;
+            this.pageNrComponentPeople = document.getElementById("PageNrPeople") as HTMLElement;
+
+            this.refreshLocations();
+            this.refreshPeople();
           }
         )
       }

@@ -1511,19 +1511,19 @@
       <DasType>varchar(50)|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="534" parent="505" name="company_id">
+    <column id="534" parent="505" name="company">
       <DasType>bigint|0s</DasType>
       <Position>8</Position>
     </column>
     <foreign-key id="535" parent="505">
-      <ColNames>company_id</ColNames>
+      <ColNames>company</ColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
       <RefColNames>id</RefColNames>
       <RefTableName>a1_api_company</RefTableName>
     </foreign-key>
     <index id="536" parent="505" name="a1_api_location_company_id_3cc41664">
-      <ColNames>company_id</ColNames>
+      <ColNames>company</ColNames>
     </index>
     <key id="537" parent="505">
       <ColNames>id</ColNames>

@@ -25,7 +25,6 @@ class Company(models.Model):
 
 class Location(models.Model):
     country = models.CharField(max_length=50, null=False)
-    county = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=50, null=False)
     street = models.CharField(max_length=50, null=False)
     number = models.IntegerField(null=False, validators=[validators.MinValueValidator(0)])
