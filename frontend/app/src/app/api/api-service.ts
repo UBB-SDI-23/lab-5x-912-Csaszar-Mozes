@@ -8,8 +8,8 @@ import { Company, CompanyDetail } from "../models/models";
 })
 export class APIService {
     //static url: string = 'http://ec2-13-49-134-0.eu-north-1.compute.amazonaws.com/api/';
-    static url: string = 'http://127.0.0.1:8000/api/';
-    //static url: string = '/api/';
+    //static url: string = 'http://127.0.0.1:8000/api/';
+    static url: string = '/api/';
 
     constructor(private http: HttpClient) {}
 
