@@ -24,11 +24,11 @@ class Company(models.Model):
 
 
 class Location(models.Model):
-    country = models.CharField(max_length=50, null=False)
-    city = models.CharField(max_length=50, null=False)
-    street = models.CharField(max_length=50, null=False)
+    country = models.CharField(max_length=100, null=False)
+    city = models.CharField(max_length=100, null=False)
+    street = models.CharField(max_length=100, null=False)
     number = models.IntegerField(null=False, validators=[validators.MinValueValidator(0)])
-    apartment = models.CharField(max_length=50, null=True, blank=True)
+    apartment = models.CharField(max_length=100, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name="locations")
 
     def __str__(self):
@@ -56,7 +56,7 @@ class PersonWorkingAtCompany(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="working_at_companies")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="people_working_here")
     salary = models.IntegerField(validators=[validators.MinValueValidator(0)])
-    role = models.CharField(max_length=50)
+    role = models.CharField(max_length=125)
 
     class Meta:
         unique_together = [['person', 'company']]
