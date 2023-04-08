@@ -13,28 +13,26 @@
     margin-left: 5%;
     width: 90%;
 }
-#TableContainer > div {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-#TableContainer > div > table {
-    width: 100%;
-}
 body {
     height: 120%;
 }
 
 #TableContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
     position:relative;
-    height: 500px;
+    height: 635px;
+}
+#TableContainer > div > table {
+    width: 100%;
 }
 
-#TableContainer > div > span {
+#TableContainer > div > div > div {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    width: 50%;
     height: 30px;
     font-size: 25px;
 }
@@ -44,8 +42,10 @@ body {
     justify-content: center;
     position:absolute;
     bottom: 0px;
-    left: 37%;
+    width: 50%;
+    left: 25%;
 }
+
 </style>
 <body>
 <form class="example-form">
@@ -99,7 +99,7 @@ body {
   </form>
 
   <div id="TableContainer">
-    <div >
+    <div>
         People working here:
         <table mat-table [dataSource]="dataSourcePeople" class="mat-elevation-z8 demo-table">
             <ng-container matColumnDef="position">
@@ -150,7 +150,7 @@ body {
         </table>
         <div id="PageNavigationPeople">
             <button mat-raised-button color="primary" (click)="decPeoplePageNr()" id="ButtonLeftPeople">&lt;</button> 
-            <span id="PageNrContainerPeople">Page:&nbsp;<span id="PageNrPeople">0</span></span>
+            <div id="PageNrContainerPeople">Page:&nbsp;<div id="PageNrPeople">0</div></div>
              <button mat-raised-button color="primary" (click)="incPeoplePageNr()" id="ButtonRightPeople">&gt;</button>
           </div>
     </div>
@@ -200,9 +200,9 @@ body {
         </table>
         <div id="PageNavigationLocations">
             <button mat-raised-button color="primary" (click)="decLocationsPageNr()" id="ButtonLeftLocations">&lt;</button> 
-            <span id="PageNrContainerLocations">Page:&nbsp;<span id="PageNrLocations">0</span></span>
-             <button mat-raised-button color="primary" (click)="incLocationsPageNr()" id="ButtonRightLocations">&gt;</button>
-          </div>
+            <div id="PageNrContainerLocations">Page:&nbsp;<div id="PageNrLocations">0</div></div>
+            <button mat-raised-button color="primary" (click)="incLocationsPageNr()" id="ButtonRightLocations">&gt;</button>
+        </div>
     </div>
 </div>
 </body>

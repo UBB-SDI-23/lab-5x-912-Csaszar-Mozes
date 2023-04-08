@@ -28,7 +28,7 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let i = index"><a routerLink="companies/">{{i + 1}}</a></td>
+        <td mat-cell *matCellDef="let i = index"><a routerLink="companies/">{{i + 1 + pageSize * pageNr}}</a></td>
       </ng-container>
     
       <ng-container matColumnDef="name">

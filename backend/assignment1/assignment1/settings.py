@@ -94,6 +94,7 @@ DATABASES = {
     }
 }
 
+DEFAULT_INDEX_TABLESPACE = 'ind_tablespace'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

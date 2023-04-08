@@ -60,3 +60,4 @@ class PersonWorkingAtCompany(models.Model):
 
     class Meta:
         unique_together = [['person', 'company']]
+        indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]

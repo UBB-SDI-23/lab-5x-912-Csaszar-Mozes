@@ -41,7 +41,7 @@ export class EditCompanyComponent implements OnInit {
 
   refreshLocations() {
     this.dataSourceLocations.data =  this.locations!.slice(this.locationsPageNr * this.pageSize, this.locationsPageNr * this.pageSize + this.pageSize);
-    this.pageNrComponentLocation!.innerHTML = this.locationsPageNr + '';
+    this.pageNrComponentLocation!.innerHTML = this.locationsPageNr + 1 + '';
   }
   incLocationsPageNr() {
     if((this.locationsPageNr + 1) * this.pageSize < this.locations.length) {
@@ -58,7 +58,7 @@ export class EditCompanyComponent implements OnInit {
   }
   refreshPeople() {
     this.dataSourcePeople.data =  this.peopleWorkingHere!.slice(this.peoplePageNr * this.pageSize, this.peoplePageNr * this.pageSize + this.pageSize);
-    this.pageNrComponentPeople!.innerHTML = this.peoplePageNr + '';
+    this.pageNrComponentPeople!.innerHTML = this.peoplePageNr + 1 + '';
   }
   incPeoplePageNr() {
     if((this.peoplePageNr + 1) * this.pageSize < this.peopleWorkingHere.length) {

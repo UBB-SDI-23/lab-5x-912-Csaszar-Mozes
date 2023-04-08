@@ -35,7 +35,7 @@ export class ListCompaniesComponent implements OnInit {
     this.apiServ.getCompanies(this.pageNr, this.pageSize).subscribe((result) => {
       this.companies = result as Company[];
       this.dataSource.data = this.companies;
-      this.pageNrComponent!.innerHTML = this.pageNr + '';
+      this.pageNrComponent!.innerHTML = this.pageNr + 1 + '';
     })
   }
   sortCompaniesByReputation() {

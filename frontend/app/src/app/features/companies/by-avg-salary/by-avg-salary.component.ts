@@ -26,7 +26,7 @@ export class ByAvgSalaryComponent {
     this.apiServ.getCompaniesByAvgSalary(this.pageNr, this.pageSize).subscribe((result) => {
       this.companies = result as Company[];
       this.dataSource.data = this.companies;
-      this.pageNrComponent!.innerHTML = this.pageNr + '';
+      this.pageNrComponent!.innerHTML = this.pageNr + 1 + '';
     })
   }
   incPageNr() {
