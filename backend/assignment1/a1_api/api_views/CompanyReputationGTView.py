@@ -8,4 +8,7 @@ class CompanyReputationGTView(ListAPIView):
 
     def get_queryset(self):
         reputation = self.kwargs['reputation']
-        return Company.objects.filter(reputation__gt=reputation)
+        page_nr = int(self.kwargs['page_nr'])
+        page_size = int(self.kwargs['page_size'])
+        page_start = page_nr * page_size
+        return Company.objects.filter(reputation__gt=reputation)[page_start:page_start+page_size]

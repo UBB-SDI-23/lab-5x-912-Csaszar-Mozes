@@ -8,4 +8,7 @@ class LocationsView(ListCreateAPIView):
     serializer_class = LocationSerializer
 
     def get_queryset(self):
-        return Location.objects().all()
+        page_nr = int(self.kwargs['page_nr'])
+        page_size = int(self.kwargs['page_size'])
+        page_start = page_nr * page_size
+        return Location.objects.all()[page_start:page_start + page_size]

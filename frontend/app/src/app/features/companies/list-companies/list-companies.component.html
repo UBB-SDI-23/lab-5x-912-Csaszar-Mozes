@@ -8,12 +8,28 @@
 .mat-mdc-row:hover .mat-mdc-cell {
   border-color: currentColor;
 }
+#PageNrContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 30px;
+  font-size: 25px;
+}
+#PageNavigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position:absolute;
+  bottom: 0px;
+  left: 37%;
+}
 </style>
 <button mat-raised-button color="primary" (click)="addCompany()">+ ADD New Company</button><button mat-raised-button color="primary" (click)="sortCompaniesByReputation()">Sort by Reputation</button>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef>#</th>
-    <td mat-cell *matCellDef="let i = index"><a routerLink="companies/">{{i + 1}}</a></td>
+    <td mat-cell *matCellDef="let i = index"><a routerLink="companies/">{{i + 1 + pageNr * pageSize}}</a></td>
   </ng-container>
 
   <ng-container matColumnDef="name">
@@ -63,3 +79,8 @@
       *matRowDef="let row; columns: displayedColumns; let element;"
   ></tr>
 </table>
+<div id="PageNavigation">
+  <button mat-raised-button color="primary" (click)="decPageNr()" id="ButtonLeft">&lt;</button> 
+  <span id="PageNrContainer">Page:&nbsp;<span id="PageNr">0</span></span>
+   <button mat-raised-button color="primary" (click)="incPageNr()" id="ButtonRight">&gt;</button>
+</div>

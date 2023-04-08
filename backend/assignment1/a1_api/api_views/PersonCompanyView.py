@@ -8,7 +8,10 @@ class PersonCompanyView(ListCreateAPIView):
     serializer_class = PersonWorkingAtCompanySerializer
 
     def get_queryset(self):
-        return PersonWorkingAtCompany.objects.all()
+        page_nr = int(self.kwargs['page_nr'])
+        page_size = int(self.kwargs['page_size'])
+        page_start = page_nr * page_size
+        return PersonWorkingAtCompany.objects.all()[page_start:page_start+page_size]
 
     def perform_create(self, serializer):
         if serializer.is_valid():

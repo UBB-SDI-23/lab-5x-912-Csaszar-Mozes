@@ -11,8 +11,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./list-companies.component.css']
 })
 export class ListCompaniesComponent implements OnInit {
+  pageSize: number = 15;
+  pageNr: number = 0;
   companies: Company[] =[];
   displayedColumns: string[] = ['position','name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations', 'delete'];
+  pageNrComponent?: HTMLElement;
+  buttonLeft?: HTMLElement;
+  buttonRight?: HTMLElement;
   dataSource: MatTableDataSource<Company> = new MatTableDataSource<Company>();
   constructor(private apiServ: APIService, private router: Router) {}
   goToDetails(id: string) {
@@ -26,6 +31,13 @@ export class ListCompaniesComponent implements OnInit {
     DeleteConfirmationComponent.setUpConfirmDelete('companies', Number(id));
     this.router.navigateByUrl('delete-confirmation');
   }
+  refresh() {
+    this.apiServ.getCompanies(this.pageNr, this.pageSize).subscribe((result) => {
+      this.companies = result as Company[];
+      this.dataSource.data = this.companies;
+      this.pageNrComponent!.innerHTML = this.pageNr + '';
+    })
+  }
   sortCompaniesByReputation() {
     this.companies.sort((a, b) => {
       if(a.reputation! < b.reputation!) {
@@ -35,11 +47,21 @@ export class ListCompaniesComponent implements OnInit {
     });
     this.dataSource.data = this.companies;
   }
+  incPageNr() {
+    this.pageNr += 1;
+    this.refresh();
+  }
+  decPageNr() {
+    if(this.pageNr > 0) {
+      this.pageNr -= 1;
+      this.refresh();
+    }
+  }
   ngOnInit(): void {
-    this.apiServ.getCompanies().subscribe((result) => {
-      this.companies = result as Company[];
-      this.dataSource.data = this.companies;
-    })
+    this.refresh();
+    this.buttonLeft = document.getElementById("ButtonLeft") as HTMLElement;
+    this.buttonRight = document.getElementById("ButtonRight") as HTMLElement;
+    this.pageNrComponent = document.getElementById("PageNr") as HTMLElement;
   }
 }
 
