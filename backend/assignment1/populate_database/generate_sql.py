@@ -31,7 +31,8 @@ def generate_location():
     street = escape_hypen(fake.street_name())
     apartment = str(rnd.randint(1, 10000)) if rnd.random() < 0.5 else ""
     number = str(rnd.randint(1,10000))
-    return "('" + country + "','" + city + "','" + street + "','" + apartment + "'," + number + ","
+    description = escape_hypen(fake.paragraph(nb_words=10, nb_sentences=10))
+    return "('" + country + "','" + city + "','" + street + "','" + apartment + "'," + number + ",'" + description + "',"
 
 def change_location_to_company(location, company):
     return location + str(company) + ")"
@@ -39,7 +40,7 @@ def change_location_to_company(location, company):
 def generate_company(net_value, reputation):
     name = escape_hypen(fake.company())
     description = escape_hypen(fake.catch_phrase())
-    start_year = rnd.randint(1750,2023)
+    start_year = rnd.randint(1750, 2023)
     return "('" + name + "','" + description + "'," + str(net_value) + "," + str(reputation) + "," + str(start_year) + ")"
 
 
@@ -92,7 +93,7 @@ def generate_all(nr_rows):
     schemas = [
         "(role,salary,person_id,company_id)",
         "(first_name,last_name,worker_id,email,age)",
-        "(country,city,street,apartment,number,company_id)",
+        "(country,city,street,apartment,number,description,company_id)",
         "(name,description,net_value,reputation,start_year)"
     ]
     names = ['a1_api_personworkingatcompany','a1_api_person', 'a1_api_location', 'a1_api_company']
@@ -208,6 +209,7 @@ def generate_all(nr_rows):
     #complete sql file with ;
     for i in range(len(files)):
         write_element(files[i], '', 1, names[i], schemas[i], False)
+        files[i].close()
 
 
 for _ in range(10000):

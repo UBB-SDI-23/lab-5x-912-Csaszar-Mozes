@@ -30,6 +30,7 @@ class Location(models.Model):
     number = models.IntegerField(null=False, validators=[validators.MinValueValidator(0)])
     apartment = models.CharField(max_length=100, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name="locations")
+    description = models.CharField(max_length=5000, null=False, default='')
 
     def __str__(self):
         return self.country.__str__() + ", " + self.county.null * (self.county.__str__() + ", ") + self.city.__str__() +\
