@@ -17,6 +17,7 @@ export class Location {
     street?: string;
     number?: number;
     apartment?: string;
+    description?: string;
 
     toString() {
         return this.country + ", " + this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
