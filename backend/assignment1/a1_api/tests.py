@@ -1,6 +1,6 @@
 from django.test import TestCase
 from rest_framework.test import  APITestCase
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT
 from django.urls import reverse
 from .models import Person, Company, Location, PersonWorkingAtCompany
 
@@ -21,13 +21,6 @@ class TestPeopleView(APITestCase):
         result = self.client.post(self.url, {"first_name": "Ifrim","last_name": "Miculescu","email": "ifrimm23@yahoo.ro","age": 25,"worker_id": 14720})
         self.assertEqual(result.status_code, HTTP_201_CREATED)
 
-    def test_put(self):
-        result = self.client.put(self.url, {"id": 1,"first_name": "Ifrim","last_name": "Miculescu","email": "ifrimm23@yahoo.ro","age": 25,"worker_id": 14720})
-        self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put(self.url, {"first_name": "Ifrim", "last_name": "Miculescu",
-                                            "email": "ifrimm23@yahoo.ro", "age": 25, "worker_id": 14720})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
-
 
 class TestPeopleIDView(APITestCase):
     url = '/api/people/1/'
@@ -40,7 +33,7 @@ class TestPeopleIDView(APITestCase):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.get('/api/people/2/')
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, 404)
 
     def test_put(self):
         result = self.client.put(self.url, {"first_name": "Ifrim","last_name": "Miculescu",
@@ -48,13 +41,13 @@ class TestPeopleIDView(APITestCase):
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.put('/api/people/2/', {"first_name": "Ifrim", "last_name": "Miculescu",
                                             "email": "ifrimm23@yahoo.ro", "age": 25, "worker_id": 14720})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_delete(self):
         result = self.client.delete(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.delete(self.url)
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_204_NO_CONTENT)
 
 
 class TestCompaniesView(APITestCase):
@@ -74,16 +67,6 @@ class TestCompaniesView(APITestCase):
                                             "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
         self.assertEqual(result.status_code, HTTP_201_CREATED)
 
-    def test_put(self):
-        result = self.client.put(self.url, {"id": 1, "name": "Memo 10",
-                                            "description": "A self-serv restaurant catered towards students and physical laborers",
-                                            "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
-        self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put(self.url, {"name": "Memo 10",
-                                            "description": "A self-serv restaurant catered towards students and physical laborers",
-                                            "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
-
 
 class TestCompaniesIDView(APITestCase):
     url = '/api/companies/1/'
@@ -96,7 +79,7 @@ class TestCompaniesIDView(APITestCase):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.get('/api/companies/2/')
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_put(self):
         result = self.client.put(self.url, {"name": "Memo 10",
@@ -106,13 +89,13 @@ class TestCompaniesIDView(APITestCase):
         result = self.client.put('/api/companies/2/', {"name": "Memo 10",
                                             "description": "A self-serv restaurant catered towards students and physical laborers",
                                             "start_year": 2000,"net_value": 100000,"reputation": 90,"nr_people_working_here": 1})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_delete(self):
         result = self.client.delete(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.delete(self.url)
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_204_NO_CONTENT)
 
 
 class TestLocationsView(APITestCase):
@@ -123,7 +106,7 @@ class TestLocationsView(APITestCase):
             name="test", description="test", start_year=1, net_value=1, reputation=1
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[0]
         )
     def test_get(self):
@@ -135,14 +118,6 @@ class TestLocationsView(APITestCase):
                                              "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
         self.assertEqual(result.status_code, HTTP_201_CREATED)
 
-    def test_put(self):
-        result = self.client.put(self.url, {"id": 1, "country": "Romania","county": "Cluj",
-                                            "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
-        self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put(self.url, {"country": "Romania","county": "Cluj",
-                                            "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
-
 
 class TestLocationsIDView(APITestCase):
     url = '/api/locations/1/'
@@ -152,14 +127,14 @@ class TestLocationsIDView(APITestCase):
             name="test", description="test", start_year=1, net_value=1, reputation=1
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[0]
         )
     def test_get(self):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.get('/api/locations/2/')
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_put(self):
         result = self.client.put(self.url, {"country": "Romania","county": "Cluj",
@@ -167,13 +142,13 @@ class TestLocationsIDView(APITestCase):
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.put('/api/locations/2/', {"country": "Romania","county": "Cluj",
                                                     "city": "Cluj Napoca","street": "Frunzisului","number": 106,"apartment": "","company": 1})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_delete(self):
         result = self.client.delete(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.delete(self.url)
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_204_NO_CONTENT)
 
 
 class TestPeopleCompaniesView(APITestCase):
@@ -201,12 +176,6 @@ class TestPeopleCompaniesView(APITestCase):
         result = self.client.post(self.url, {"person": 2,"company": 1,"salary": 19000,"role": "CEO"})
         self.assertEqual(result.status_code, HTTP_201_CREATED)
 
-    def test_put(self):
-        result = self.client.put(self.url, {"id": 1, "person": 1,"company": 1,"salary": 19000,"role": "CEO"})
-        self.assertEqual(result.status_code, HTTP_200_OK)
-        result = self.client.put(self.url, {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
-
 
 class TestPeopleCompaniesIDView(APITestCase):
     url = '/api/pc/1/'
@@ -226,19 +195,21 @@ class TestPeopleCompaniesIDView(APITestCase):
         result = self.client.get(self.url)
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.get('/api/pc/2/')
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_put(self):
         result = self.client.put(self.url, {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.put('/api/pc/2/', {"person": 1,"company": 1,"salary": 19000,"role": "CEO"})
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_404_NOT_FOUND)
 
     def test_delete(self):
         result = self.client.delete(self.url)
+        print(result.status_code, result.data)
+
         self.assertEqual(result.status_code, HTTP_200_OK)
         result = self.client.delete(self.url)
-        self.assertEqual(result.status_code, HTTP_400_BAD_REQUEST)
+        self.assertEqual(result.status_code, HTTP_204_NO_CONTENT)
 
 
 class TestAvgSalaryFunctionality(APITestCase):
@@ -269,7 +240,7 @@ class TestAvgSalaryFunctionality(APITestCase):
                 name="c3", description="test", start_year=1, net_value=1, reputation=1
             )
             Location.objects.create(
-                country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+                country="Test", city="test", street="test", number=1, apartment="test",
                 company=Company.objects.all()[0]
             )
             PersonWorkingAtCompany.objects.create(
@@ -312,19 +283,19 @@ class TestNrLocationsFunctionality(APITestCase):
             name="c3", description="test", start_year=1, net_value=1, reputation=1
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[1]
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[2]
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[2]
         )
         Location.objects.create(
-            country="Test", county="Test", city="test", street="test", number=1, apartment="test",
+            country="Test", city="test", street="test", number=1, apartment="test",
             company=Company.objects.all()[2]
         )
 

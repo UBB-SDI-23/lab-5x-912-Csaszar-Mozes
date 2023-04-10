@@ -10,3 +10,14 @@ class CompaniesIDPeopleView(ListCreateAPIView):
 
     def get_queryset(self):
         return PersonWorkingAtCompany.objects.filter(company=self.kwargs['comp_id'])
+
+    def perform_create(self, serializer):
+        ser_data = {
+            'salary': self.request.data.get('salary'),
+            'role': self.request.data.get('role'),
+            'person': self.request.data.get('person'),
+            'company': self.kwargs.get('comp_id')
+        }
+        ser = PersonWorkingAtCompanySerializer(data=ser_data)
+        if ser.is_valid():
+            ser.save()

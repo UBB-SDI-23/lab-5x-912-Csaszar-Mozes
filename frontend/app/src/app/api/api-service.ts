@@ -15,7 +15,7 @@ export class APIService {
 
     getCompanies(page_nr: number, page_size: number) {
         if(page_nr >= 0 && page_size >= 1) {
-            return this.http.get(APIService.url + 'companies/page-' + page_nr + ',size-' + page_size);
+            return this.http.get(APIService.url + 'companies/?page=' + page_nr + '&size=' + page_size);
         }
         else {
             throw "Page number and Page size should be positive integers!";
@@ -23,7 +23,7 @@ export class APIService {
     }
     getCompaniesByAvgSalary(page_nr: number, page_size: number) {
         if(page_nr >= 0 && page_size >= 1) {
-            return this.http.get(APIService.url + 'companies/avg-salary/page-' + page_nr + ',size-' + page_size);
+            return this.http.get(APIService.url + 'companies/avg-salary/?page=' + page_nr + '&size=' + page_size);
         }
         else {
             throw "Page number and Page size should be positive integers!";

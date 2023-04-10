@@ -11,8 +11,8 @@ class CompanyByNrLocationsView(ListAPIView):
     serializer_class = CompanyNrLocationsSerializer
 
     def get_queryset(self):
-        page_nr = int(self.kwargs['page_nr'])
-        page_size = int(self.kwargs['page_size'])
+        page_nr = int(self.request.query_params.get('page', 0))
+        page_size = int(self.request.query_params.get('size', 15))
         page_start = page_nr * page_size
         return Company.objects.all().annotate(nr_comp_locations=models.Count("locations")).\
             order_by("-nr_comp_locations")[page_start:page_start+page_size]

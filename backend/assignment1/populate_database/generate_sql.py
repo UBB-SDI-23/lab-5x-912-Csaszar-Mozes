@@ -210,5 +210,9 @@ def generate_all(nr_rows):
         write_element(files[i], '', 1, names[i], schemas[i], False)
 
 
+for _ in range(10000):
+    if "'" in fake.word():
+        print("HYPEN")
 
-generate_all(1001000)
+
+#generate_all(1001000)
