@@ -44,9 +44,8 @@ def generate_company(net_value, reputation):
     return "('" + name + "','" + description + "'," + str(net_value) + "," + str(reputation) + "," + str(start_year) + ")"
 
 
-def generate_pc(p_id, c_id):
+def generate_pc(p_id, c_id, salary):
     role = escape_hypen(fake.job())
-    salary = rnd.randint(1000,100000)
     return "('" + role + "'," + str(salary) + "," + str(p_id) + "," + str(c_id) + ")"
 
 
@@ -76,6 +75,7 @@ def generate_all(nr_rows):
     nr_people = [1, 15, 45, 180, 455, 1300]
     nr_locations = [1, 2, 4, 10, 25, 100]
     net_values = [100, 1000, 15764, 547895, 7845962, 54687514]
+    salaries = [100, 250, 2500, 25000, 180000, 600000]
     reputations = [20, 60, 70, 80, 90, 100]
 
     max_dict_size = 1000
@@ -108,13 +108,13 @@ def generate_all(nr_rows):
         used_locations = {}
         used_people = {}
         comp_chance = rnd.random()
-        i = 0
-        while chances_added[i] < comp_chance:
-            i += 1
-        reputation = rnd.randint(reputations[i - 1], reputations[i])
-        net_value = rnd.randint(net_values[i - 1], net_values[i])
-        nr_location = rnd.randint(nr_locations[i - 1], nr_locations[i])
-        nr_person = rnd.randint(nr_people[i - 1], nr_people[i])
+        comp_i = 0
+        while chances_added[comp_i] < comp_chance:
+            comp_i += 1
+        reputation = rnd.randint(reputations[comp_i - 1], reputations[comp_i])
+        net_value = rnd.randint(net_values[comp_i - 1], net_values[comp_i])
+        nr_location = rnd.randint(nr_locations[comp_i - 1], nr_locations[comp_i])
+        nr_person = rnd.randint(nr_people[comp_i - 1], nr_people[comp_i])
         company = generate_company(net_value, reputation)
         write_element(files[3], company, comp_id, names[3],schemas[3])
         for i in range(nr_location):
@@ -203,7 +203,8 @@ def generate_all(nr_rows):
                         used_people[ind] = True
                 p_id = person_id
                 write_element(files[1], person, person_id, names[1], schemas[1])
-            pc = generate_pc(p_id, comp_id)
+            salary = rnd.randint(salaries[comp_i - 1], salaries[comp_i])
+            pc = generate_pc(p_id, comp_id, salary)
             pc_id += 1
             write_element(files[0], pc, pc_id, names[0], schemas[0])
     #complete sql file with ;

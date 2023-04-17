@@ -1,5 +1,5 @@
 from ..api_views.__init__ import *
-from ..serializers import PersonSerializer, PersonDetailSerializer
+from ..serializers import PersonDetailSerializer
 from ..models import Person
 
 
@@ -10,4 +10,4 @@ class PeopleIDView(RetrieveUpdateDestroyAPIView):
     lookup_field = "id"
 
     def get_queryset(self):
-        return Person.objects().all()
+        return Person.objects.all()

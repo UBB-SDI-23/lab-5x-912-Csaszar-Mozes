@@ -12,15 +12,30 @@ export class Company {
 export class Location {
     id?: number;
     country?: string;
-    county?: string;
     city?: string;
     street?: string;
     number?: number;
     apartment?: string;
     description?: string;
+    company?: number;
 
     toString() {
-        return this.country + ", " + this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
+        return this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
+    }
+}
+
+export class LocationDetail {
+    id?: number;
+    country?: string;
+    city?: string;
+    street?: string;
+    number?: number;
+    apartment?: string;
+    description?: string;
+    company?: Company;
+
+    toString() {
+        return this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
     }
 }
 
@@ -38,7 +53,7 @@ export class Person {
     }
 }
 
-export class PCDetail {
+export class PC {
     id?: number;
     role?: string;
     salary?: number;
@@ -67,7 +82,7 @@ export class PersonCompanyFull {
     nr_locations?: number;
 
 
-    constructor(person: PCDetail) {
+    constructor(person: PC) {
         this.role = person.role;
         this.salary = person.salary;
         this.id  = person.id;

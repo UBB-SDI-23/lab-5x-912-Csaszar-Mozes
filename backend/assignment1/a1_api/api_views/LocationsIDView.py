@@ -1,5 +1,5 @@
 from ..api_views.__init__ import *
-from ..serializers import LocationDetailSerializer, LocationSerializer
+from ..serializers import LocationDetailSerializer
 from ..models import Location
 
 

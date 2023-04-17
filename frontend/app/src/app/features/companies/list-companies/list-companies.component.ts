@@ -1,67 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import {Company} from '../../../models/models';
+import { Component } from '@angular/core';
+import { Company } from '../../../models/models';
 import { APIService } from 'src/app/api/api-service';
 import { Router } from '@angular/router';
-import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-list-companies',
-  templateUrl: './list-companies.component.html',
-  styleUrls: ['./list-companies.component.css']
+  templateUrl: 'list-companies.component.html',
+  styleUrls: ['list-companies.component.css']
 })
-export class ListCompaniesComponent implements OnInit {
-  pageSize: number = 15;
-  pageNr: number = 0;
-  companies: Company[] =[];
-  displayedColumns: string[] = ['position','name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations', 'delete'];
-  pageNrComponent?: HTMLElement;
-  buttonLeft?: HTMLElement;
-  buttonRight?: HTMLElement;
-  dataSource: MatTableDataSource<Company> = new MatTableDataSource<Company>();
-  constructor(private apiServ: APIService, private router: Router) {}
-  goToDetails(id: string) {
-    this.router.navigateByUrl(`companies/${id}`);
-  }
-  addCompany() {
-    this.router.navigateByUrl('companies/add');
-  }
-  delete(event: MouseEvent, id: string) {
-    event.stopPropagation();
-    DeleteConfirmationComponent.setUpConfirmDelete('companies', Number(id));
-    this.router.navigateByUrl('delete-confirmation');
-  }
-  refresh() {
-    this.apiServ.getCompanies(this.pageNr, this.pageSize).subscribe((result) => {
-      this.companies = result as Company[];
-      this.dataSource.data = this.companies;
-      this.pageNrComponent!.innerHTML = this.pageNr + 1 + '';
-    })
+export class ListCompaniesComponent {
+  dynamicColumns = ['name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations'];
+  displayedColumns = ['name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations'];
+  baseUrl = 'companies';
+  listPageComp?: HTMLElement;
+  doSort: boolean = false;
+  compareFn?: (a: never, b: never) => number;
+  constructor(protected apiServ: APIService, protected router: Router) {
+    this.listPageComp = document.querySelector('app-list-all-page') as HTMLElement;
+    console.log(this.listPageComp);
   }
   sortCompaniesByReputation() {
-    this.companies.sort((a, b) => {
-      if(a.reputation! < b.reputation!) {
-        return 1;
-      }
-      return -1;
-    });
-    this.dataSource.data = this.companies;
-  }
-  incPageNr() {
-    this.pageNr += 1;
-    this.refresh();
-  }
-  decPageNr() {
-    if(this.pageNr > 0) {
-      this.pageNr -= 1;
-      this.refresh();
-    }
-  }
-  ngOnInit(): void {
-    this.refresh();
-    this.buttonLeft = document.getElementById("ButtonLeft") as HTMLElement;
-    this.buttonRight = document.getElementById("ButtonRight") as HTMLElement;
-    this.pageNrComponent = document.getElementById("PageNr") as HTMLElement;
+    //Change comparte function to be appropriate
+    this.compareFn = (a, b) => {
+      let dc_a = a as Company; let dc_b = b as Company;
+      return dc_a.reputation == dc_b.reputation ? 0 : (dc_a.reputation! < dc_b.reputation! ? 1 : -1);
+    };
+    //Start sort by changing this value
+    this.doSort = true;
+    //Reset value for next sort
+    setTimeout(
+      () => { this.doSort = false; }, 100
+    );
   }
 }
 

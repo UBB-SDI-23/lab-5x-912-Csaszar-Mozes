@@ -22,6 +22,9 @@ class Company(models.Model):
     def __str__(self):
         return self.name.__str__()
 
+    class Meta:
+        indexes = [models.Index(name='ind_company_name_auto', fields=['name'], include=['id'])]
+
 
 class Location(models.Model):
     country = models.CharField(max_length=100, null=False)
@@ -46,11 +49,14 @@ class Person(models.Model):
 
     @property
     def nr_workplaces(self):
-        return PersonWorkingAtCompany.objects.all().filter(person=self.id).aggregate(nr_workplaces=models.Count('*'))[
+        return PersonWorkingAtCompany.objects.filter(person=self.id).aggregate(nr_workplaces=models.Count('*'))[
             'nr_workplaces']
 
     def __str__(self):
         return self.first_name.__str__() + " " + self.last_name.__str__()
+
+    class Meta:
+        indexes = [models.Index(name='ind_person_name_auto', fields=['first_name', 'last_name'], include=['id'])]
 
 
 class PersonWorkingAtCompany(models.Model):
