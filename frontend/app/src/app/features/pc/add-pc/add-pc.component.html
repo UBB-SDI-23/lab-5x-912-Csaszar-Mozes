@@ -1,0 +1,48 @@
+<style>
+    .example-form {
+      min-width: 150px;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .example-full-width {
+      width: 100%;
+    }
+    
+</style>
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Role" floatLabel="always" [formControl]="roleFormControl">
+        <mat-label>Role</mat-label>
+        <mat-error *ngIf="roleFormControl.hasError('required')">
+            Role is <strong>&nbsp;required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Salary</mat-label>
+        <input matInput placeholder="Salary" [formControl]="salaryFormControl">
+        <mat-error *ngIf="salaryFormControl.hasError('required')">
+            Salary is <strong>&nbsp;required</strong>
+        </mat-error>
+        <mat-error *ngIf="salaryFormControl.hasError('pattern')">
+            Salary has to be <strong>&nbsp;a positive number less than 10000000</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Person</mat-label>
+        <input matInput placeholder="Person" [formControl]="personFormControl">
+        <mat-error *ngIf="personFormControl.hasError('required')">
+            Person is <strong>&nbsp;required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Company</mat-label>
+        <input matInput placeholder="Company" [formControl]="companyFormControl">
+        <mat-error *ngIf="companyFormControl.hasError('required')">
+            Company is <strong>&nbsp;required</strong>
+        </mat-error>
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" (click)="add()">Add</button>
+    <button mat-raised-button color="warn" (click)="cancel()">Back</button>
+</form>

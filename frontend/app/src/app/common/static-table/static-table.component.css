@@ -1,0 +1,26 @@
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.PageNrContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 30px;
+  font-size: 25px;
+}
+
+.PageNavigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  bottom: 0px;
+  left: 37%;
+}

@@ -1,0 +1,23 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let i = index"><a routerLink="this.baseUrl/">{{i + 1 + pageNr * pageSize}}</a></td>
+  </ng-container>
+
+  <ng-container *ngFor="let column of dynamicColumns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef>
+      {{formatColumn(column)}}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{getColumnValue(element,column)}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row (click)="goToDetails(element.id)" *matRowDef="let row; columns: displayedColumns; let element;"></tr>
+</table>
+<div class="PageNavigation">
+  <button mat-raised-button color="primary" (click)="decPageNr()" class="ButtonLeft">&lt;</button>
+  <span class="PageNrContainer">Page:&nbsp;<span class="PageNr">{{this.pageNr + 1}}</span></span>
+  <button mat-raised-button color="primary" (click)="incPageNr()" class="ButtonRight">&gt;</button>
+</div>
