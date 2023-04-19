@@ -20,7 +20,7 @@ export class Location {
     company?: number;
 
     toString() {
-        return this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
+        return this.country + ", " + this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
     }
 }
 
@@ -35,7 +35,7 @@ export class LocationDetail {
     company?: Company;
 
     toString() {
-        return this.country + ", " +  this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
+        return this.country + ", " + this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
     }
 }
 
@@ -53,7 +53,25 @@ export class Person {
     }
 }
 
+export class PersonDetail {
+    id?: number;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+    age?: number;
+    worker_id?: number;
+    working_at_companies?: Company[];
+}
+
 export class PC {
+    id?: number;
+    role?: string;
+    salary?: number;
+    person?: number;
+    company?: number;
+}
+
+export class PCDetail {
     id?: number;
     role?: string;
     salary?: number;
@@ -85,8 +103,8 @@ export class PersonCompanyFull {
     constructor(person: PC) {
         this.role = person.role;
         this.salary = person.salary;
-        this.id  = person.id;
-    } 
+        this.id = person.id;
+    }
 }
 
 export class CompanyDetail {

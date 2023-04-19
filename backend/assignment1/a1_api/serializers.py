@@ -36,7 +36,7 @@ class LocationDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ["id", "country", "county", "city", "street", "number", "apartment", "company", "description"]
+        fields = ["id", "country", "city", "street", "number", "apartment", "company", "description"]
 
 
 class PersonWorkingAtCompanyDetailSerializer(serializers.ModelSerializer):

@@ -32,7 +32,7 @@ export class AddLocationComponent {
         return this.countryFormControl.valid && this.cityFormControl.valid && this.streetFormControl.valid && this.numberFormControl.valid && this.companyFormControl.valid && this.companyID > 0;
     }
     updateAutocomplete(): void {
-        this.apiServ.getAutocompleteCompany(this.companyFormControl.value, this.autocompleteSize).subscribe(
+        this.apiServ.getAutocompleteEntity('companies', this.companyFormControl.value, this.autocompleteSize).subscribe(
             result => {
                 this.companies = result as Company[];
                 this.suggestions = this.companies.map(e => e.name!);

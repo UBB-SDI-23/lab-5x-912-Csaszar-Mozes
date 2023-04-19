@@ -19,6 +19,7 @@ from .api_views.PeopleIDCompaniesView import PeopleIDCompaniesView
 from .api_views.PeopleIDCompaniesIDView import PeopleIDCompaniesIDView
 from .api_views.CompaniesIDPeopleView import CompaniesIDPeopleView
 from .api_views.CompaniesIDPeopleIDView import CompaniesIDPeopleIDView
+from .api_views.PersonNameAutoView import PersonNameAutoView
 
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('api/people/<int:id>/', PeopleIDView.as_view(), name="people_detail"),
     path('api/people/<int:person_id>/companies/', PeopleIDCompaniesView.as_view(), name="peopleidcompanies"),
     path('api/people/<int:person_id>/companies/<int:comp_id>/', PeopleIDCompaniesIDView.as_view(), name="peopleidcompaniesid"),
+    path('api/people/name-autocomplete/', PersonNameAutoView.as_view(), name="people_name_autocomplete"),
     path('api/locations/', LocationsView.as_view(), name="locations_list"),
     path('api/locations/<int:id>/', LocationsIDView.as_view(), name="locations_detail"),
     path('api/companies/', CompaniesView.as_view(), name="companies_list"),
@@ -35,7 +37,7 @@ urlpatterns = [
     path('api/companies/<int:comp_id>/people/', CompaniesIDPeopleView.as_view(), name="companiesidpeople"),
     path('api/companies/<int:comp_id>/people/<int:person_id>/', CompaniesIDPeopleIDView.as_view(), name="companiesidpeopleid"),
     path('api/companies/reputation-greater-than/<int:reputation>/', CompanyReputationGTView.as_view(), name="companies_reputation_gt"),
-    path('api/companies/name-autocomplete/', CompanyNameAutoView.as_view(), name="companies_list"),
+    path('api/companies/name-autocomplete/', CompanyNameAutoView.as_view(), name="companies_name_autocomplete"),
     path('api/pc/', PersonCompanyView.as_view(), name="pc_list"),
     path('api/pc/<int:id>/', PersonCompanyIDView.as_view(), name="pc_detail"),
     path('api/companies/by-avg-salary/', CompanyByAvgSalaryView.as_view(), name="companies_avg_salary"),

@@ -1,14 +1,13 @@
 <style>
     .example-form {
-      min-width: 150px;
-      max-width: 500px;
-      width: 100%;
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
     }
-    
+
     .example-full-width {
-      width: 100%;
+        width: 100%;
     }
-    
 </style>
 <form class="example-form">
     <mat-form-field class="example-full-width">
@@ -30,19 +29,32 @@
     </mat-form-field>
     <mat-form-field class="example-full-width">
         <mat-label>Person</mat-label>
-        <input matInput placeholder="Person" [formControl]="personFormControl">
+        <input matInput placeholder="Search for a person" [matAutocomplete]="auto1" [formControl]="personFormControl"
+            (input)="updatePeopleAutocomplete()">
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selectPerson($event)">
+            <mat-option *ngFor="let suggestion of peopleSuggestions" [value]="suggestion">
+                {{suggestion}}
+            </mat-option>
+        </mat-autocomplete>
         <mat-error *ngIf="personFormControl.hasError('required')">
             Person is <strong>&nbsp;required</strong>
         </mat-error>
+
     </mat-form-field>
     <mat-form-field class="example-full-width">
         <mat-label>Company</mat-label>
-        <input matInput placeholder="Company" [formControl]="companyFormControl">
+        <input matInput placeholder="Search for a company" [matAutocomplete]="auto2" [formControl]="companyFormControl"
+            (input)="updateCompaniesAutocomplete()">
         <mat-error *ngIf="companyFormControl.hasError('required')">
             Company is <strong>&nbsp;required</strong>
         </mat-error>
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectCompany($event)">
+            <mat-option *ngFor="let suggestion of companiesSuggestions" [value]="suggestion">
+                {{suggestion}}
+            </mat-option>
+        </mat-autocomplete>
     </mat-form-field>
-    
+
     <button mat-raised-button color="primary" (click)="add()">Add</button>
     <button mat-raised-button color="warn" (click)="cancel()">Back</button>
 </form>

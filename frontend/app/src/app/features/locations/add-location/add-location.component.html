@@ -58,6 +58,9 @@
         <mat-label>Company</mat-label>
         <input matInput placeholder="Search for a company" [matAutocomplete]="auto" [formControl]="companyFormControl"
             (keyup)="updateAutocomplete()">
+        <mat-error *ngIf="companyFormControl.hasError('required')">
+            Company is <strong>&nbsp;required</strong>
+        </mat-error>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectCompany($event)">
             <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion">
                 {{suggestion}}

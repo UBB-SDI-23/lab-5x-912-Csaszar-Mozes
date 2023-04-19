@@ -20,19 +20,19 @@ export class APIService {
             throw "Page number and Page size should be positive integers!";
         }
     }
-    getAutocompleteCompany(name: string, size: number) {
+    getAutocompleteEntity(base_url: string, name: string, size: number) {
         if (size >= 1) {
-            return this.http.get(APIService.url + `companies/name-autocomplete/?name=${name}&size=${size}`);
+            return this.http.get(APIService.url + base_url + `/name-autocomplete/?name=${name}&size=${size}`);
         }
         else {
             throw "Page size should be a positive integer!";
         }
     }
-    getCompany(id: number): Observable<CompanyDetail> {
-        return this.http.get(APIService.url + 'companies/' + id + '/') as Observable<CompanyDetail>;
+    getEntity(base_url: string, id: number): Observable<Object> {
+        return this.http.get(APIService.url + base_url + '/' + id + '/') as Observable<CompanyDetail>;
     }
-    putCompany(id: number, data: Company) {
-        return this.http.put(APIService.url + 'companies/' + id + '/', data);
+    putEntity(base_url: string, id: number, data: Object) {
+        return this.http.put(APIService.url + base_url + '/' + id + '/', data);
     }
     deleteEntity(base_url: string, id: number) {
         return this.http.delete(APIService.url + base_url + '/' + id + '/');

@@ -9,16 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['list-companies.component.css']
 })
 export class ListCompaniesComponent {
-  dynamicColumns = ['name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations'];
-  displayedColumns = ['name', 'description', 'net-worth', 'reputation', 'nr-workers', 'nr-locations'];
+  dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
+  displayedColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations', 'delete'];
   baseUrl = 'companies';
   listPageComp?: HTMLElement;
   doSort: boolean = false;
   compareFn?: (a: never, b: never) => number;
-  constructor(protected apiServ: APIService, protected router: Router) {
-    this.listPageComp = document.querySelector('app-list-all-page') as HTMLElement;
-    console.log(this.listPageComp);
-  }
+  constructor(protected apiServ: APIService, protected router: Router) { }
   sortCompaniesByReputation() {
     //Change comparte function to be appropriate
     this.compareFn = (a, b) => {
