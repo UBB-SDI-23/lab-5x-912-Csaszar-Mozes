@@ -5,12 +5,6 @@ backend/assignment1/db.sqlite3
 backend/assignment1/db.sqlite3
 backend/assignment1/db.sqlite3
 backend/assignment1/db.sqlite3
-backend/assignment1/populate_database/insert_pc_ultra.7z
-backend/assignment1/populate_database/insert_p.sql
-backend/assignment1/populate_database/insert_l.sql
-backend/assignment1/populate_database/insert_c.sql
-backend/assignment1/populate_database/generate_sql.py
-backend/assignment1/populate_database/insert_pc.sql
 backend/assignment1/db.sqlite3-journal
-backend/assignment1/populate_database/run_sql.py
+backend/assignment1/populate_database/*.sql
 *.7z
