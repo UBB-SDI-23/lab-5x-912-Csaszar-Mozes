@@ -28,7 +28,8 @@ class Company(models.Model):
 
     class Meta:
         indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
-                   models.Index(name='ind_comp_avg_salary', fields=['avg_salary', 'id'])]
+                   models.Index(name='ind_comp_avg_salary', fields=['avg_salary', 'id']),
+                   models.Index(name='ind_company_reputation', fields=['reputation', 'id'])]
 
 
 class Location(models.Model):
