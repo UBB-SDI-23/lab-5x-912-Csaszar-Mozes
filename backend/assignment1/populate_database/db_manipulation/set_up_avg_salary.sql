@@ -1,4 +1,5 @@
 UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = a1_api_company.id);
-CREATE TRIGGER avg_salary AFTER DELETE ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = OLD.company_id); end;
-CREATE TRIGGER avg_salary AFTER INSERT ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = NEW.company_id); end;
-CREATE TRIGGER avg_salary AFTER UPDATE ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = OLD.company_id);end;
+CREATE TRIGGER avg_salary_delete AFTER DELETE ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = OLD.company_id); end;
+CREATE TRIGGER avg_salary_insert AFTER INSERT ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = NEW.company_id); end;
+CREATE TRIGGER avg_salary_update AFTER UPDATE ON a1_api_personworkingatcompany BEGIN UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = OLD.company_id);end;
+--CREATE INDEX avg_salary_idx ON a1_api_company (avg_salary, id);

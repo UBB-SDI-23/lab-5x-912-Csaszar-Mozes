@@ -8,3 +8,10 @@ backend/assignment1/db.sqlite3
 backend/assignment1/db.sqlite3-journal
 backend/assignment1/populate_database/*.sql
 *.7z
+backend/assignment1/populate_database/data_generation/insert_c.sql
+backend/assignment1/populate_database/data_generation/insert_c.sql
+backend/assignment1/populate_database/data_generation/insert_l.sql
+backend/assignment1/populate_database/data_generation/insert_p.sql
+backend/assignment1/populate_database/data_generation/insert_pc.sql
+backend/assignment1/populate_database/data_generation/insert_l.sql
+backend/assignment1/populate_database/data_generation/insert_l.sql

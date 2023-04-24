@@ -33,21 +33,27 @@ import sqlite3
 # db.close()
 
 
-with open('../db_manipulation/set_up_avg_salary.sql', 'r') as sql_file:
-    db = sqlite3.connect('../../db.sqlite3')
-    command = sql_file.readline()
-    i = 0
-    while command:
-        cursor = db.cursor()
-        try:
-            cursor.executescript(command)
-        except sqlite3.OperationalError:
-            print(command)
-        db.commit()
-
+def run_file(file_name):
+    with open(file_name, 'r') as sql_file:
+        db = sqlite3.connect('../../db.sqlite3')
         command = sql_file.readline()
-        i += 1
-        if i % 100 == 0:
-            print("Finished", i, "command(s).")
-    print("Updating Avg_Salary finished successfully.")
-    db.close()
+        i = 0
+        while command:
+            cursor = db.cursor()
+            try:
+                cursor.executescript(command)
+            except sqlite3.OperationalError:
+                print("ERROR AT")
+                print(command)
+            db.commit()
+
+            command = sql_file.readline()
+            i += 1
+            if i % 100 == 0:
+                print("Finished", i, "command(s).")
+        print("Execution" + file_name + " finished successfully.")
+        db.close()
+
+
+run_file('../db_manipulation/reset_tables.sql')
+
