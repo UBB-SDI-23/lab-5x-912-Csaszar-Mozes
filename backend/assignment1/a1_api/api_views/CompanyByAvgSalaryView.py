@@ -12,7 +12,7 @@ class CompanyByAvgSalaryView(ListAPIView):
         page_nr = int(self.request.query_params.get('page', 0))
         page_size = int(self.request.query_params.get('size', 15))
         page_start = page_nr * page_size
-        return Company.objects.all().annotate(avg_salary=models.Avg('people_working_here__salary', default=0)).order_by(
+        return Company.objects.all().order_by(
             '-avg_salary')[page_start:page_start+page_size]
 
 

@@ -34,6 +34,7 @@ import { EditLocationComponent } from './features/locations/edit-location/edit-l
 import { DynamicTableComponent } from './common/dynamic-table/dynamic-table.component';
 import { StaticTableComponent } from './common/static-table/static-table.component';
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
+import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-
     DynamicTableComponent,
     StaticTableComponent,
     ByNrLocationsComponent,
+    ReputationGreaterThanComponent,
   ],
   imports: [
     BrowserModule,

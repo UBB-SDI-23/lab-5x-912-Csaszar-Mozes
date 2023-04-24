@@ -27,8 +27,9 @@
     <button mat-menu-item routerLink="companies/add">Add</button>
     <button mat-menu-item [matMenuTriggerFor]="companiesStatisticsMenu">Statistics</button>
     <mat-menu #companiesStatisticsMenu>
-      <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</button>
+      <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers of a Company</button>
       <button mat-menu-item routerLink="companies/by-nr-locations">Nr Locations of a Company</button>
+      <button mat-menu-item routerLink="companies/reputation-greater-than">Filter By Reputation</button>
     </mat-menu>
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="locationsMenu">Locations</button>
@@ -48,8 +49,9 @@
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="statisticsMenu">Statistics</button>
   <mat-menu #statisticsMenu="matMenu">
-    <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</button>
+    <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers of a Company</button>
     <button mat-menu-item routerLink="companies/by-nr-locations">Nr Locations of a Company</button>
+    <button mat-menu-item routerLink="companies/reputation-greater-than">Filter Company By Reputation</button>
   </mat-menu>
 </nav>
 

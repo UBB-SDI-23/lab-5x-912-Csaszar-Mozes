@@ -107,7 +107,6 @@ class PersonDetailSerializer(serializers.ModelSerializer):
 
 
 class CompanyByAvgSalarySerializer(serializers.ModelSerializer):
-    avg_salary = serializers.IntegerField(read_only=True)
     class Meta:
         model = Company
         fields = ["id", "name", "description", "start_year", "net_value", "reputation", "avg_salary"]

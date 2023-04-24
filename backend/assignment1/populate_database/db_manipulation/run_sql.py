@@ -55,5 +55,6 @@ def run_file(file_name):
         db.close()
 
 
-run_file('../db_manipulation/reset_tables.sql')
+
+run_file('../db_manipulation/set_up_avg_salary.sql')
 

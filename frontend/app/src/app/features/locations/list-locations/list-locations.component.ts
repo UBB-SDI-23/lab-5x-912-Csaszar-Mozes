@@ -9,8 +9,8 @@ import { ListAllPageComponent } from 'src/app/common/list-all-page/list-all-page
   styleUrls: ['list-locations.component.css']
 })
 export class ListLocationsComponent {
-  dynamicColumns = ['country', 'city', 'street', 'number', 'apartment'];
-  displayedColumns = ['position', 'country', 'city', 'street', 'number', 'apartment', 'delete'];
+  dynamicColumns = ['country', 'city', 'street', 'number', 'apartment', 'description'];
+  displayedColumns = ['position', 'country', 'city', 'street', 'number', 'apartment', 'description', 'delete'];
   baseUrl = 'locations';
   constructor(protected apiServ: APIService, protected router: Router) { }
 }

@@ -9,7 +9,6 @@ import { Company, CompanyDetail } from "../models/models";
 export class APIService {
     //static url: string = 'https://mozes-csaszar-sdi-922.strangled.net/';
     static url: string = 'http://127.0.0.1:8000/api/';
-    //static url: string = '/api/';
 
     constructor(private http: HttpClient) { }
     getEntities(page_nr: number, page_size: number, base_url: string) {

@@ -8,8 +8,8 @@ import { APIService } from 'src/app/api/api-service';
   styleUrls: ['by-avg-salary.component.css']
 })
 export class ByAvgSalaryComponent {
-  dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'people_working_here', 'avg_salary'];
-  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'people_working_here', 'avg_salary'];
+  dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'avg_salary'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'avg_salary'];
   baseUrl = 'companies/by-avg-salary';
   constructor(protected apiServ: APIService, protected router: Router) {
   }

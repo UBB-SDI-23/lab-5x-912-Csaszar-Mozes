@@ -8,12 +8,12 @@ from django.core import validators
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=2000)
     net_value = models.IntegerField()
     reputation = models.IntegerField(validators=())
     start_year = models.IntegerField(null=True, blank=True, validators=[validators.MinValueValidator(0)])
-    avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0)
+    avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0, null=True)
 
     @property
     def nr_locations(self):
@@ -26,8 +26,9 @@ class Company(models.Model):
     def __str__(self):
         return self.name.__str__()
 
-    # class Meta:
-    #     indexes = [models.Index(name='ind_company_name_auto', fields=['name'], include=['id'])]
+    class Meta:
+        indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
+                   models.Index(name='ind_comp_avg_salary', fields=['avg_salary', 'id'])]
 
 
 class Location(models.Model):
@@ -48,7 +49,7 @@ class Person(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     worker_id = models.IntegerField()
-    email = models.EmailField(max_length=75, validators=[validators.EmailValidator()])
+    email = models.EmailField(max_length=75, validators=[validators.EmailValidator()], unique=True)
     age = models.IntegerField()
 
     @property
@@ -59,10 +60,6 @@ class Person(models.Model):
     def __str__(self):
         return self.first_name.__str__() + " " + self.last_name.__str__()
 
-    #class Meta:
-        #indexes = [models.Index(Concat('first_name', V(' '), 'last_name'), name='ind_person_name_auto',
-        #                       include=['id', 'first_name', 'last_name', 'email'])]
-
 
 
 class PersonWorkingAtCompany(models.Model):
@@ -71,7 +68,7 @@ class PersonWorkingAtCompany(models.Model):
     salary = models.IntegerField(validators=[validators.MinValueValidator(0)])
     role = models.CharField(max_length=125)
 
-    #class Meta:
-        #unique_together = [['person', 'company']]
-        #indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]
+    class Meta:
+        unique_together = [['person', 'company']]
+        indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]
 

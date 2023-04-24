@@ -35,6 +35,10 @@ const routes: Routes = [
         component: ByNrLocationsComponent
     },
     {
+        path: "companies/reputation-greater-than",
+        component: ByNrLocationsComponent
+    },
+    {
         path: "companies/:id",
         component: EditCompanyComponent
     },
