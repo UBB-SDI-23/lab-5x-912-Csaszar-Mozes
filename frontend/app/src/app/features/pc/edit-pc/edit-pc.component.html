@@ -29,9 +29,9 @@
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Person</mat-label>
-    <input matInput placeholder="Search for a person" [matAutocomplete]="auto1" [formControl]="personFormControl"
+    <input matInput placeholder="Search for a person" [matAutocomplete]="auto" [formControl]="personFormControl"
       (input)="updatePeopleAutocomplete()">
-    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selectPerson($event)">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectPerson($event)">
       <mat-option *ngFor="let suggestion of peopleSuggestions" [value]="suggestion">
         {{suggestion}}
       </mat-option>

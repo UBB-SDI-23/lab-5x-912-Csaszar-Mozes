@@ -41,7 +41,7 @@ urlpatterns = [
     path('api/pc/', PersonCompanyView.as_view(), name="pc_list"),
     path('api/pc/<int:id>/', PersonCompanyIDView.as_view(), name="pc_detail"),
     path('api/companies/by-avg-salary/', CompanyByAvgSalaryView.as_view(), name="companies_avg_salary"),
-    path('api/companies/nr-locations/', CompanyByNrLocationsView.as_view(), name="companies_nr_locations"),
+    path('api/companies/by-nr-locations/', CompanyByNrLocationsView.as_view(), name="companies_nr_locations"),
     path('api/swagger-plain/', get_schema_view(title='Swagger documentation',description='Guide for the REST API'), name='swagger_plain'),
     path('api/swagger-html/', TemplateView.as_view(template_name='swagger.html',extra_context={'schema_url':'swagger_plain'}), name='swagger_html'),
 ]

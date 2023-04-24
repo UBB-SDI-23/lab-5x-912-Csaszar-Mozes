@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ListCompaniesComponent {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
-  displayedColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations', 'delete'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations', 'delete'];
   baseUrl = 'companies';
   listPageComp?: HTMLElement;
   doSort: boolean = false;

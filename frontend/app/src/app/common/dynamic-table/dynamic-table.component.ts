@@ -26,14 +26,18 @@ export class DynamicTableComponent implements OnChanges {
   @Input() compareFn?: (a: never, b: never) => number;
   @Input() doSort: boolean = false;
   constructor() {
-    this.displayedColumns.unshift('position');
-    this.displayedColumns.push('delete');
   }
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }
   goToDetails(id: string) {
-    this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
+    if (this.baseUrl == 'companies/by-avg-salary') {
+      this.router!.navigateByUrl(`companies/${id}`);
+    }
+    else {
+      this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
+    }
+
   }
   delete(event: MouseEvent, id: string) {
     event.stopPropagation();
@@ -44,6 +48,7 @@ export class DynamicTableComponent implements OnChanges {
     this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
       this.entities = result as [];
       this.dataSource.data = this.entities;
+      console.log(this.entities);
     })
   }
   sortByFunction() {

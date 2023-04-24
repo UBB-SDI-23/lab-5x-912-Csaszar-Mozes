@@ -25,8 +25,6 @@ export class ListAllPageComponent {
   @Input() compareFn?: (a: never, b: never) => number;
   @Input() doSort: boolean = false;
   constructor() {
-    this.displayedColumns.unshift('position');
-    this.displayedColumns.push('delete');
   }
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');

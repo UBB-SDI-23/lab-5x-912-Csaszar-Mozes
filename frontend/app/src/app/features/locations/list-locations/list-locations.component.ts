@@ -10,7 +10,7 @@ import { ListAllPageComponent } from 'src/app/common/list-all-page/list-all-page
 })
 export class ListLocationsComponent {
   dynamicColumns = ['country', 'city', 'street', 'number', 'apartment'];
-  displayedColumns = ['country', 'city', 'street', 'number', 'apartment', 'delete'];
+  displayedColumns = ['position', 'country', 'city', 'street', 'number', 'apartment', 'delete'];
   baseUrl = 'locations';
   constructor(protected apiServ: APIService, protected router: Router) { }
 }

@@ -23,7 +23,6 @@ export class StaticTableComponent implements OnChanges {
 
   constructor() {
     this.displayedColumns.unshift('position');
-    console.log(this.entities);
   }
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...

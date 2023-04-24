@@ -27,7 +27,7 @@ export class EditCompanyComponent implements OnInit {
   baseUrlLocations: string = 'locations';
 
   peopleColumns: string[] = ["role", "salary", "person.first_name", "person.last_name", "person.age", "person.email", "person.worker_id"];
-  locationsColumns: string[] = ["country", "county", "city", "street", "number", "apartment", "description"];
+  locationsColumns: string[] = ["country", "city", "street", "number", "apartment", "description"];
 
   constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
 

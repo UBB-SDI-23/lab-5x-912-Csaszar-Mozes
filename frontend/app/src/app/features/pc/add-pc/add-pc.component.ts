@@ -74,5 +74,6 @@ export class AddPcComponent {
         let selected = event.option;
         let ind = event.source.options.reduce((pVal, cVal, ind) => cVal.id == selected.id ? ind : pVal, 0);
         this.personID = this.people[ind].id!;
+        this.personFormControl.setValue(this.people[ind].first_name + " " + this.people[ind].last_name)
     }
 }

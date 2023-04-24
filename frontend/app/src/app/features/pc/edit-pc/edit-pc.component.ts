@@ -42,7 +42,6 @@ export class EditPcComponent implements OnInit {
     data["salary"] = this.salaryFormControl.value;
     data["company"] = this.companyID;
     data["person"] = this.personID;
-
     if (this.isInputDataValid()) {
       this.apiServ.putEntity(this.baseUrl, this.pc!.id!, data).subscribe(result => {
         alert("Updated successfully!");
@@ -88,6 +87,7 @@ export class EditPcComponent implements OnInit {
     let selected = event.option;
     let ind = event.source.options.reduce((pVal, cVal, ind) => cVal.id == selected.id ? ind : pVal, 0);
     this.companyID = this.companies[ind].id!;
+
   }
   updatePeopleAutocomplete(): void {
     this.apiServ.getAutocompleteEntity('people', this.personFormControl.value, this.autocompleteSize).subscribe(
@@ -101,5 +101,6 @@ export class EditPcComponent implements OnInit {
     let selected = event.option;
     let ind = event.source.options.reduce((pVal, cVal, ind) => cVal.id == selected.id ? ind : pVal, 0);
     this.personID = this.people[ind].id!;
+    this.personFormControl.setValue(this.people[ind].first_name + " " + this.people[ind].last_name)
   }
 }

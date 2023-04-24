@@ -10,12 +10,10 @@ import { PC } from 'src/app/models/models';
   styleUrls: ['list-pc.component.css']
 })
 export class ListPcComponent {
-  dynamicColumns = ['role', 'salary', 'person', 'company'];
-  displayedColumns = ['role', 'salary', 'person', 'company', 'delete'];
+  dynamicColumns = ['role', 'salary', 'persons_name', 'persons_email', 'company_name'];
+  displayedColumns = ['position', 'role', 'salary', 'persons_name', 'persons_email', 'company_name', 'delete'];
   baseUrl = 'pc';
   listPageComp?: HTMLElement;
   constructor(protected apiServ: APIService, protected router: Router) {
-    this.listPageComp = document.querySelector('app-list-all-page') as HTMLElement;
-    console.log(this.listPageComp);
   }
 }

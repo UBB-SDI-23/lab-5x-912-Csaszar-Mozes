@@ -15,6 +15,7 @@ import { AddPersonComponent } from './features/people/add-person/add-person.comp
 import { EditLocationComponent } from './features/locations/edit-location/edit-location.component';
 import { EditPcComponent } from './features/pc/edit-pc/edit-pc.component';
 import { EditPersonComponent } from './features/people/edit-person/edit-person.component';
+import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 
 const routes: Routes = [
     {
@@ -28,6 +29,10 @@ const routes: Routes = [
     {
         path: "companies/by-avg-salary",
         component: ByAvgSalaryComponent
+    },
+    {
+        path: "companies/by-nr-locations",
+        component: ByNrLocationsComponent
     },
     {
         path: "companies/:id",

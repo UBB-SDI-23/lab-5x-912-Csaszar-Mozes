@@ -11,15 +11,46 @@
     margin-right: 20px;
     color: aliceblue;
   }
+
+  button {
+    color: aliceblue !important;
+    margin-right: 20px;
+    font-size: 20px;
+  }
 </style>
 
 <nav>
-  <a routerLink="">Home</a>
-  <a routerLink="companies">Companies</a>
-  <a routerLink="locations">Locations</a>
-  <a routerLink="people">People</a>
-  <a routerLink="pc">People Working at Companies</a>
-  <a routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</a>
+  <button mat-button routerLink="">Home</button>
+  <button mat-button [matMenuTriggerFor]="companiesMenu">Companies</button>
+  <mat-menu #companiesMenu="matMenu">
+    <button mat-menu-item routerLink="companies">View All</button>
+    <button mat-menu-item routerLink="companies/add">Add</button>
+    <button mat-menu-item [matMenuTriggerFor]="companiesStatisticsMenu">Statistics</button>
+    <mat-menu #companiesStatisticsMenu>
+      <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</button>
+      <button mat-menu-item routerLink="companies/by-nr-locations">Nr Locations of a Company</button>
+    </mat-menu>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="locationsMenu">Locations</button>
+  <mat-menu #locationsMenu="matMenu">
+    <button mat-menu-item routerLink="locations">View All</button>
+    <button mat-menu-item routerLink="locations/add">Add</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="peopleMenu">People</button>
+  <mat-menu #peopleMenu="matMenu">
+    <button mat-menu-item routerLink="people">View All</button>
+    <button mat-menu-item routerLink="people/add">Add</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="pcMenu">People Working at Companies</button>
+  <mat-menu #pcMenu="matMenu">
+    <button mat-menu-item routerLink="pc">View All</button>
+    <button mat-menu-item routerLink="pc/add">Add</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="statisticsMenu">Statistics</button>
+  <mat-menu #statisticsMenu="matMenu">
+    <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers in a Company</button>
+    <button mat-menu-item routerLink="companies/by-nr-locations">Nr Locations of a Company</button>
+  </mat-menu>
 </nav>
 
 <router-outlet></router-outlet>

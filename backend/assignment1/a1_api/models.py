@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.functions import Concat
+from django.db.models import Value as V
+from django.db.models import F, Avg
 from django.core import validators
 
 # Create your models here.
@@ -10,6 +13,7 @@ class Company(models.Model):
     net_value = models.IntegerField()
     reputation = models.IntegerField(validators=())
     start_year = models.IntegerField(null=True, blank=True, validators=[validators.MinValueValidator(0)])
+    avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0)
 
     @property
     def nr_locations(self):
@@ -22,8 +26,8 @@ class Company(models.Model):
     def __str__(self):
         return self.name.__str__()
 
-    class Meta:
-        indexes = [models.Index(name='ind_company_name_auto', fields=['name'], include=['id'])]
+    # class Meta:
+    #     indexes = [models.Index(name='ind_company_name_auto', fields=['name'], include=['id'])]
 
 
 class Location(models.Model):
@@ -55,8 +59,10 @@ class Person(models.Model):
     def __str__(self):
         return self.first_name.__str__() + " " + self.last_name.__str__()
 
-    class Meta:
-        indexes = [models.Index(name='ind_person_name_auto', fields=['first_name', 'last_name'], include=['id'])]
+    #class Meta:
+        #indexes = [models.Index(Concat('first_name', V(' '), 'last_name'), name='ind_person_name_auto',
+        #                       include=['id', 'first_name', 'last_name', 'email'])]
+
 
 
 class PersonWorkingAtCompany(models.Model):
@@ -65,6 +71,7 @@ class PersonWorkingAtCompany(models.Model):
     salary = models.IntegerField(validators=[validators.MinValueValidator(0)])
     role = models.CharField(max_length=125)
 
-    class Meta:
-        unique_together = [['person', 'company']]
-        indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]
+    #class Meta:
+        #unique_together = [['person', 'company']]
+        #indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]
+

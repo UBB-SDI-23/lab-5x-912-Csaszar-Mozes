@@ -21,10 +21,19 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "nr_workplaces"]
 
 
+class PersonAutocompleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ["id", "first_name", "last_name", "email"]
+
+
 class PersonWorkingAtCompanySerializer(serializers.ModelSerializer):
+    persons_name = serializers.CharField(read_only=True)
+    persons_email = serializers.CharField(read_only=True)
+    company_name = serializers.CharField(read_only=True)
     class Meta:
         model = PersonWorkingAtCompany
-        fields = "__all__"
+        fields = ["id", "company", "person", "role", "salary", "persons_name", "persons_email", "company_name"]
 
 
 class LocationDetailSerializer(serializers.ModelSerializer):
@@ -105,7 +114,7 @@ class CompanyByAvgSalarySerializer(serializers.ModelSerializer):
 
 
 class CompanyNrLocationsSerializer(serializers.ModelSerializer):
-    nr_comp_locations = serializers.IntegerField(read_only=True)
+    nr_company_locations = serializers.IntegerField(read_only=True)
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_comp_locations"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_company_locations"]

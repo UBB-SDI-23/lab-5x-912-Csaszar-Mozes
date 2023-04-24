@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,7 @@ import { EditPersonComponent } from './features/people/edit-person/edit-person.c
 import { EditLocationComponent } from './features/locations/edit-location/edit-location.component';
 import { DynamicTableComponent } from './common/dynamic-table/dynamic-table.component';
 import { StaticTableComponent } from './common/static-table/static-table.component';
+import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { StaticTableComponent } from './common/static-table/static-table.compone
     EditLocationComponent,
     DynamicTableComponent,
     StaticTableComponent,
+    ByNrLocationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,8 +71,8 @@ import { StaticTableComponent } from './common/static-table/static-table.compone
     MatButtonModule,
     MatIconModule,
     MatOptionModule,
-    MatAutocompleteModule
-
+    MatAutocompleteModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
