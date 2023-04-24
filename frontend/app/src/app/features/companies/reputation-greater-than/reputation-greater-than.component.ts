@@ -10,7 +10,7 @@ import { APIService } from 'src/app/api/api-service';
 export class ReputationGreaterThanComponent {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
   displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
-  baseUrl = 'companies/by-nr-locations';
+  baseUrl = 'companies/reputation-greater-than';
   constructor(protected apiServ: APIService, protected router: Router) {
   }
 }
