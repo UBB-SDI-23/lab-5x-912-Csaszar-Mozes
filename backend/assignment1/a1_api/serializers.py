@@ -3,16 +3,16 @@ from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfi
 import django.db.models as models
 
 
-class CompanySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations"]
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = '__all__'
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations"]
 
 
 
