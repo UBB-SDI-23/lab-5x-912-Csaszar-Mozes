@@ -9,6 +9,13 @@ class User {
     is_active?: boolean;
 }
 
+export class RegisterUser {
+    username?: string;
+    email?: string;
+    password?: string;
+    password2?: string;
+}
+
 export class UserProfile {
     id?: number;
     first_name?: string;

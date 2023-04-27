@@ -1,1 +1,55 @@
-<p>register works!</p>
+<style>
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+</style>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Username" floatLabel="always" [formControl]="usernameFormControl">
+    <mat-label>Username</mat-label>
+    <mat-error *ngIf="usernameFormControl.hasError('required')">
+      Username is <strong>&nbsp;required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>E-mail</mat-label>
+    <input matInput placeholder="E-mail" [formControl]="emailFormControl">
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      E-mail is <strong>&nbsp;required</strong>
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('pattern')">
+      E-mail has to have general <strong>&nbsp;e-mail format</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl" (input)="updateMatch()">
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Password is <strong>&nbsp;required</strong>
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('min')">
+      Password has to be at least <strong>&nbsp;8 letter long</strong>
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('pattern')">
+      Password has to be <strong>&nbsp;strong&nbsp;</strong> (contains at least one upper case character and two digits)
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Confirm password</mat-label>
+    <input type="password" matInput placeholder="Confirm password" [formControl]="password2FormControl"
+      (input)="updateMatch()">
+    <mat-error *ngIf="password2FormControl.hasError('required')">
+      Confirming password is <strong>&nbsp;required</strong>
+    </mat-error>
+    <mat-error *ngIf="password2FormControl.hasError('notMatching')">
+      Confirmation password and original password should <strong>&nbsp;match</strong>
+    </mat-error>
+  </mat-form-field>
+  <button (click)="signUp()">Sign Up</button>
+</form>

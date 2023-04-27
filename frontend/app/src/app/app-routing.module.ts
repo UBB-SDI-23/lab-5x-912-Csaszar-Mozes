@@ -18,6 +18,7 @@ import { EditPersonComponent } from './features/people/edit-person/edit-person.c
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
 import { ViewUserPageComponent } from './features/users/view-user-page/view-user-page.component';
+import { RegisterComponent } from './features/users/register/register.component';
 
 const routes: Routes = [
     {
@@ -91,6 +92,10 @@ const routes: Routes = [
     {
         path: "users/:id",
         component: ViewUserPageComponent
+    },
+    {
+        path: "register",
+        component: RegisterComponent
     },
 ];
 
