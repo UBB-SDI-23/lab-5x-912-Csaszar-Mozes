@@ -36,6 +36,8 @@ import { StaticTableComponent } from './common/static-table/static-table.compone
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
 import { ViewUserPageComponent } from './features/users/view-user-page/view-user-page.component';
+import { RegisterComponent } from './features/users/register/register.component';
+import { LogInComponent } from './features/users/log-in/log-in.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { ViewUserPageComponent } from './features/users/view-user-page/view-user
     ByNrLocationsComponent,
     ReputationGreaterThanComponent,
     ViewUserPageComponent,
+    RegisterComponent,
+    LogInComponent,
   ],
   imports: [
     BrowserModule,

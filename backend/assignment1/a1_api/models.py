@@ -3,6 +3,7 @@ from django.db.models.functions import Concat
 from django.db.models import Value as V
 from django.db.models import F, Avg
 from django.core import validators
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -86,5 +87,6 @@ class UserProfile(models.Model):
     bio = models.CharField(max_length=1000, blank=True, null=True, default='')
     high_school = models.CharField(max_length=200, blank=True, null=True, default='')
     university = models.CharField(max_length=200, blank=True, null=True, default='')
+    user = models.ForeignKey(User, models.CASCADE, default=1)
 
 

@@ -1,14 +1,20 @@
 <div class="container">
-  <label for="FirstName">First Name:</label>
+  <label for="Username">Username:&nbsp;</label>
+  <span id="Username">{{user?.user?.username}}</span>
+  <br>
+  <label for="Email">E-mail:&nbsp;</label>
+  <span id="Email">{{user?.user?.email}}</span>
+  <br>
+  <label for="FirstName">First Name:&nbsp;</label>
   <span id="FirstName">{{user?.first_name}}</span>
   <br>
-  <label for="LastName">Last Name:</label>
+  <label for="LastName">Last Name:&nbsp;</label>
   <span id="LastName">{{user?.last_name}}</span>
   <br>
-  <label for="University">University:</label>
+  <label for="University">University:&nbsp;</label>
   <span id="University">{{user?.university}}</span>
   <br>
-  <label for="HighSchool">High School:</label>
+  <label for="HighSchool">High School:&nbsp;</label>
   <span id="HighSchool">{{user?.high_school}}</span>
   <br>
   <label for="Bio">Bio:</label>

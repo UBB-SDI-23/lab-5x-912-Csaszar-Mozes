@@ -2,6 +2,13 @@ export class NrTotalPages {
     nr_total_pages?: number;
 }
 
+class User {
+    id?: number;
+    username?: string;
+    email?: string;
+    is_active?: boolean;
+}
+
 export class UserProfile {
     id?: number;
     first_name?: string;
@@ -9,6 +16,7 @@ export class UserProfile {
     bio?: string;
     high_school?: string;
     university?: string;
+    user?: User;
 }
 
 export class Company {
