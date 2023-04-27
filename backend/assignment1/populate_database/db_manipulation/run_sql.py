@@ -56,5 +56,5 @@ def run_file(file_name):
 
 
 
-run_file('../db_manipulation/set_up_avg_salary.sql')
+run_file('set_upaggregates.sql')
 

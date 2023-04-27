@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
-import { PCDetail, Person, PersonDetail } from 'src/app/models/models';
+import { PC, PCDetail, Person, PersonDetail } from 'src/app/models/models';
 
 @Component({
   selector: 'app-edit-person',
@@ -12,13 +12,19 @@ import { PCDetail, Person, PersonDetail } from 'src/app/models/models';
 })
 export class EditPersonComponent {
   baseUrl: string = "people";
-  person?: Person;
+  person?: PersonDetail;
 
   firstNameFormControl: FormControl = new FormControl('', [Validators.required]);
   lastNameFormControl: FormControl = new FormControl('', [Validators.required]);
   emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
   ageFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[012]?[0-9]{1,2}$')]);
   workerIDFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]);
+
+  redirectEntityPropertyCompanies: string = 'company.id';
+  companyColumns: string[] = ['role', 'salary', 'company.name', 'company.description', 'company.net_value', 'company.reputation'];
+  baseUrlCompany: string = "companies";
+
+  workingAtCompanies: PCDetail[] = [];
 
   constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
 
@@ -63,6 +69,8 @@ export class EditPersonComponent {
             this.emailFormControl.setValue(this.person.email);
             this.ageFormControl.setValue(this.person.age);
             this.workerIDFormControl.setValue(this.person.worker_id);
+
+            this.workingAtCompanies = this.person!.working_at_companies as PCDetail[];
           }
         )
       }

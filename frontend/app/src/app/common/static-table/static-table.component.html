@@ -14,7 +14,8 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row (click)="goToDetails(element.id)" *matRowDef="let row; columns: displayedColumns; let element;"></tr>
+  <tr mat-row (click)="goToDetails(getColumnValue(element, redirectEntityProperty))"
+    *matRowDef="let row; columns: displayedColumns; let element;"></tr>
 </table>
 <div class="PageNavigation">
   <button mat-raised-button color="primary" (click)="decPageNr()" class="ButtonLeft">&lt;</button>

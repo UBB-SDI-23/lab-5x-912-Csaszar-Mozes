@@ -35,6 +35,7 @@ import { DynamicTableComponent } from './common/dynamic-table/dynamic-table.comp
 import { StaticTableComponent } from './common/static-table/static-table.component';
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
+import { ViewUserPageComponent } from './features/users/view-user-page/view-user-page.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { ReputationGreaterThanComponent } from './features/companies/reputation-
     StaticTableComponent,
     ByNrLocationsComponent,
     ReputationGreaterThanComponent,
+    ViewUserPageComponent,
   ],
   imports: [
     BrowserModule,

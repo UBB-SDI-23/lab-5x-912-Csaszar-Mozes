@@ -15,6 +15,8 @@ export class StaticTableComponent implements OnChanges {
   @Input() entities: any[] = [];
   @Input() pageSize: number = 10;
   @Input() id: number = 0;
+  @Input() redirectUrl: string = '';
+  @Input() redirectEntityProperty = "id";
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
@@ -49,7 +51,12 @@ export class StaticTableComponent implements OnChanges {
     return name.split('.')[name.split('.').length - 1]?.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }
   goToDetails(id: string) {
-    this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
+    if (this.redirectUrl == '') {
+      this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
+    }
+    else {
+      this.router!.navigateByUrl(`${this.redirectUrl}/${id}`);
+    }
   }
   getColumnValue(base: any, col: string): string {
     for (let c of col.split('.')) {

@@ -8,9 +8,10 @@ import { APIService } from 'src/app/api/api-service';
   styleUrls: ['./by-nr-locations.component.css']
 })
 export class ByNrLocationsComponent {
-  dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_company_locations'];
-  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_company_locations'];
+  dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_locations'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_locations'];
   baseUrl = 'companies/by-nr-locations';
+  redirectUrl = 'companies';
   constructor(protected apiServ: APIService, protected router: Router) {
   }
 }

@@ -12,6 +12,5 @@ class CompanyByNrLocationsView(ListAPIView):
         page_nr = int(self.request.query_params.get('page', 0))
         page_size = int(self.request.query_params.get('size', 15))
         page_start = page_nr * page_size
-        q_s = Company.objects.all().annotate(nr_company_locations=models.Count("locations")).\
-            order_by("-nr_company_locations")[page_start:page_start+page_size]
+        q_s = Company.objects.all().order_by("-nr_locations")[page_start:page_start+page_size]
         return q_s

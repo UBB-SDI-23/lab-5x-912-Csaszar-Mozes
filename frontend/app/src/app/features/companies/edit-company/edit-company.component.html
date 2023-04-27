@@ -105,10 +105,11 @@
 
   <div id="TableContainer">
     <app-static-table [id]="company!.id!" [router]="router" [baseUrl]="baseUrlPeople" [displayedColumns]="peopleColumns"
-      [dynamicColumns]="peopleColumns" [entities]="peopleWorkingHere"></app-static-table>
+      [dynamicColumns]="peopleColumns" [entities]="peopleWorkingHere"
+      [redirectEntityProperty]="redirectEntityPropertyPeople"></app-static-table>
     <app-static-table [id]="company!.id!" [router]="router" [baseUrl]="baseUrlLocations"
-      [displayedColumns]="locationsColumns" [dynamicColumns]="locationsColumns"
-      [entities]="locations"></app-static-table>
+      [displayedColumns]="locationsColumns" [dynamicColumns]="locationsColumns" [entities]="locations"
+      [redirectEntityProperty]="redirectEntityPropertyLocations"></app-static-table>
 
   </div>
 </body>

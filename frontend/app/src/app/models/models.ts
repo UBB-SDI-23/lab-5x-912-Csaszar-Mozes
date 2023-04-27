@@ -1,3 +1,16 @@
+export class NrTotalPages {
+    nr_total_pages?: number;
+}
+
+export class UserProfile {
+    id?: number;
+    first_name?: string;
+    last_name?: string;
+    bio?: string;
+    high_school?: string;
+    university?: string;
+}
+
 export class Company {
     id?: number;
     name?: string;

@@ -14,10 +14,7 @@ class Company(models.Model):
     reputation = models.IntegerField(validators=())
     start_year = models.IntegerField(null=True, blank=True, validators=[validators.MinValueValidator(0)])
     avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0, null=True)
-
-    @property
-    def nr_locations(self):
-        return Location.objects.all().filter(company=self.id).aggregate(nr_locations=models.Count('*'))['nr_locations']
+    nr_locations = models.IntegerField(default=0, null=True)
 
     @property
     def nr_workers(self):
@@ -28,8 +25,9 @@ class Company(models.Model):
 
     class Meta:
         indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
-                   models.Index(name='ind_comp_avg_salary', fields=['avg_salary', 'id']),
-                   models.Index(name='ind_company_reputation', fields=['reputation', 'id'])]
+                   models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
+                   models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
+                   models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id'])]
 
 
 class Location(models.Model):
@@ -41,9 +39,17 @@ class Location(models.Model):
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name="locations")
     description = models.CharField(max_length=5000, null=False, default='')
 
+    @property
+    def nr_workplaces(self):
+        return PersonWorkingAtCompany.objects.all().filter(person=self.id).aggregate(nr_workplaces=models.Count('*'))[
+            'nr_workplaces']
+
     def __str__(self):
         return self.country.__str__() + ", " + self.county.null * (self.county.__str__() + ", ") + self.city.__str__() +\
                 ", " + self.street.__str__() + ", " + self.number.__str__() + self.apartment.null * (", " + self.apartment.__str__())
+
+    class Meta:
+        indexes = [models.Index(name='ind_pc_location', fields=['company', 'id'])]
 
 
 class Person(models.Model):
@@ -62,7 +68,6 @@ class Person(models.Model):
         return self.first_name.__str__() + " " + self.last_name.__str__()
 
 
-
 class PersonWorkingAtCompany(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="working_at_companies")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="people_working_here")
@@ -71,5 +76,15 @@ class PersonWorkingAtCompany(models.Model):
 
     class Meta:
         unique_together = [['person', 'company']]
-        indexes = [models.Index(name='ind_company', fields=['company'], include=['salary'])]
+        indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
+                   models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary'])]
+
+
+class UserProfile(models.Model):
+    first_name = models.CharField(max_length=70, default='')
+    last_name = models.CharField(max_length=70, default='')
+    bio = models.CharField(max_length=1000, blank=True, null=True, default='')
+    high_school = models.CharField(max_length=200, blank=True, null=True, default='')
+    university = models.CharField(max_length=200, blank=True, null=True, default='')
+
 

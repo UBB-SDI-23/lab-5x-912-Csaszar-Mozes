@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Person, Location, Company, PersonWorkingAtCompany
+from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile
 import django.db.models as models
 
 
@@ -7,6 +7,13 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations"]
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -113,7 +120,6 @@ class CompanyByAvgSalarySerializer(serializers.ModelSerializer):
 
 
 class CompanyNrLocationsSerializer(serializers.ModelSerializer):
-    nr_company_locations = serializers.IntegerField(read_only=True)
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_company_locations"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_locations"]

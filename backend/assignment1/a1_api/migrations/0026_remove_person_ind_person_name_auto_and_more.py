@@ -10,10 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveIndex(
-            model_name='person',
-            name='ind_person_name_auto',
-        ),
         migrations.AddIndex(
             model_name='company',
             index=models.Index(fields=['reputation', 'id'], name='ind_company_reputation'),

@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
-import { Company, CompanyDetail, Person, PC } from 'src/app/models/models';
+import { Company, CompanyDetail, Person, PC, PCDetail } from 'src/app/models/models';
 
 @Component({
   selector: 'app-edit-company',
@@ -15,7 +15,7 @@ export class EditCompanyComponent implements OnInit {
   baseUrl: string = 'companies';
   company?: CompanyDetail = new CompanyDetail();
 
-  peopleWorkingHere: PC[] = [];
+  peopleWorkingHere: PCDetail[] = [];
   locations: Location[] = [];
   nameFormControl: FormControl = new FormControl('', [Validators.required]);
   descriptionFormControl: FormControl = new FormControl('', [Validators.required]);
@@ -24,7 +24,9 @@ export class EditCompanyComponent implements OnInit {
   startYearFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);
 
   baseUrlPeople: string = 'people';
+  redirectEntityPropertyPeople: string = "person.id";
   baseUrlLocations: string = 'locations';
+  redirectEntityPropertyLocations: string = "id";
 
   peopleColumns: string[] = ["role", "salary", "person.first_name", "person.last_name", "person.age", "person.email", "person.worker_id"];
   locationsColumns: string[] = ["country", "city", "street", "number", "apartment", "description"];
@@ -78,7 +80,7 @@ export class EditCompanyComponent implements OnInit {
             this.startYearFormControl.setValue(this.company.start_year);
 
             this.locations = c_result.locations as Location[];
-            this.peopleWorkingHere = c_result.people_working_here as PC[];
+            this.peopleWorkingHere = c_result.people_working_here as PCDetail[];
           }
         )
       }

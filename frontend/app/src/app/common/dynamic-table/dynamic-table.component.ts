@@ -1,9 +1,69 @@
 import { Component, Inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { NrTotalPages } from 'src/app/models/models';
 
+class PaginationButtonNumbersHolder {
+  before_the_dots: number[] = [];
+  before: number[] = [];
+  actual: number = 0;
+  after: number[] = [];
+  after_the_dots: number[] = [];
+  displayBeforeDots: boolean = false;
+  displayAfterDots: boolean = false;
+
+  private totalPageNr: number = 0;
+
+  constructor() { }
+
+  setPage(pageNr: number) {
+    pageNr++;
+    this.before_the_dots = [];
+    this.before = [];
+    this.after = [];
+    this.after_the_dots = [];
+    for (let i = 1; i < 6 && i < pageNr; i++) {
+      this.before_the_dots.push(i);
+    }
+    for (let i = pageNr - 1; i > 5 && i > pageNr - 1 - 5; i--) {
+      this.before.unshift(i);
+    }
+    for (let i = pageNr + 1; i < pageNr + 1 + 5 && i < this.totalPageNr - 5; i++) {
+      this.after.push(i);
+    }
+    for (let i = this.totalPageNr; i > this.totalPageNr - 5 && i > pageNr; i--) {
+      this.after_the_dots.unshift(i);
+    }
+    this.actual = pageNr;
+    this.displayBeforeDots = this.hasBeforeDots();
+    this.displayAfterDots = this.hasAfterDots();
+  }
+
+  setTotalPageNr(totalPageNr: number) {
+    this.totalPageNr = totalPageNr;
+  }
+
+  hasBeforeTheDots(): boolean {
+    return this.before_the_dots.length > 0;
+  }
+  hasBeforeDots(): boolean {
+    return this.before.length == 5 && this.before_the_dots[4] + 1 < this.before[0];
+  }
+  hasBefore(): boolean {
+    return this.before.length > 0;
+  }
+  hasAfter(): boolean {
+    return this.after.length > 0;
+  }
+  hasAfterDots(): boolean {
+    return this.after.length == 5 && this.after[4] + 1 < this.after_the_dots[0];
+  }
+  hasAfterTheDots(): boolean {
+    return this.after_the_dots.length > 0;
+  }
+}
 
 @Component({
   selector: 'app-dynamic-table',
@@ -14,30 +74,30 @@ export class DynamicTableComponent implements OnChanges {
   pageSize: number = 15;
   pageNr: number = 0;
   entities: [] = [];
-  pageNrComponent?: HTMLElement;
-  buttonLeft?: HTMLElement;
-  buttonRight?: HTMLElement;
+  paginationNrs: PaginationButtonNumbersHolder = new PaginationButtonNumbersHolder();
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+
   @Input() baseUrl: string = '';
+  @Input() redirectUrl: string = '';
   @Input() apiServ?: APIService;
   @Input() router?: Router;
   @Input() displayedColumns: string[] = [];
   @Input() dynamicColumns: string[] = [];
   @Input() compareFn?: (a: never, b: never) => number;
   @Input() doSort: boolean = false;
-  constructor() {
+
+  constructor(private route: ActivatedRoute) {
   }
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }
   goToDetails(id: string) {
-    if (this.baseUrl == 'companies/by-avg-salary') {
-      this.router!.navigateByUrl(`companies/${id}`);
-    }
-    else {
+    if (this.redirectUrl == '') {
       this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
     }
-
+    else {
+      this.router!.navigateByUrl(`${this.redirectUrl}/${id}`);
+    }
   }
   delete(event: MouseEvent, id: string) {
     event.stopPropagation();
@@ -45,11 +105,36 @@ export class DynamicTableComponent implements OnChanges {
     this.router!.navigateByUrl('delete-confirmation');
   }
   refresh() {
-    this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
-      this.entities = result as [];
-      this.dataSource.data = this.entities;
-      console.log(this.entities);
-    })
+    this.apiServ?.getNrTotalPages(this.baseUrl, this.pageSize).subscribe((result) => {
+      let res = result as NrTotalPages;
+      if (res.nr_total_pages! < this.pageNr) {
+        this.pageNr = res.nr_total_pages! - 1;
+      }
+      this.paginationNrs.setTotalPageNr(res.nr_total_pages!);
+      this.paginationNrs.setPage(this.pageNr);
+
+      let queryParams: Params = { pageNr: this.pageNr, pageSize: this.pageSize };
+      this.router!.navigate(
+        [],
+        {
+          queryParams: queryParams,
+          queryParamsHandling: 'merge',
+        });
+      this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
+        this.entities = result as [];
+        this.dataSource.data = this.entities;
+        console.log(this.entities);
+
+
+      });
+    });
+
+  }
+  goToPage(pageNr: number) {
+    //unshift page numbers
+    pageNr--;
+    this.pageNr = pageNr;
+    this.refresh();
   }
   sortByFunction() {
     if (this.compareFn != undefined) {
@@ -66,17 +151,12 @@ export class DynamicTableComponent implements OnChanges {
       this.sortByFunction()
     }
   }
-  incPageNr() {
-    this.pageNr += 1;
-    this.refresh();
-  }
-  decPageNr() {
-    if (this.pageNr > 0) {
-      this.pageNr -= 1;
-      this.refresh();
-    }
-  }
   ngOnInit(): void {
-    this.refresh();
+    this.route.queryParams.subscribe((params) => {
+      this.pageNr = params["pageNr"] == undefined ? 0 : Number(params["pageNr"]);
+      this.pageSize = params["pageSize"] == undefined ? 15 : Number(params["pageSize"]);
+      this.refresh();
+    });
+
   }
 }

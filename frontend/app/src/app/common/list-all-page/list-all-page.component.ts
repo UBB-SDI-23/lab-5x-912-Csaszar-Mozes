@@ -10,12 +10,6 @@ import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confi
   styleUrls: ['./list-all-page.component.css']
 })
 export class ListAllPageComponent {
-  pageSize: number = 15;
-  pageNr: number = 0;
-  entities: [] = [];
-  pageNrComponent?: HTMLElement;
-  buttonLeft?: HTMLElement;
-  buttonRight?: HTMLElement;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @Input() baseUrl: string = '';
   @Input() apiServ?: APIService;

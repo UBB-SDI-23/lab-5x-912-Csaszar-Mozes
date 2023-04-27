@@ -1,2 +1,12 @@
-<app-list-all-page [apiServ]="apiServ" [router]="router" [baseUrl]="baseUrl" [displayedColumns]="displayedColumns"
-  [dynamicColumns]="dynamicColumns"></app-list-all-page>
+<mat-form-field class="example-full-width">
+  <mat-label>Reputation</mat-label>
+  <input matInput placeholder="80" [formControl]="reputationFormControl" (input)="changeReputation()">
+  <mat-error *ngIf="reputationFormControl.hasError('required')">
+    Reputation is <strong>&nbsp;required</strong>
+  </mat-error>
+  <mat-error *ngIf="reputationFormControl.hasError('pattern')">
+    Reputation should an integer between <strong>&nbsp;0 and 100</strong>
+  </mat-error>
+</mat-form-field>
+<app-dynamic-table [apiServ]="apiServ" [router]="router" [baseUrl]="baseUrl" [displayedColumns]="displayedColumns"
+  [dynamicColumns]="dynamicColumns" [redirectUrl]="redirectUrl"></app-dynamic-table>

@@ -55,3 +55,7 @@
   <button mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
   <button mat-raised-button color="primary" (click)="cancel()">Back</button>
 </form>
+
+<app-static-table [id]="person!.id!" [router]="router" [baseUrl]="baseUrlCompany" [displayedColumns]="companyColumns"
+  [dynamicColumns]="companyColumns" [entities]="workingAtCompanies"
+  [redirectEntityProperty]="redirectEntityPropertyCompanies"></app-static-table>

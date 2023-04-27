@@ -14,3 +14,4 @@ class CompanyReputationGTView(ListAPIView):
         qs = Company.objects.filter(reputation__gt=reputation)[page_start:page_start+page_size]
         print(qs.query)
         return qs
+    

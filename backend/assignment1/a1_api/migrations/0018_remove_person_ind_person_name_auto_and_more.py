@@ -14,9 +14,5 @@ class Migration(migrations.Migration):
         migrations.RemoveIndex(
             model_name='person',
             name='ind_person_name_auto',
-        ),
-        migrations.AddIndex(
-            model_name='person',
-            index=models.Index(django.db.models.functions.text.Concat('first_name', models.Value(' '), 'last_name'), include=('id', 'first_name', 'last_name', 'email'), name='ind_person_name_auto'),
-        ),
+        )
     ]

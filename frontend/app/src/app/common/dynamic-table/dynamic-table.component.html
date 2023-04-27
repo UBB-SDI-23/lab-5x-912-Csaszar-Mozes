@@ -1,3 +1,16 @@
+<div class="pagination_nav">
+  <div class="pag_nav_link before_the_dots" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.before_the_dots">
+    {{elem}}
+  </div>
+  <div class="before_dots" *ngIf="paginationNrs.displayBeforeDots">...</div>
+  <div class="pag_nav_link before" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.before">{{elem}}</div>
+  <div class="actual">{{paginationNrs.actual}}</div>
+  <div class="pag_nav_link after" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after">{{elem}}</div>
+  <div class="after_dots" *ngIf="paginationNrs.displayAfterDots">...</div>
+  <div class="pag_nav_link after_the_dots" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after_the_dots">
+    {{elem}}</div>
+</div>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container matColumnDef="position">
     <th mat-header-cell *matHeaderCellDef>#</th>
@@ -25,8 +38,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row (click)="goToDetails(element.id)" *matRowDef="let row; columns: displayedColumns; let element;"></tr>
 </table>
-<div class="PageNavigation">
-  <button mat-raised-button color="primary" (click)="decPageNr()" class="ButtonLeft">&lt;</button>
-  <span class="PageNrContainer">Page:&nbsp;<span class="PageNr">{{this.pageNr + 1}}</span></span>
-  <button mat-raised-button color="primary" (click)="incPageNr()" class="ButtonRight">&gt;</button>
-</div>
