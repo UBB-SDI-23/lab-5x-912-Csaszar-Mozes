@@ -22,6 +22,8 @@ from .api_views.PersonNameAutoView import PersonNameAutoView
 from .api_views.NrTotalPages import NrTotalPages
 from .api_views.UserProfileIDView import UserProfileIDView
 from .api_views.RegisterView import RegisterView
+from .api_views.ConfirmRegisterView import ConfirmRegisterView
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 
 
 urlpatterns = [
@@ -44,6 +46,9 @@ urlpatterns = [
     path('api/companies/by-nr-locations/', CompanyByNrLocationsView.as_view(), name="companies_nr_locations"),
     path('api/users/<int:id>/', UserProfileIDView.as_view(), name="user_by_id"),
     path('api/register/', RegisterView.as_view(), name="register"),
+    path('api/register/confirm/<str:token>', ConfirmRegisterView.as_view(), name="register"),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/nr-total-pages/', NrTotalPages.as_view(), name="nr_total_pages"),
     path('api/swagger-plain/', get_schema_view(title='Swagger documentation',description='Guide for the REST API'), name='swagger_plain'),
     path('api/swagger-html/', TemplateView.as_view(template_name='swagger.html',extra_context={'schema_url':'swagger_plain'}), name='swagger_html'),

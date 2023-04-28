@@ -6,6 +6,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 
 
+class ConfirmRegisterSerializer(serializers.Serializer):
+    message = serializers.CharField(read_only=True)
+
+
+
+class RegisterMessageSerializer(serializers.Serializer):
+    activation_token = serializers.CharField(read_only=True)
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True, validators=[UniqueValidator(queryset=User.objects.all())]

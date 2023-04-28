@@ -2,6 +2,14 @@ export class NrTotalPages {
     nr_total_pages?: number;
 }
 
+export class RegistrationMessage {
+    activation_token?: string;
+}
+
+export class Message {
+    message?: string;
+}
+
 class User {
     id?: number;
     username?: string;

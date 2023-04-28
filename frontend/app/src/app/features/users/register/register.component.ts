@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/app/api/api-service';
 import { ManageAccountService } from 'src/app/api/manage-account-service';
-import { RegisterUser } from 'src/app/models/models';
+import { Message, RegisterUser, RegistrationMessage } from 'src/app/models/models';
 
 @Component({
   selector: 'app-register',
@@ -39,8 +39,20 @@ export class RegisterComponent {
       user.password = this.passwordFormControl.value;
       user.password2 = this.password2FormControl.value;
       this.manageAccountServ.registerUser(user).subscribe(
-        () => {
-          alert("REGISTRATION SUCCESSFULL, ALERT FOR TESTING ONLY");
+        (resp) => {
+          let res = resp as RegistrationMessage;
+          console.log(resp, res);
+          if (confirm('Activate your account now?')) {
+            this.manageAccountServ.confirmRegistration(res.activation_token!).subscribe(
+              (resp) => {
+                let res = resp as Message;
+                alert(res.message!);
+              }
+            )
+          }
+          else {
+            alert(`Your confirmation token: ${res.activation_token}`);
+          }
         }
       )
     }

@@ -1,5 +1,5 @@
---UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = a1_api_company.id);
---UPDATE a1_api_company SET nr_locations = (SELECT COUNT(*) FROM a1_api_location L WHERE L.company_id = a1_api_company.id);
+UPDATE a1_api_company SET avg_salary = (SELECT AVG(PC.salary) FROM a1_api_personworkingatcompany PC WHERE PC.company_id = a1_api_company.id);
+UPDATE a1_api_company SET nr_locations = (SELECT COUNT(*) FROM a1_api_location L WHERE L.company_id = a1_api_company.id);
 
 CREATE OR REPLACE FUNCTION update_company_aggregates() RETURNS trigger AS $$
 BEGIN
