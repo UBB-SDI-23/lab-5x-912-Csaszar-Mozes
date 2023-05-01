@@ -14,24 +14,20 @@ def escape_single_quote(string):
     return new_str
 
 
-def generate_pc(p_id, c_id, salary):
+def generate_pc(p_id, c_id, salary, nr_users):
     role = escape_single_quote(fake.job())
-    return "('" + role + "'," + str(salary) + "," + str(p_id) + "," + str(c_id) + ")"
+    return "('" + role + "'," + str(salary) + "," + str(p_id) + "," + str(c_id) + "," + str(rnd.randint(1, nr_users)) + ")"
 
 
-def generate(chances_added, salaries, nr_people_in_comp, nr_people, nr_companies, version, batch_size=1000):
+def generate(chances_added, salaries, nr_people_in_comp, nr_people, nr_companies, nr_users, batch_size=1000):
     print("GENERATING PC")
 
     file = open('data_generation/insert_pc.sql', 'w')
-    if version == "Lite":
-        file.write('DELETE FROM a1_api_personworkingatcompany;\n')
-        file.write("DELETE FROM sqlite_sequence WHERE name = 'a1_api_personworkingatcompany';\n")
-    else:
-        file.write('TRUNCATE a1_api_personworkingatcompany RESTART IDENTITY RESTRICT;')
+    file.write('ALTER TABLE a1_api_personworkingatcompany DISABLE TRIGGER ALL;TRUNCATE a1_api_personworkingatcompany RESTART IDENTITY RESTRICT;')
 
     i_ca = 1
     nr_written = 0
-    stmt = 'INSERT INTO a1_api_personworkingatcompany (role,salary,person_id,company_id) VALUES '
+    stmt = 'INSERT INTO a1_api_personworkingatcompany (role,salary,person_id,company_id, user_id) VALUES '
 
     for c_id in range(1, nr_companies + 1):
 
@@ -51,17 +47,18 @@ def generate(chances_added, salaries, nr_people_in_comp, nr_people, nr_companies
                 p_id = rnd.randint(1, nr_people)
             used_people[p_id] = True
             salary = rnd.randint(salaries[i_ca - 1], salaries[i_ca])
-            stmt += generate_pc(p_id, c_id, salary)
+            stmt += generate_pc(p_id, c_id, salary, nr_users)
             nr_written += 1
 
         # if written more than batch size, write stmt to new line
         if nr_written > batch_size:
             nr_written = 0
             file.write(stmt + ";\n")
-            stmt = 'INSERT INTO a1_api_personworkingatcompany (role,salary,person_id,company_id) VALUES '
+            stmt = 'INSERT INTO a1_api_personworkingatcompany (role,salary,person_id,company_id, user_id) VALUES '
         if c_id % batch_size == 0:
             print("Finished with " + str(c_id) + " companies!")
         # write out last line as well
-    if stmt != 'INSERT INTO a1_api_personworkingatcompany (role,salary,person_id,company_id) VALUES ':
+    if nr_written != 0:
         file.write(stmt + ";\n")
+    file.write('ALTER TABLE a1_api_personworkingatcompany ENABLE TRIGGER ALL;')
     file.close()

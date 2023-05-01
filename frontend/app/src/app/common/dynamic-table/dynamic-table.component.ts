@@ -91,6 +91,12 @@ export class DynamicTableComponent implements OnChanges {
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }
+  getColumnValue(base: any, col: string): string {
+    for (let c of col.split('.')) {
+      base = base[c];
+    }
+    return base + '';
+  }
   goToDetails(id: string) {
     if (this.redirectUrl == '') {
       this.router!.navigateByUrl(`${this.baseUrl}/${id}`);
@@ -129,6 +135,9 @@ export class DynamicTableComponent implements OnChanges {
       });
     });
 
+  }
+  goToUser(userNr: number) {
+    this.router!.navigateByUrl('users/' + userNr);
   }
   goToPage(pageNr: number) {
     //unshift page numbers

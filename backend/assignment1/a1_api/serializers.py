@@ -40,7 +40,6 @@ class LoginSerializer(TokenObtainPairSerializer):
         except KeyError:
             pass
         self.user = self.auth(authenticate_kwargs)
-        print(self.user)
         if self.user is None:
             self.error_messages['no_active_account'] = (
                 'No active account found with the given credentials')
@@ -63,9 +62,9 @@ class LoginSerializer(TokenObtainPairSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
+
 class ConfirmRegisterSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True)
-
 
 
 class RegisterMessageSerializer(serializers.Serializer):
@@ -119,41 +118,48 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ['id', 'first_name', 'last_name', 'bio', 'university', 'high_school', 'user', 'nr_entities_added']
 
 
 class CompanySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations", "user"]
 
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
     class Meta:
         model = Location
-        fields = ["id", "country", "city", "street", "number", "apartment", "company", "description"]
+        fields = ["id", "country", "city", "street", "number", "apartment", "company", "description", "user"]
 
 
 class PersonSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     class Meta:
         model = Person
-        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "nr_workplaces"]
+        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "nr_workplaces", "user"]
 
 
 class PersonAutocompleteSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Person
         fields = ["id", "first_name", "last_name", "email"]
 
 
 class PersonWorkingAtCompanySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     persons_name = serializers.CharField(read_only=True)
     persons_email = serializers.CharField(read_only=True)
     company_name = serializers.CharField(read_only=True)
     class Meta:
         model = PersonWorkingAtCompany
-        fields = ["id", "company", "person", "role", "salary", "persons_name", "persons_email", "company_name"]
+        fields = ["id", "company", "person", "role", "salary", "persons_name", "persons_email", "company_name", "user"]
 
 
 class LocationDetailSerializer(serializers.ModelSerializer):
@@ -162,10 +168,11 @@ class LocationDetailSerializer(serializers.ModelSerializer):
             model = Company
             fields = ["id", "name", "description", "start_year", "net_value", "reputation"]
     company = CompanySerializer(read_only=True)
+    user = UserSerializer(read_only=True, many=False)
 
     class Meta:
         model = Location
-        fields = ["id", "country", "city", "street", "number", "apartment", "company", "description"]
+        fields = ["id", "country", "city", "street", "number", "apartment", "company", "description", "user"]
 
 
 class PersonWorkingAtCompanyDetailSerializer(serializers.ModelSerializer):
@@ -179,10 +186,11 @@ class PersonWorkingAtCompanyDetailSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Person
-            fields = ["id", "first_name", "last_name", "email", "age", "worker_id"]
+            fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "user"]
 
     person = PersonSerializer(read_only=True)
     company = CompanySerializer(read_only=True)
+    user = UserSerializer(read_only=True, many=False)
 
     class Meta:
         model = PersonWorkingAtCompany
@@ -202,10 +210,11 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
             fields = ['id', 'person', 'salary', 'role']
     locations = LocationSerializer(read_only=True, many=True)
     people_working_here = PCforCompanyDetailSerializer(read_only=True, many=True)
+    user = UserSerializer(read_only=True, many=False)
 
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "locations", "people_working_here"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "locations", "people_working_here", "user"]
 
 
 class PersonDetailSerializer(serializers.ModelSerializer):
@@ -220,19 +229,24 @@ class PersonDetailSerializer(serializers.ModelSerializer):
             model = PersonWorkingAtCompany
             fields = ['id', 'company', 'salary', 'role']
     working_at_companies = PCforPersonDetailSerializer(read_only=True, many=True)
+    user = UserSerializer(read_only=True, many=False)
 
     class Meta:
         model = Person
-        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "working_at_companies"]
+        fields = ["id", "first_name", "last_name", "email", "age", "worker_id", "working_at_companies", "user"]
 
 
 class CompanyByAvgSalarySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "avg_salary"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "avg_salary", "user"]
 
 
 class CompanyNrLocationsSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True, many=False)
+
     class Meta:
         model = Company
-        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_locations"]
+        fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_locations", "user"]

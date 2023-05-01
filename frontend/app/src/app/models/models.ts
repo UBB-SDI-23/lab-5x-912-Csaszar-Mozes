@@ -37,6 +37,7 @@ export class UserProfile {
     high_school?: string;
     university?: string;
     user?: User;
+    nr_entities_added?: number;
 
     static reset(user: UserProfile) {
         user.first_name = '';
@@ -56,6 +57,7 @@ export class Company {
     reputation?: number;
     nr_workers?: number;
     nr_locations?: number;
+    user?: User;
 }
 
 export class Location {
@@ -67,6 +69,8 @@ export class Location {
     apartment?: string;
     description?: string;
     company?: number;
+    user?: User;
+
 
     toString() {
         return this.country + ", " + this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
@@ -82,6 +86,8 @@ export class LocationDetail {
     apartment?: string;
     description?: string;
     company?: Company;
+    user?: User;
+
 
     toString() {
         return this.country + ", " + this.city + ", " + this.street + " " + this.number + (this.apartment != "" ? ", " + this.apartment : "");
@@ -96,6 +102,8 @@ export class Person {
     age?: number;
     worker_id?: number;
     nr_workplaces?: number;
+    user?: User;
+
 
     toString() {
         return "Name: " + this.first_name + " " + this.last_name + "; E-mail: " + this.email + "; Age: " + this.age + "; Worker id: " + this.worker_id + "; Nr. workplaces: " + this.nr_workplaces;
@@ -110,6 +118,8 @@ export class PersonDetail {
     age?: number;
     worker_id?: number;
     working_at_companies?: Company[];
+    user?: User;
+
 }
 
 export class PC {
@@ -118,6 +128,8 @@ export class PC {
     salary?: number;
     person?: number;
     company?: number;
+    user?: User;
+
 }
 
 export class PCDetail {
@@ -126,34 +138,8 @@ export class PCDetail {
     salary?: number;
     person?: Person;
     company?: Company;
-}
+    user?: User;
 
-export class PersonCompanyFull {
-    id?: number;
-    role?: string;
-    salary?: number;
-    p_id?: number;
-    first_name?: string;
-    last_name?: string;
-    email?: string;
-    age?: number;
-    worker_id?: number;
-    nr_workplaces?: number;
-    c_id?: number;
-    name?: string;
-    start_year?: number;
-    description?: string;
-    net_value?: number;
-    reputation?: number;
-    nr_workers?: number;
-    nr_locations?: number;
-
-
-    constructor(person: PC) {
-        this.role = person.role;
-        this.salary = person.salary;
-        this.id = person.id;
-    }
 }
 
 export class CompanyDetail {
@@ -165,4 +151,38 @@ export class CompanyDetail {
     reputation?: number;
     people_working_here: Person[] = [];
     locations: Location[] = [];
+    user?: User;
+
 }
+
+
+
+// export class PersonCompanyFull {
+//     id?: number;
+//     role?: string;
+//     salary?: number;
+//     p_id?: number;
+//     first_name?: string;
+//     last_name?: string;
+//     email?: string;
+//     age?: number;
+//     worker_id?: number;
+//     nr_workplaces?: number;
+//     c_id?: number;
+//     name?: string;
+//     start_year?: number;
+//     description?: string;
+//     net_value?: number;
+//     reputation?: number;
+//     nr_workers?: number;
+//     nr_locations?: number;
+//     user?: User;
+
+
+
+//     constructor(person: PC) {
+//         this.role = person.role;
+//         this.salary = person.salary;
+//         this.id = person.id;
+//     }
+// }

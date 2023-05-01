@@ -25,7 +25,7 @@ export class LogInComponent {
           let res = resp as LoginResponse;
           this.manageAccountServ.saveToken(res.access!);
           alert('Login successful!');
-          this.router.navigateByUrl('users/profile')
+          this.router.navigateByUrl('users/profile');
         }, (resp) => {
           if (resp.error.detail.startsWith('Account is not active')) {
             if (confirm('Account is inactive. Activate it now?')) {

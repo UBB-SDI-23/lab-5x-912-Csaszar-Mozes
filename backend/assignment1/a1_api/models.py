@@ -16,6 +16,7 @@ class Company(models.Model):
     start_year = models.IntegerField(null=True, blank=True, validators=[validators.MinValueValidator(0)])
     avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0, null=True)
     nr_locations = models.IntegerField(default=0, null=True)
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
     @property
     def nr_workers(self):
@@ -28,7 +29,8 @@ class Company(models.Model):
         indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
                    models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
                    models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
-                   models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id'])]
+                   models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id']),
+                   models.Index(name='ind_company_user', fields=['user', 'id'])]
 
 
 class Location(models.Model):
@@ -45,6 +47,10 @@ class Location(models.Model):
         return PersonWorkingAtCompany.objects.all().filter(person=self.id).aggregate(nr_workplaces=models.Count('*'))[
             'nr_workplaces']
 
+    @property
+    def user(self):
+        return User.objects.filter(company__locations=self).first()
+
     def __str__(self):
         return self.country.__str__() + ", " + self.county.null * (self.county.__str__() + ", ") + self.city.__str__() +\
                 ", " + self.street.__str__() + ", " + self.number.__str__() + self.apartment.null * (", " + self.apartment.__str__())
@@ -59,6 +65,11 @@ class Person(models.Model):
     worker_id = models.IntegerField()
     email = models.EmailField(max_length=75, validators=[validators.EmailValidator()], unique=True)
     age = models.IntegerField()
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+
+
+    class Meta:
+        indexes = [models.Index(name='ind_person_user', fields=['user', 'id'])]
 
     @property
     def nr_workplaces(self):
@@ -74,11 +85,15 @@ class PersonWorkingAtCompany(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="people_working_here")
     salary = models.IntegerField(validators=[validators.MinValueValidator(0)])
     role = models.CharField(max_length=125)
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
+
+
 
     class Meta:
         unique_together = [['person', 'company']]
         indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
-                   models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary'])]
+                   models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary']),
+                   models.Index(name='ind_pc_user', fields=['user', 'id'])]
 
 
 class UserProfile(models.Model):
@@ -88,5 +103,13 @@ class UserProfile(models.Model):
     high_school = models.CharField(max_length=200, blank=True, null=True, default='')
     university = models.CharField(max_length=200, blank=True, null=True, default='')
     user = models.ForeignKey(User, models.CASCADE, default=1)
+
+    @property
+    def nr_entities_added(self):
+        count_c = Company.objects.filter(user=self.user).count()
+        count_p = Person.objects.filter(user=self.user).count()
+        count_pc = PersonWorkingAtCompany.objects.filter(user=self.user).count()
+        count_l = Company.objects.filter(user=self.user).annotate(nr_locs=models.Count(F('locations'))).aggregate(nr=models.Sum('nr_locs'))['nr']
+        return count_c + count_l + count_p + count_pc
 
 

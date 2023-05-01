@@ -14,13 +14,13 @@ def escape_single_quote(string):
     return new_str
 
 
-def generate_person(worker_id):
+def generate_person(worker_id, nr_users):
     first_name = escape_single_quote(fake.first_name())
     last_name = escape_single_quote(fake.last_name())
-    worker_id += rnd.randint(3, 7)
     email = f"{first_name.lower()}.{last_name.lower()}@{fake.domain_name()}"
     age = rnd.randint(18, 100)
-    return "('" + first_name + "','" + last_name + "'," + str(worker_id) + ",'" + email + "'," + str(age) + ")", email
+    return "('" + first_name + "','" + last_name + "'," + str(worker_id) + ",'" + email + "'," \
+           + str(age) + "," + str(rnd.randint(1, nr_users)) + ")", email
 
 
 def change_email_of_person(person, email):
@@ -32,23 +32,19 @@ def change_email_of_person(person, email):
     return person_r[:-1]
 
 
-def generate(nr, version, batch_size=1000):
+def generate(nr, nr_users, batch_size=1000):
     print("GENERATING PEOPLE")
     file = open('data_generation/insert_p.sql', 'w')
-    if version == "Lite":
-        file.write('DELETE FROM a1_api_person;')
-        file.write("DELETE FROM SQLITE_SEQUENCE WHERE name = 'a1_api_person';")
-    else:
-        file.write('TRUNCATE a1_api_person RESTART IDENTITY RESTRICT;')
+    file.write('ALTER TABLE a1_api_person DISABLE TRIGGER ALL; TRUNCATE a1_api_person RESTART IDENTITY CASCADE;')
 
     emails = {}
     worker_id = rnd.randint(1035, 134532)
     for b in range(nr // batch_size):
-        stmt = 'INSERT INTO a1_api_person (first_name,last_name,worker_id,email,age) VALUES '
+        stmt = 'INSERT INTO a1_api_person (first_name,last_name,worker_id,email,age,user_id) VALUES '
         for i in range(batch_size):
             if i != 0:
                 stmt += ","
-            person, email = generate_person(worker_id)
+            person, email = generate_person(worker_id, nr_users)
             if emails.get(email) is not None:
                 emails[email] += 1
                 old_nr = emails[email]
@@ -61,5 +57,6 @@ def generate(nr, version, batch_size=1000):
             worker_id += rnd.randint(1, 4)
         file.write(stmt + ";\n")
         print("Finished " + str(b * batch_size) + " with people!")
+    file.write('ALTER TABLE a1_api_person ENABLE TRIGGER ALL;')
     file.close()
 

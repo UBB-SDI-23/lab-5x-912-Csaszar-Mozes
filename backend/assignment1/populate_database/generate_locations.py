@@ -25,15 +25,11 @@ def generate_location(company_id):
         + "'," + str(company_id) + ")"
 
 
-def generate(chances_added, nr_locations_in_comp, nr_companies, version, batch_size=1000):
+def generate(chances_added, nr_locations_in_comp, nr_companies, batch_size=1000):
     print("GENERATING LOCATIONS")
 
     file = open('data_generation/insert_l.sql', 'w')
-    if version == "Lite":
-        file.write('DELETE FROM a1_api_location;')
-        file.write("DELETE FROM sqlite_sequence WHERE name = 'a1_api_location';")
-    else:
-        file.write('TRUNCATE a1_api_location RESTART IDENTITY RESTRICT;')
+    file.write('ALTER TABLE a1_api_location DISABLE TRIGGER ALL; TRUNCATE a1_api_location RESTART IDENTITY RESTRICT;')
 
     i_ca = 1
     nr_written = 0
@@ -62,4 +58,5 @@ def generate(chances_added, nr_locations_in_comp, nr_companies, version, batch_s
             print("Finished with " + str(c_id) + " companies!")
     if stmt != 'INSERT INTO a1_api_location (country,city,street,apartment,number,description,company_id) VALUES ':
         file.write(stmt + ";\n")
+    file.write('ALTER TABLE a1_api_personworkingatcompany ENABLE TRIGGER ALL;')
     file.close()

@@ -16,11 +16,13 @@ def escape_single_quote(string):
     return new_str
 
 
-def generate_company(net_value, reputation):
+def generate_company(net_value, reputation, nr_users):
     name = escape_single_quote(fake.company())
     description = escape_single_quote(fake.catch_phrase())
     start_year = rnd.randint(1750, 2023)
-    return "('" + name + "','" + description + "'," + str(net_value) + "," + str(reputation) + "," + str(start_year) + ")", name
+    return "('" + name + "','" + description + "'," + str(net_value) + "," + str(reputation) + "," + \
+           str(start_year) + "," + str(rnd.randint(1, nr_users)) + ")", name
+
 
 def change_name_of_company(company, name):
     company = company.split(',')
@@ -31,18 +33,14 @@ def change_name_of_company(company, name):
     return company_r[:-1]
 
 
-def generate(nr, chances_added, reputations, net_values, version, batch_size=1000):
+def generate(nr, chances_added, reputations, net_values, nr_users, batch_size=1000):
     print("GENERATING COMPANIES")
     file = open('data_generation/insert_c.sql', 'w')
-    if version == "Lite":
-        file.write('DELETE FROM a1_api_company;')
-        file.write("DELETE FROM sqlite_sequence WHERE name = 'a1_api_company';")
-    else:
-        file.write('TRUNCATE a1_api_company RESTART IDENTITY RESTRICT;')
+    file.write('ALTER TABLE a1_api_company DISABLE TRIGGER ALL;TRUNCATE a1_api_company RESTART IDENTITY CASCADE;')
 
     i_ca = 1
     nr_written = 0
-    stmt = 'INSERT INTO a1_api_company (name,description,net_value,reputation,start_year) VALUES '
+    stmt = 'INSERT INTO a1_api_company (name,description,net_value,reputation,start_year,user_id) VALUES '
 
     names = {}
     for c_id in range(1, nr + 1):
@@ -56,8 +54,7 @@ def generate(nr, chances_added, reputations, net_values, version, batch_size=100
         reputation = rnd.randint(reputations[i_ca - 1], reputations[i_ca])
         net_value = rnd.randint(net_values[i_ca - 1], net_values[i_ca])
 
-
-        company, name = generate_company(net_value, reputation)
+        company, name = generate_company(net_value, reputation, nr_users)
         if names.get(name) is not None:
             names[name] += 1
             name = name + ' ' + str(names[name])
@@ -71,10 +68,11 @@ def generate(nr, chances_added, reputations, net_values, version, batch_size=100
         if nr_written > batch_size:
             nr_written = 0
             file.write(stmt + ";\n")
-            stmt = 'INSERT INTO a1_api_company (name,description,net_value,reputation,start_year) VALUES '
+            stmt = 'INSERT INTO a1_api_company (name,description,net_value,reputation,start_year,user_id) VALUES '
         if c_id % batch_size == 0:
             print("Finished with " + str(c_id) + " companies!")
     #write out last line as well
-    if stmt != 'INSERT INTO a1_api_company (name,description,net_value,reputation,start_year) VALUES ':
+    if nr_written == 0:
         file.write(stmt + ";\n")
+    file.write('ALTER TABLE auth_user ENABLE TRIGGER ALL;')
     file.close()

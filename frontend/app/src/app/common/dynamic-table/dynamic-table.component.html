@@ -22,7 +22,14 @@
       {{formatColumn(column)}}
     </th>
     <td mat-cell *matCellDef="let element">
-      {{element[column]}}
+      {{getColumnValue(element, column)}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>Username</th>
+    <td mat-cell *matCellDef="let element;" (click)="goToUser(element.user!.id)">
+      {{element.user!.username}}
     </td>
   </ng-container>
 

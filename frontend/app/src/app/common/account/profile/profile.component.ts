@@ -67,6 +67,7 @@ export class ProfileComponent implements OnInit {
     this.manageAccountServ.getProfile().subscribe(
       result => {
         this.user = result as UserProfile;
+        console.log(this.user);
         this.emailFormControl.disable();
         this.usernameFormControl.disable();
         this.loadDataIntoInputs();
