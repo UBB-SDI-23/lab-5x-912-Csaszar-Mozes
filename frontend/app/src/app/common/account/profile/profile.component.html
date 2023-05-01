@@ -1,0 +1,63 @@
+<div class="container">
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" [formControl]="usernameFormControl">
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>E-mail</mat-label>
+    <input matInput placeholder="E-mail" [formControl]="emailFormControl">
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="First Name" [formControl]="firstNameFormControl">
+    <mat-error *ngIf="firstNameFormControl.hasError('max')">
+      First Name cannot be longer than <strong>&nbsp;70 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{firstNameFormControl.value.length}} / 70</mat-hint>
+
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Last Name" [formControl]="lastNameFormControl">
+    <mat-error *ngIf="lastNameFormControl.hasError('max')">
+      Last Name cannot be longer than <strong>&nbsp;70 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{lastNameFormControl.value.length}} / 70</mat-hint>
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>Last Name</mat-label>
+    <input id="University" matInput placeholder="University" [formControl]="universityFormControl">
+    <mat-error *ngIf="universityFormControl.hasError('max')">
+      University cannot be longer than <strong>&nbsp;200 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{universityFormControl.value.length}} / 200</mat-hint>
+
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>High School</mat-label>
+    <input id="HighSchool" matInput placeholder="High School" [formControl]="highSchoolFormControl">
+    <mat-error *ngIf="highSchoolFormControl.hasError('max')">
+      High School cannot be longer than <strong>&nbsp;200 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{highSchoolFormControl.value.length}} / 200</mat-hint>
+
+  </mat-form-field>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>Bio</mat-label>
+    <textarea matInput placeholder="Bio" [formControl]="bioFormControl"></textarea>
+    <mat-error *ngIf="bioFormControl.hasError('max')">
+      Bio cannot be longer than <strong>&nbsp;1000 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{bioFormControl.value.length}} / 1000</mat-hint>
+
+  </mat-form-field>
+  <br>
+  <button mat-raised-button color="primary" (click)="edit()">Edit</button> <button mat-raised-button color="warn"
+    (click)="reset()">Reset Profile</button>
+</div>

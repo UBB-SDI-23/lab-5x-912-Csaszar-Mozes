@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,8 +36,11 @@ import { StaticTableComponent } from './common/static-table/static-table.compone
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
 import { ViewUserPageComponent } from './features/users/view-user-page/view-user-page.component';
-import { RegisterComponent } from './features/users/register/register.component';
-import { LogInComponent } from './features/users/log-in/log-in.component';
+import { RegisterComponent } from './common/account/register/register.component';
+import { LogInComponent } from './common/account/log-in/log-in.component';
+import { AuthGuard } from '_helpers/auth.guard';
+import { AuthInterceptor } from '_helpers/auth.interceptor';
+import { ProfileComponent } from './common/account/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,7 @@ import { LogInComponent } from './features/users/log-in/log-in.component';
     ViewUserPageComponent,
     RegisterComponent,
     LogInComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,14 @@ import { LogInComponent } from './features/users/log-in/log-in.component';
     MatAutocompleteModule,
     MatMenuModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

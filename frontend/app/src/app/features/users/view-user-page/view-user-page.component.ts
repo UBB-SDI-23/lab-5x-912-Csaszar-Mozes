@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { UserProfile } from 'src/app/models/models';
@@ -8,7 +8,7 @@ import { UserProfile } from 'src/app/models/models';
   templateUrl: './view-user-page.component.html',
   styleUrls: ['./view-user-page.component.css']
 })
-export class ViewUserPageComponent {
+export class ViewUserPageComponent implements OnInit {
   user?: UserProfile;
 
   baseUrl: string = 'users';

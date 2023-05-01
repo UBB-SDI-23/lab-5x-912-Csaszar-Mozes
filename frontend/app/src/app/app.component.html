@@ -53,8 +53,14 @@
     <button mat-menu-item routerLink="companies/by-nr-locations">Nr Locations of a Company</button>
     <button mat-menu-item routerLink="companies/reputation-greater-than">Filter Company By Reputation</button>
   </mat-menu>
-  <button mat-button routerLink="register">Register</button>
-  <a routerLink="users/2">UserTest</a>
+  <div *ngIf="manageAccountServ.isLoggedIn()">
+    <button mat-button routerLink="users/profile">Profile</button>
+    <button mat-button (click)="logOut()">Log Out</button>
+  </div>
+  <div *ngIf="manageAccountServ.isLoggedOut()">
+    <button mat-button routerLink=" register">Register</button>
+    <button mat-button routerLink="login">Log In</button>
+  </div>
 </nav>
 
 <router-outlet></router-outlet>

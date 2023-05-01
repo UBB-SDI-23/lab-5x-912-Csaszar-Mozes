@@ -1,0 +1,28 @@
+<style>
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+</style>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="E-mail" [formControl]="usernameFormControl">
+    <mat-error *ngIf="usernameFormControl.hasError('required')">
+      Username <strong>&nbsp;required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput placeholder="Password" [formControl]="passwordFormControl">
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Password is <strong>&nbsp;required</strong>
+    </mat-error>
+  </mat-form-field>
+  <button (click)="logIn()">Log In</button>
+</form>

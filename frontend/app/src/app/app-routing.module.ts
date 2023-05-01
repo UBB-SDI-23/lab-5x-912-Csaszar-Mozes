@@ -18,7 +18,10 @@ import { EditPersonComponent } from './features/people/edit-person/edit-person.c
 import { ByNrLocationsComponent } from './features/companies/by-nr-locations/by-nr-locations.component';
 import { ReputationGreaterThanComponent } from './features/companies/reputation-greater-than/reputation-greater-than.component';
 import { ViewUserPageComponent } from './features/users/view-user-page/view-user-page.component';
-import { RegisterComponent } from './features/users/register/register.component';
+import { RegisterComponent } from './common/account/register/register.component';
+import { LogInComponent } from './common/account/log-in/log-in.component';
+import { UserProfile } from './models/models';
+import { ProfileComponent } from './common/account/profile/profile.component';
 
 const routes: Routes = [
     {
@@ -90,12 +93,20 @@ const routes: Routes = [
         component: DeleteConfirmationComponent
     },
     {
+        path: "users/profile",
+        component: ProfileComponent
+    },
+    {
         path: "users/:id",
         component: ViewUserPageComponent
     },
     {
         path: "register",
         component: RegisterComponent
+    },
+    {
+        path: "login",
+        component: LogInComponent
     },
 ];
 

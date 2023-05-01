@@ -1,10 +1,67 @@
+from datetime import timedelta, datetime
+
+from django.contrib.auth import authenticate, get_user_model
+from django.db.models import Q
 from rest_framework import serializers
+from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.tokens import AccessToken
+
 from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile
 import django.db.models as models
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
+class LoginSerializer(TokenObtainPairSerializer):
+
+    def auth(self, attrs):
+        UserModel = get_user_model()
+        try:
+            user = UserModel.objects.get(Q(username__iexact=attrs['username']))
+        except UserModel.DoesNotExist:
+            return None
+        else:
+            if user.check_password(attrs['password']):
+                return user
+        return None
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
+    def validate(self, attrs):
+        authenticate_kwargs = {
+            'username': attrs[self.username_field],
+            'password': attrs['password'],
+        }
+        try:
+            authenticate_kwargs['request'] = self.context['request']
+        except KeyError:
+            pass
+        self.user = self.auth(authenticate_kwargs)
+        print(self.user)
+        if self.user is None:
+            self.error_messages['no_active_account'] = (
+                'No active account found with the given credentials')
+            raise AuthenticationFailed(
+                self.error_messages['no_active_account'],
+                'no_active_account',
+            )
+        elif not self.user.is_active:
+            ac = AccessToken.for_user(self.user)
+            expiration_time = datetime.now() + timedelta(minutes=10)
+            ac['exp'] = int(expiration_time.timestamp())
+            self.error_messages['no_active_account'] = (
+                'Account is not active;' + str(ac))
+            raise AuthenticationFailed(
+                self.error_messages['no_active_account'],
+                'no_active_account',
+            )
+        return super().validate(attrs)
+
+    def create(self, validated_data):
+        return super().create(validated_data)
 
 class ConfirmRegisterSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True)

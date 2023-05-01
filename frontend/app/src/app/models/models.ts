@@ -6,6 +6,11 @@ export class RegistrationMessage {
     activation_token?: string;
 }
 
+export class LoginResponse {
+    access?: string;
+    refresh?: string;
+}
+
 export class Message {
     message?: string;
 }
@@ -32,6 +37,14 @@ export class UserProfile {
     high_school?: string;
     university?: string;
     user?: User;
+
+    static reset(user: UserProfile) {
+        user.first_name = '';
+        user.last_name = '';
+        user.bio = '';
+        user.high_school = '';
+        user.university = '';
+    }
 }
 
 export class Company {
