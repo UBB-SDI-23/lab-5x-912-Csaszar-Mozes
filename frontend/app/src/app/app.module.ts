@@ -40,9 +40,8 @@ import { LogInComponent } from './common/account/log-in/log-in.component';
 import { AuthGuard } from '_helpers/auth.guard';
 import { AuthInterceptor } from '_helpers/auth.interceptor';
 import { ProfileComponent } from './common/account/profile/profile.component';
-import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
 import { ErrorInterceptor } from '_helpers/error.interceptor';
-
+import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +69,7 @@ import { ErrorInterceptor } from '_helpers/error.interceptor';
     RegisterComponent,
     LogInComponent,
     ProfileComponent,
-    ErrorMessagesComponent,
+    ErrorMessagesComponent
   ],
   imports: [
     BrowserModule,
