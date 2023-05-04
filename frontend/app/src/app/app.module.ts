@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatMenuModule } from '@angular/material/menu'
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +40,8 @@ import { LogInComponent } from './common/account/log-in/log-in.component';
 import { AuthGuard } from '_helpers/auth.guard';
 import { AuthInterceptor } from '_helpers/auth.interceptor';
 import { ProfileComponent } from './common/account/profile/profile.component';
+import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
+import { ErrorInterceptor } from '_helpers/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { ProfileComponent } from './common/account/profile/profile.component';
     RegisterComponent,
     LogInComponent,
     ProfileComponent,
+    ErrorMessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,11 @@ import { ProfileComponent } from './common/account/profile/profile.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     }
   ],

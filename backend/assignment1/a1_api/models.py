@@ -11,10 +11,10 @@ from django.contrib.auth.models import User
 class Company(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=2000)
-    net_value = models.IntegerField()
-    reputation = models.IntegerField(validators=())
+    net_value = models.IntegerField(validators=[validators.MinValueValidator(0)])
+    reputation = models.IntegerField(validators=[validators.MinValueValidator(0), validators.MaxValueValidator(100)])
     start_year = models.IntegerField(null=True, blank=True, validators=[validators.MinValueValidator(0)])
-    avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0, null=True)
+    avg_salary = models.DecimalField(max_digits=12, decimal_places=4, default=0, null=True, validators=[validators.MinValueValidator(0)])
     nr_locations = models.IntegerField(default=0, null=True)
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
@@ -62,9 +62,9 @@ class Location(models.Model):
 class Person(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    worker_id = models.IntegerField()
+    worker_id = models.IntegerField(validators=[validators.MinValueValidator(0)])
     email = models.EmailField(max_length=75, validators=[validators.EmailValidator()], unique=True)
-    age = models.IntegerField()
+    age = models.IntegerField(validators=[validators.MinValueValidator(0)])
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
 

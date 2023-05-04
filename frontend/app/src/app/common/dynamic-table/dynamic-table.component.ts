@@ -130,8 +130,6 @@ export class DynamicTableComponent implements OnChanges {
         this.entities = result as [];
         this.dataSource.data = this.entities;
         console.log(this.entities);
-
-
       });
     });
 

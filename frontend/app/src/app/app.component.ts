@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ManageAccountService } from './api/manage-account-service';
+import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { ManageAccountService } from './api/manage-account-service';
 })
 export class AppComponent {
   title = 'app';
+  static errors: Object = {};
 
   constructor(public manageAccountServ: ManageAccountService) { }
 
@@ -15,5 +17,9 @@ export class AppComponent {
     if (confirm("Are you sure you want to log out?")) {
       this.manageAccountServ.logOut();
     }
+  }
+
+  hasErrors() {
+    return Object.keys(AppComponent.errors).length != 0;
   }
 }
