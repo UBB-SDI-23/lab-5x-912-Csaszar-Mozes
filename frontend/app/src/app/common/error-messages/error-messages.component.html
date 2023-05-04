@@ -1,0 +1,12 @@
+<div *ngIf="hasErrors()">
+  <div class="error-container">
+    <div *ngFor="let pair of getErrors() | keyvalue">
+      <h3>Errors regarding {{pair.key}}:</h3>
+      <ul>
+        <li *ngFor="let val of getValues(pair.value)">
+          {{val}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
