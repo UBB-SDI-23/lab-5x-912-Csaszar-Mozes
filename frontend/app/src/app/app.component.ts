@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ManageAccountService } from './api/manage-account-service';
-import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
 
 @Component({
   selector: 'app-root',
