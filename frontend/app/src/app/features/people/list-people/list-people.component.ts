@@ -9,7 +9,7 @@ import { APIService } from 'src/app/api/api-service';
 })
 export class ListPeopleComponent {
   dynamicColumns = ['first_name', 'last_name', 'email', 'age', 'worker_id', 'nr_workplaces'];
-  displayedColumns = ['position', 'first_name', 'last_name', 'email', 'age', 'worker_id', 'nr_workplaces', 'delete'];
+  displayedColumns = ['position', 'first_name', 'last_name', 'email', 'age', 'worker_id', 'nr_workplaces', 'username', 'delete'];
   baseUrl = 'people';
   listPageComp?: HTMLElement;
   constructor(protected apiServ: APIService, protected router: Router) { }

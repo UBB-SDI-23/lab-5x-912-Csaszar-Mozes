@@ -96,7 +96,13 @@ class PersonWorkingAtCompany(models.Model):
                    models.Index(name='ind_pc_user', fields=['user', 'id'])]
 
 
+class UserRoles:
+    NORMAL = 1
+    MODERATOR = 2
+    ADMIN = 3
+
 class UserProfile(models.Model):
+
     first_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     last_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     bio = models.CharField(max_length=1000, blank=True, null=True, default='')
@@ -105,6 +111,8 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, models.CASCADE, default=1)
     activation_code = models.CharField(max_length=100, default='')
     code_requested_at = models.DateTimeField(blank=True, null=True)
+    #roles are 1=normal user, 2=moderator, 3=admin
+    role = models.SmallIntegerField(default=1, validators=[validators.MinValueValidator(UserRoles.NORMAL), validators.MaxValueValidator(UserRoles.ADMIN)])
 
     @property
     def nr_entities_added(self):

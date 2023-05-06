@@ -4,7 +4,6 @@ from ..models import UserProfile
 
 
 class PersonalProfileView(RetrieveUpdateDestroyAPIView):
-    # add permission to check if user is authenticated
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserProfileSerializer
 

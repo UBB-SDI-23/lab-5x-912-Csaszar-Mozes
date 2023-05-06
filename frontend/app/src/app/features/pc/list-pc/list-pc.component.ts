@@ -11,7 +11,7 @@ import { PC } from 'src/app/models/models';
 })
 export class ListPcComponent {
   dynamicColumns = ['role', 'salary', 'persons_name', 'persons_email', 'company_name'];
-  displayedColumns = ['position', 'role', 'salary', 'persons_name', 'persons_email', 'company_name', 'delete'];
+  displayedColumns = ['position', 'role', 'salary', 'persons_name', 'persons_email', 'company_name', 'username', 'delete'];
   baseUrl = 'pc';
   listPageComp?: HTMLElement;
   constructor(protected apiServ: APIService, protected router: Router) {

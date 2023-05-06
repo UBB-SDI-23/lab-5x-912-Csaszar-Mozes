@@ -1,11 +1,12 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import UserProfileSerializer
 from ..models import UserProfile
 
 
 class UserProfileIDView(RetrieveAPIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsSafeToView]
     serializer_class = UserProfileSerializer
 
     def get_queryset(self):

@@ -1,4 +1,5 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import PersonWorkingAtCompanySerializer
 from ..models import PersonWorkingAtCompany
 from django.db.models import F, Value as V
@@ -6,7 +7,7 @@ from django.db.models.functions import Concat
 
 class PersonCompanyView(ListCreateAPIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated | IsSafeToView]
     serializer_class = PersonWorkingAtCompanySerializer
 
     def get_queryset(self):

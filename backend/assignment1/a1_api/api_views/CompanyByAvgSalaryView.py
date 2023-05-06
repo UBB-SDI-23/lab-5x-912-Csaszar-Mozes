@@ -1,4 +1,5 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import CompanyByAvgSalarySerializer
 from ..models import Company
 import django.db.models as models
@@ -6,7 +7,7 @@ import django.db.models as models
 
 
 class CompanyByAvgSalaryView(ListAPIView):
-    #permissions_classes = [permissions.IsAuthenticated]
+    permissions_classes = [IsSafeToView]
     serializer_class = CompanyByAvgSalarySerializer
     def get_queryset(self):
         page_nr = int(self.request.query_params.get('page', 0))

@@ -1,10 +1,11 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import CompanySerializer
 from ..models import Company
 
 class CompaniesView(ListCreateAPIView):
     # add permission to check if user is authenticated
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated | IsSafeToView]
     serializer_class = CompanySerializer
 
     def get_queryset(self):

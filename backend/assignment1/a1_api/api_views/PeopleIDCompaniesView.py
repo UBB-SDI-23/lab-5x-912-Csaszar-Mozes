@@ -1,4 +1,5 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import PersonWorkingAtCompanySerializer
 from ..models import PersonWorkingAtCompany, Person, Company
 
@@ -6,6 +7,7 @@ from ..models import PersonWorkingAtCompany, Person, Company
 # url: /people/<person_id:int>/companies/
 class PeopleIDCompaniesView(ListCreateAPIView):
     serializer_class = PersonWorkingAtCompanySerializer
+    permission_classes = [permissions.IsAuthenticated | IsSafeToView]
 
     def get_queryset(self):
         return PersonWorkingAtCompany.objects.filter(person=self.kwargs['person_id'])

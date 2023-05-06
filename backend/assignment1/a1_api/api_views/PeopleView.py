@@ -1,10 +1,11 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import PersonSerializer
 from ..models import Person
 
 
 class PeopleView(ListCreateAPIView):
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated | IsSafeToView]
     serializer_class = PersonSerializer
     def get_queryset(self):
         page_nr = int(self.request.query_params.get('page', 0))

@@ -1,4 +1,5 @@
 from ..api_views.__init__ import *
+from ..permissions import IsSafeToView
 from ..serializers import CompanySerializer
 from ..models import Company
 import django.db.models as models
@@ -6,7 +7,7 @@ import django.db.models as models
 
 
 class CompanyNameAutoView(ListAPIView):
-    #permissions_classes = [permissions.IsAuthenticated]
+    permissions_classes = [IsSafeToView]
     serializer_class = CompanySerializer
     def get_queryset(self):
         page_size = int(self.request.query_params.get('size', 15))

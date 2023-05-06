@@ -1,4 +1,5 @@
 from ..api_views.__init__ import *
+from ..permissions import *
 from ..serializers import PersonWorkingAtCompanySerializer
 from ..models import PersonWorkingAtCompany
 
@@ -7,6 +8,7 @@ from ..models import PersonWorkingAtCompany
 # url: /people/<person_id:int>/companies/<comp_id:int>/
 class PeopleIDCompaniesIDView(RetrieveUpdateDestroyAPIView):
     serializer_class = PersonWorkingAtCompanySerializer
+    permission_classes = [IsCurrentUserOwner | IsSafeToView | IsModerator | IsAdministrator]
 
     def get_queryset(self):
         return PersonWorkingAtCompany.objects.all()
