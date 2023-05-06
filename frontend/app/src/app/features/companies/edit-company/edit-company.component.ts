@@ -17,8 +17,8 @@ export class EditCompanyComponent implements OnInit {
 
   peopleWorkingHere: PCDetail[] = [];
   locations: Location[] = [];
-  nameFormControl: FormControl = new FormControl('', [Validators.required]);
-  descriptionFormControl: FormControl = new FormControl('', [Validators.required]);
+  nameFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(200)]);
+  descriptionFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(2000)]);
   netWorthFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);
   reputationFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]?[0-9]$|^100$')]);
   startYearFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);

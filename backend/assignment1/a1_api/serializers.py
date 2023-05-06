@@ -1,5 +1,8 @@
+import random
+import string
 from datetime import timedelta, datetime
 
+import pytz
 from django.contrib.auth import authenticate, get_user_model
 from django.db.models import Q
 from rest_framework import serializers
@@ -48,11 +51,12 @@ class LoginSerializer(TokenObtainPairSerializer):
                 'no_active_account',
             )
         elif not self.user.is_active:
-            ac = AccessToken.for_user(self.user)
-            expiration_time = datetime.now() + timedelta(minutes=10)
-            ac['exp'] = int(expiration_time.timestamp())
+            user_profile = UserProfile.objects.get(user=self.user.id)
+            user_profile.activation_code = ''.join(random.choice(string.ascii_letters) for i in range(60))
+            user_profile.code_requested_at = datetime.now(tz=pytz.utc)
             self.error_messages['no_active_account'] = (
-                'Account is not active;' + str(ac))
+                'Account is not active;' + user_profile.activation_code
+            )
             raise AuthenticationFailed(
                 self.error_messages['no_active_account'],
                 'no_active_account',
@@ -101,7 +105,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         user_profile = UserProfile.objects.create(
-            user=user
+            user=user,
+            activation_code=''.join(random.choice(string.ascii_letters) for i in range(60)),
+            code_requested_at=datetime.now(tz=pytz.utc)
         )
         user_profile.save()
         return user

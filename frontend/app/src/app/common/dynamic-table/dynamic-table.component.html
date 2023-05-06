@@ -1,21 +1,22 @@
+<div class="pagination_nav">
+  <div class="pag_nav_link before_the_dots" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.before_the_dots">
+    {{elem}}
+  </div>
+  <div class="before_dots" *ngIf="paginationNrs.displayBeforeDots">...</div>
+  <div class="pag_nav_link before" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.before">{{elem}}</div>
+  <div class="actual">{{paginationNrs.actual}}</div>
+  <div class="pag_nav_link after" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after">{{elem}}</div>
+  <div class="after_dots" *ngIf="paginationNrs.displayAfterDots">...</div>
+  <div class="pag_nav_link after_the_dots" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after_the_dots">
+    {{elem}}</div>
+  <div class="nr_total_elements">({{paginationNrs.nrResults}} results)</div>
+</div>
 <div *ngIf="entities.length == 0; else table">
+
   Sorry, nothing to show here...
 </div>
-<ng-template #table>
-  <div class="pagination_nav">
-    <div class="pag_nav_link before_the_dots" (click)="goToPage(elem)"
-      *ngFor="let elem of paginationNrs.before_the_dots">
-      {{elem}}
-    </div>
-    <div class="before_dots" *ngIf="paginationNrs.displayBeforeDots">...</div>
-    <div class="pag_nav_link before" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.before">{{elem}}</div>
-    <div class="actual">{{paginationNrs.actual}}</div>
-    <div class="pag_nav_link after" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after">{{elem}}</div>
-    <div class="after_dots" *ngIf="paginationNrs.displayAfterDots">...</div>
-    <div class="pag_nav_link after_the_dots" (click)="goToPage(elem)" *ngFor="let elem of paginationNrs.after_the_dots">
-      {{elem}}</div>
-  </div>
 
+<ng-template #table>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>#</th>

@@ -42,6 +42,7 @@ import { AuthInterceptor } from '_helpers/auth.interceptor';
 import { ProfileComponent } from './common/account/profile/profile.component';
 import { ErrorInterceptor } from '_helpers/error.interceptor';
 import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
+
 @NgModule({
   declarations: [
     AppComponent,

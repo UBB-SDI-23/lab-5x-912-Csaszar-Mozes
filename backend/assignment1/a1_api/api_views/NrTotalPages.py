@@ -21,4 +21,4 @@ class NrTotalPages(APIView):
             qs = PersonWorkingAtCompany.objects.all().count()
         else:
             return Response({"message": "ERROR: Bad URL provided!"}, 404)
-        return Response({"nr_total_pages": ceil(qs/page_size)}, 200)
+        return Response({"nr_total_pages": ceil(qs/page_size), "nr_results": qs}, 200)

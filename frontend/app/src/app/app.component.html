@@ -54,7 +54,7 @@
     <button mat-menu-item routerLink="companies/reputation-greater-than">Filter Company By Reputation</button>
   </mat-menu>
   <div *ngIf="manageAccountServ.isLoggedIn()">
-    <button mat-button routerLink="users/profile">Profile</button>
+    <button mat-button routerLink="users/profile">Logged in as {{manageAccountServ.getUser()}}</button>
     <button mat-button (click)="logOut()">Log Out</button>
   </div>
   <div *ngIf="manageAccountServ.isLoggedOut()">

@@ -14,6 +14,16 @@ def escape_single_quote(string):
     return new_str
 
 
+def generate_p_id(nr_users, c_id, nr_people):
+    # Get the user id
+    u_id = c_id % nr_users
+    # Generate a random offset
+    rand = rnd.randint(0, nr_people // nr_users) * nr_users
+    # If we overshot the number of people, reduce the random offset
+    if u_id + rand > nr_people:
+        rand -= nr_users
+    return u_id + rand
+
 def generate_pc(p_id, c_id, salary, nr_users):
     role = escape_single_quote(fake.job())
     return "('" + role + "'," + str(salary) + "," + str(p_id) + "," + str(c_id) + "," + str(rnd.randint(1, nr_users)) + ")"

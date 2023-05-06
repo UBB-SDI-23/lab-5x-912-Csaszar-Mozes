@@ -28,7 +28,7 @@ export class ErrorMessagesComponent {
   static setError(error: Object) {
     this.clearError();
     this.errors = error;
-    this.timeout = window.setTimeout(() => ErrorMessagesComponent.clearError(), 30000);
+    //this.timeout = window.setTimeout(() => ErrorMessagesComponent.clearError(), 30000);
   }
 
   static clearError() {

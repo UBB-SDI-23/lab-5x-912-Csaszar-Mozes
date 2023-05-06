@@ -1,0 +1,20 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 50%;
+}
+
+.example-full-width {
+  width: 50%;
+  min-width: 300px;
+}
+
+#TableContainer {
+  display: flex;
+  margin-left: 5%;
+  width: 90%;
+}
+
+body {
+  height: 120%;
+}

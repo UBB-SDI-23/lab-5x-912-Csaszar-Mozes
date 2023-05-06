@@ -38,7 +38,7 @@ class Location(models.Model):
     city = models.CharField(max_length=100, null=False)
     street = models.CharField(max_length=100, null=False)
     number = models.IntegerField(null=False, validators=[validators.MinValueValidator(0)])
-    apartment = models.CharField(max_length=100, null=True, blank=True)
+    apartment = models.CharField(max_length=30, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name="locations")
     description = models.CharField(max_length=5000, null=False, default='')
 
@@ -97,12 +97,14 @@ class PersonWorkingAtCompany(models.Model):
 
 
 class UserProfile(models.Model):
-    first_name = models.CharField(max_length=70, default='')
-    last_name = models.CharField(max_length=70, default='')
+    first_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
+    last_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     bio = models.CharField(max_length=1000, blank=True, null=True, default='')
-    high_school = models.CharField(max_length=200, blank=True, null=True, default='')
-    university = models.CharField(max_length=200, blank=True, null=True, default='')
+    high_school = models.CharField(max_length=200, blank=True, null=True, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
+    university = models.CharField(max_length=200, blank=True, null=True, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     user = models.ForeignKey(User, models.CASCADE, default=1)
+    activation_code = models.CharField(max_length=100, default='')
+    code_requested_at = models.DateTimeField(blank=True, null=True)
 
     @property
     def nr_entities_added(self):
@@ -110,6 +112,8 @@ class UserProfile(models.Model):
         count_p = Person.objects.filter(user=self.user).count()
         count_pc = PersonWorkingAtCompany.objects.filter(user=self.user).count()
         count_l = Company.objects.filter(user=self.user).annotate(nr_locs=models.Count(F('locations'))).aggregate(nr=models.Sum('nr_locs'))['nr']
+        if count_l is None:
+            count_l = 0
         return count_c + count_l + count_p + count_pc
 
 

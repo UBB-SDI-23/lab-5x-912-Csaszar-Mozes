@@ -14,9 +14,9 @@ export class EditPersonComponent {
   baseUrl: string = "people";
   person?: PersonDetail;
 
-  firstNameFormControl: FormControl = new FormControl('', [Validators.required]);
-  lastNameFormControl: FormControl = new FormControl('', [Validators.required]);
-  emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  firstNameFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+  lastNameFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+  emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email, Validators.maxLength(75)]);
   ageFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[012]?[0-9]{1,2}$')]);
   workerIDFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,10}$')]);
 

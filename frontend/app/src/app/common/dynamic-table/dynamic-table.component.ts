@@ -15,6 +15,7 @@ class PaginationButtonNumbersHolder {
   displayAfterDots: boolean = false;
 
   private totalPageNr: number = 0;
+  nrResults: number = 0;
 
   constructor() { }
 
@@ -43,6 +44,9 @@ class PaginationButtonNumbersHolder {
 
   setTotalPageNr(totalPageNr: number) {
     this.totalPageNr = totalPageNr;
+  }
+  setNrResults(nrResults: number) {
+    this.nrResults = nrResults;
   }
 
   hasBeforeTheDots(): boolean {
@@ -73,7 +77,7 @@ class PaginationButtonNumbersHolder {
 export class DynamicTableComponent implements OnChanges {
   pageSize: number = 15;
   pageNr: number = 0;
-  entities: [] = [];
+  entities: any[] = [];
   paginationNrs: PaginationButtonNumbersHolder = new PaginationButtonNumbersHolder();
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
@@ -83,7 +87,7 @@ export class DynamicTableComponent implements OnChanges {
   @Input() router?: Router;
   @Input() displayedColumns: string[] = [];
   @Input() dynamicColumns: string[] = [];
-  @Input() compareFn?: (a: never, b: never) => number;
+  @Input() compareFn?: (a: any, b: any) => number;
   @Input() doSort: boolean = false;
 
   constructor(private route: ActivatedRoute) {
@@ -117,6 +121,7 @@ export class DynamicTableComponent implements OnChanges {
         this.pageNr = res.nr_total_pages! - 1;
       }
       this.paginationNrs.setTotalPageNr(res.nr_total_pages!);
+      this.paginationNrs.setNrResults(res.nr_results!);
       this.paginationNrs.setPage(this.pageNr);
 
       let queryParams: Params = { pageNr: this.pageNr, pageSize: this.pageSize };
@@ -127,7 +132,7 @@ export class DynamicTableComponent implements OnChanges {
           queryParamsHandling: 'merge',
         });
       this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
-        this.entities = result as [];
+        this.entities = result as Array<any>;
         this.dataSource.data = this.entities;
         console.log(this.entities);
       });

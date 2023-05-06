@@ -15,7 +15,7 @@ export class EditPcComponent implements OnInit {
   baseUrl: string = 'pc';
   pc?: PCDetail;
 
-  roleFormControl: FormControl = new FormControl('', [Validators.required]);
+  roleFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(125)]);
   salaryFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,8}$')]);
   personFormControl: FormControl = new FormControl('', [Validators.required]);
   companyFormControl: FormControl = new FormControl('', [Validators.required]);

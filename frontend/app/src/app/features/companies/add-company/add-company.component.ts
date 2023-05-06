@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 import { Company } from 'src/app/models/models';
 
 
@@ -14,10 +15,11 @@ export class AddCompanyComponent {
     nameFormControl: FormControl = new FormControl('', [Validators.required]);
     descriptionFormControl: FormControl = new FormControl('', [Validators.required]);
     netWorthFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);
-    reputationFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]?[0-9]$|^100$')]);
+    //, Validators.pattern('^[0-9]?[0-9]$|^100$')
+    reputationFormControl: FormControl = new FormControl('', [Validators.required]);
     startYearFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^([0-9])*$')]);
 
-    constructor(private apiServ: APIService, private router: Router) { }
+    constructor(private apiServ: APIService, private manageAccountServ: ManageAccountService, private router: Router) { }
 
     cancel() {
         this.router.navigateByUrl('companies');

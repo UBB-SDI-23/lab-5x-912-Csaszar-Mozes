@@ -16,14 +16,16 @@ export class ManageAccountService {
   constructor(private http: HttpClient) { }
 
   registerUser(user: RegisterUser): Observable<Object> {
+    this.saveUser(user.username!);
     return this.http.post(APIService.url + 'register/', user);
   }
 
   confirmRegistration(token: string): Observable<Object> {
-    return this.http.post(APIService.url + `register/confirm/${token}`, {});
+    return this.http.post(APIService.url + `register/confirm/${token}` + '?username=' + this.getUser(), {});
   }
 
   logIn(username: string, password: string) {
+    this.saveUser(username);
     return this.http.post(APIService.url + 'token/', { username: username, password: password });
   }
 
@@ -38,7 +40,8 @@ export class ManageAccountService {
   }
 
   logOut() {
-    window.localStorage.removeItem(TOKEN_KEY);
+    this.removeToken();
+    this.removeUser();
   }
 
   isLoggedIn() {
@@ -54,20 +57,28 @@ export class ManageAccountService {
     window.localStorage.setItem(TOKEN_KEY, token);
   }
 
+  removeToken() {
+    window.localStorage.removeItem(TOKEN_KEY);
+  }
+
   getToken() {
     return window.localStorage.getItem(TOKEN_KEY);
   }
 
-  saveUser(user: any) {
+  saveUser(username: string) {
     window.localStorage.removeItem(USER_KEY);
-    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.localStorage.setItem(USER_KEY, username);
   }
 
-  getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
+  removeUser() {
+    window.localStorage.removeItem(USER_KEY);
+  }
+
+  getUser(): string {
+    const username = window.localStorage.getItem(USER_KEY);
+    if (username) {
+      return username;
     }
-    return {};
+    return '';
   }
 }

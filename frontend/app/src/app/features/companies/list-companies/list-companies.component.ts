@@ -14,7 +14,7 @@ export class ListCompaniesComponent {
   baseUrl = 'companies';
   listPageComp?: HTMLElement;
   doSort: boolean = false;
-  compareFn?: (a: never, b: never) => number;
+  compareFn?: (a: any, b: any) => number;
   constructor(protected apiServ: APIService, protected router: Router) { }
   sortCompaniesByReputation() {
     //Change comparte function to be appropriate

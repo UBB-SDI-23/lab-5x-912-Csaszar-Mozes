@@ -1,56 +1,3 @@
-<style>
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-
-  .example-full-width {
-    width: 100%;
-  }
-
-  #TableContainer {
-    display: flex;
-    margin-left: 5%;
-    width: 90%;
-  }
-
-  body {
-    height: 120%;
-  }
-
-  #TableContainer>div {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    position: relative;
-    height: 635px;
-  }
-
-  #TableContainer>div>table {
-    width: 100%;
-  }
-
-  #TableContainer>div>div>div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 30px;
-    font-size: 25px;
-  }
-
-  #TableContainer>div>div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    position: absolute;
-    bottom: 0px;
-    width: 50%;
-    left: 25%;
-  }
-</style>
-
 <body>
   <form class="example-form">
     <mat-form-field class="example-full-width">
@@ -59,6 +6,10 @@
       <mat-error *ngIf="nameFormControl.hasError('required')">
         Name is <strong>&nbsp;required</strong>
       </mat-error>
+      <mat-error *ngIf="nameFormControl.hasError('maxLength')">
+        Name cannot be longer than <strong>&nbsp;200 characters</strong>
+      </mat-error>
+      <mat-hint align="end">{{nameFormControl.value.length}} / 200</mat-hint>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <textarea matInput label="Description" [formControl]="descriptionFormControl"></textarea>
@@ -66,6 +17,10 @@
       <mat-error *ngIf="descriptionFormControl.hasError('required')">
         Description is <strong>&nbsp;required</strong>
       </mat-error>
+      <mat-error *ngIf="descriptionFormControl.hasError('maxLength')">
+        Description cannot be longer than <strong>&nbsp;2000 characters</strong>
+      </mat-error>
+      <mat-hint align="end">{{descriptionFormControl.value.length}} / 2000</mat-hint>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <mat-label>Net Worth</mat-label>

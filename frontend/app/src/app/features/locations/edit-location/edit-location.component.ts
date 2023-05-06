@@ -15,12 +15,12 @@ export class EditLocationComponent implements OnInit {
     baseUrl: string = "locations";
     location?: LocationDetail;
 
-    countryFormControl: FormControl = new FormControl('', [Validators.required]);
-    cityFormControl: FormControl = new FormControl('', [Validators.required]);
-    streetFormControl: FormControl = new FormControl('', [Validators.required]);
-    numberFormControl: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,4}$|^10000$')]);
+    countryFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+    cityFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+    streetFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+    numberFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(30)]);
     apartmentFormControl: FormControl = new FormControl('', [Validators.pattern('^[0-9]{1,4}$|^10000$')]);
-    descriptionFormControl: FormControl = new FormControl('');
+    descriptionFormControl: FormControl = new FormControl('', [Validators.maxLength(5000)]);
     companyFormControl: FormControl = new FormControl('', [Validators.required]);
     suggestions: string[] = [];
     companies: Company[] = [];

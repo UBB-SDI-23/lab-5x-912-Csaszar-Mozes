@@ -14,11 +14,11 @@ export class ProfileComponent implements OnInit {
 
   baseUrl: string = 'users';
 
-  firstNameFormControl: FormControl = new FormControl('', [Validators.max(70)]);
-  lastNameFormControl: FormControl = new FormControl('', [Validators.max(70)]);
-  bioFormControl: FormControl = new FormControl('', [Validators.max(1000)]);
-  universityFormControl: FormControl = new FormControl('', [Validators.max(200)]);
-  highSchoolFormControl: FormControl = new FormControl('', [Validators.max(200)]);
+  firstNameFormControl: FormControl = new FormControl('', [Validators.maxLength(70), Validators.pattern(/^(?!.*[#$%^&*!]).*$/)]);
+  lastNameFormControl: FormControl = new FormControl('', [Validators.maxLength(70), Validators.pattern(/^(?!.*[#$%^&*!]).*$/)]);
+  bioFormControl: FormControl = new FormControl('', [Validators.maxLength(1000)]);
+  universityFormControl: FormControl = new FormControl('', [Validators.maxLength(200), Validators.pattern(/^(?!.*[#$%^&*!]).*$/)]);
+  highSchoolFormControl: FormControl = new FormControl('', [Validators.maxLength(200), Validators.pattern(/^(?!.*[#$%^&*!]).*$/)]);
   usernameFormControl: FormControl = new FormControl('');
   emailFormControl: FormControl = new FormControl('');
 

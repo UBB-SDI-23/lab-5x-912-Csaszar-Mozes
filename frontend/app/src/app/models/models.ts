@@ -1,5 +1,6 @@
 export class NrTotalPages {
     nr_total_pages?: number;
+    nr_results?: number;
 }
 
 export class RegistrationMessage {

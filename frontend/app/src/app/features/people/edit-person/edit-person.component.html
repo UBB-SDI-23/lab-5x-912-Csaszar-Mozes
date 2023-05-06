@@ -16,21 +16,36 @@
     <mat-error *ngIf="firstNameFormControl.hasError('required')">
       First Name is <strong>&nbsp;required</strong>
     </mat-error>
+    <mat-error *ngIf="firstNameFormControl.hasError('maxLength')">
+      First Name cannot be longer than <strong>&nbsp;50 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{firstNameFormControl.value.length}} / 50</mat-hint>
   </mat-form-field>
+
   <mat-form-field class="example-full-width">
     <mat-label>Last Name</mat-label>
     <input matInput placeholder="Last Name" [formControl]="lastNameFormControl">
     <mat-error *ngIf="lastNameFormControl.hasError('required')">
       Last Name is <strong>&nbsp;required</strong>
     </mat-error>
+    <mat-error *ngIf="lastNameFormControl.hasError('maxLength')">
+      Last Name cannot be longer than <strong>&nbsp;50 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{lastNameFormControl.value.length}} / 50</mat-hint>
   </mat-form-field>
+
   <mat-form-field class="example-full-width">
     <mat-label>E-mail</mat-label>
     <input matInput placeholder="E-mail" [formControl]="emailFormControl">
     <mat-error *ngIf="emailFormControl.hasError('required')">
       E-mail is <strong>&nbsp;required</strong>
     </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('maxLength')">
+      E-mail cannot be longer than <strong>&nbsp;75 characters</strong>
+    </mat-error>
+    <mat-hint align="end">{{emailFormControl.value.length}} / 75</mat-hint>
   </mat-form-field>
+
   <mat-form-field class="example-full-width">
     <mat-label>Age</mat-label>
     <input matInput placeholder="Age" [formControl]="ageFormControl">
@@ -41,6 +56,7 @@
       Age has to be <strong>&nbsp;a positive number less than 200</strong>
     </mat-error>
   </mat-form-field>
+
   <mat-form-field class="example-full-width">
     <mat-label>Worker ID</mat-label>
     <input matInput placeholder="Worker ID" [formControl]="workerIDFormControl">
@@ -51,6 +67,7 @@
       Worker ID has to be <strong>&nbsp;a positive number less than 10000000</strong>
     </mat-error>
   </mat-form-field>
+
   <button mat-raised-button color="primary" (click)="edit()">Add</button>
   <button mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
   <button mat-raised-button color="primary" (click)="cancel()">Back</button>

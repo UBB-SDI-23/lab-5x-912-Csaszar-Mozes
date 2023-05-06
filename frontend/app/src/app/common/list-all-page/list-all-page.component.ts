@@ -16,7 +16,7 @@ export class ListAllPageComponent {
   @Input() router?: Router;
   @Input() displayedColumns: string[] = [];
   @Input() dynamicColumns: string[] = [];
-  @Input() compareFn?: (a: never, b: never) => number;
+  @Input() compareFn?: (a: any, b: any) => number;
   @Input() doSort: boolean = false;
   constructor() {
   }
@@ -26,7 +26,7 @@ export class ListAllPageComponent {
   addEntity() {
     this.router!.navigateByUrl(`${this.baseUrl}/add`);
   }
-  setCompareFn(fn: (a: never, b: never) => number) {
+  setCompareFn(fn: (a: any, b: any) => number) {
     this.compareFn = fn;
   }
 }
