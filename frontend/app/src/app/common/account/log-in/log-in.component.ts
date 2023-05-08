@@ -20,10 +20,13 @@ export class LogInComponent {
   }
   logIn() {
     if (this.isInputDataValid()) {
-      this.manageAccountServ.logIn(this.usernameFormControl.value, this.passwordFormControl.value).subscribe(
+      const username = this.usernameFormControl.value;
+      this.manageAccountServ.logIn(username, this.passwordFormControl.value).subscribe(
         (resp) => {
           let res = resp as LoginResponse;
           this.manageAccountServ.saveToken(res.access!);
+          this.manageAccountServ.saveRole(res.role!);
+          this.manageAccountServ.saveUser(username);
           alert('Login successful!');
           this.router.navigateByUrl('users/profile');
         }, (resp) => {

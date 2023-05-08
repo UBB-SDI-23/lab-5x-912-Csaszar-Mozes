@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
 import { PC, PCDetail, Person, PersonDetail } from 'src/app/models/models';
 
@@ -26,7 +27,9 @@ export class EditPersonComponent {
 
   workingAtCompanies: PCDetail[] = [];
 
-  constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
+  canEdit: boolean = false;
+
+  constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, private actRoute: ActivatedRoute, protected router: Router) { }
 
   cancel() {
     this.router.navigateByUrl('people');
@@ -71,6 +74,9 @@ export class EditPersonComponent {
             this.workerIDFormControl.setValue(this.person.worker_id);
 
             this.workingAtCompanies = this.person!.working_at_companies as PCDetail[];
+
+            this.canEdit = this.manageAccountServ.isLoggedInAsModerator() || this.manageAccountServ.isLoggedInAsAdmin() ||
+              this.manageAccountServ.isLoggedInAndOwnsObject(this.person.user?.username!);
           }
         )
       }

@@ -41,7 +41,7 @@ def generate_user_profile(user_id, first_name, last_name):
     bio = escape_single_quote(fake.paragraph(nb_sentences=12, variable_nb_sentences=True))
     university = escape_single_quote(fake.sentence(nb_words=7))
     high_school = escape_single_quote(fake.sentence(nb_words=7))
-    return "('" + first_name + "','" + last_name + "','" + bio + "','" + university + "','" + high_school + "'," + str(user_id) + ",1)"
+    return "('" + first_name + "','" + last_name + "','" + bio + "','" + university + "','" + high_school + "'," + str(user_id) + ",1,'agesegwsgwaw')"
 
 
 def generate_username(first_name, last_name):
@@ -74,10 +74,10 @@ def generate(nr, batch_size=1000):
     password = 'pbkdf2_sha256$390000$VxXug1jiSC6hHTD9MUAEuJ$qZvuOVv2BToBIcrWKm4+DZ+/6FyZ84pAq0/wDb1MwEM='
     nr_written = 0
     stmt_u = 'INSERT INTO auth_user (username,email,password,is_active,is_staff,is_superuser,first_name,last_name,date_joined) VALUES '
-    stmt_up = 'INSERT INTO a1_api_userprofile (first_name,last_name,bio,university,high_school,user_id, role) VALUES '
+    stmt_up = 'INSERT INTO a1_api_userprofile (first_name,last_name,bio,university,high_school,user_id,role,activation_code) VALUES '
     usernames = {}
     emails = {}
-    for i_u in range(1, nr + 1):
+    for i_u in range(1, nr + 1 - 2):
         if nr_written != 0:
             stmt_u += ","
             stmt_up += ","
@@ -104,13 +104,22 @@ def generate(nr, batch_size=1000):
             file_u.write(stmt_u + ";\n")
             file_up.write(stmt_up + ";\n")
             stmt_u = 'INSERT INTO auth_user (username,email,password,is_active,is_staff,is_superuser,first_name,last_name,date_joined) VALUES '
-            stmt_up = 'INSERT INTO a1_api_userprofile (first_name,last_name,bio,university,high_school, user_id, role) VALUES '
+            stmt_up = 'INSERT INTO a1_api_userprofile (first_name,last_name,bio,university,high_school,user_id, role,activation_code) VALUES '
         if i_u % batch_size == 0:
             print("Finished with " + str(i_u) + " users!")
     #write out last line as well
     if nr_written != 0:
         file_u.write(stmt_u + ";\n")
         file_up.write(stmt_up + ";\n")
+    stmt_u = 'INSERT INTO auth_user (username,email,password,is_active,is_staff,is_superuser,first_name,last_name,date_joined) VALUES '
+    stmt_up = 'INSERT INTO a1_api_userprofile (first_name,last_name,bio,university,high_school,user_id,role,activation_code) VALUES '
+    stmt_u += "('admin','admin@admin.admin','" + password + "',true,true,false,'','','2023-04-27 22:18:54'),"
+    stmt_u += "('moderator','moderator@moderator.moderator','" + password + "',false,true,false,'','','2023-04-27 22:18:54');"
+    stmt_up += "('Admin','Admin','I''m the admin','',''," + str(nr - 1) + ",3,'sgaszegwvse'),"
+    stmt_up += "('Moderator','Moderator','I''m a moderator','',''," + str(nr) + ",2,'wfsegewsgews');"
+    file_u.write(stmt_u)
+    file_up.write(stmt_up)
+
     file_u.write('ALTER TABLE auth_user ENABLE TRIGGER ALL;')
     file_u.close()
     file_up.close()

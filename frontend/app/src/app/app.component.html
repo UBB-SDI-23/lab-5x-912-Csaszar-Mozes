@@ -24,7 +24,7 @@
   <button mat-button [matMenuTriggerFor]="companiesMenu">Companies</button>
   <mat-menu #companiesMenu="matMenu">
     <button mat-menu-item routerLink="companies">View All</button>
-    <button mat-menu-item routerLink="companies/add">Add</button>
+    <button *ngIf="manageAccountServ.isLoggedIn()" mat-menu-item routerLink="companies/add">Add</button>
     <button mat-menu-item [matMenuTriggerFor]="companiesStatisticsMenu">Statistics</button>
     <mat-menu #companiesStatisticsMenu>
       <button mat-menu-item routerLink="companies/by-avg-salary">Average Salary of Workers of a Company</button>
@@ -35,17 +35,17 @@
   <button mat-button [matMenuTriggerFor]="locationsMenu">Locations</button>
   <mat-menu #locationsMenu="matMenu">
     <button mat-menu-item routerLink="locations">View All</button>
-    <button mat-menu-item routerLink="locations/add">Add</button>
+    <button *ngIf="manageAccountServ.isLoggedIn()" mat-menu-item routerLink="locations/add">Add</button>
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="peopleMenu">People</button>
   <mat-menu #peopleMenu="matMenu">
     <button mat-menu-item routerLink="people">View All</button>
-    <button mat-menu-item routerLink="people/add">Add</button>
+    <button *ngIf="manageAccountServ.isLoggedIn()" mat-menu-item routerLink="people/add">Add</button>
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="pcMenu">People Working at Companies</button>
   <mat-menu #pcMenu="matMenu">
     <button mat-menu-item routerLink="pc">View All</button>
-    <button mat-menu-item routerLink="pc/add">Add</button>
+    <button *ngIf="manageAccountServ.isLoggedIn()" mat-menu-item routerLink="pc/add">Add</button>
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="statisticsMenu">Statistics</button>
   <mat-menu #statisticsMenu="matMenu">

@@ -11,7 +11,7 @@
 </style>
 <form class="example-form">
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Contry" floatLabel="always" [formControl]="countryFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Contry" floatLabel="always" [formControl]="countryFormControl">
     <mat-label>Country</mat-label>
     <mat-error *ngIf="countryFormControl.hasError('required')">
       Country is <strong>&nbsp;required</strong>
@@ -24,7 +24,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>City</mat-label>
-    <input matInput placeholder="City" [formControl]="cityFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="City" [formControl]="cityFormControl">
     <mat-error *ngIf="cityFormControl.hasError('required')">
       City is <strong>&nbsp;required</strong>
     </mat-error>
@@ -36,7 +36,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Street</mat-label>
-    <input matInput placeholder="Street" [formControl]="streetFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Street" [formControl]="streetFormControl">
     <mat-error *ngIf="streetFormControl.hasError('required')">
       Street is <strong>&nbsp;required</strong>
     </mat-error>
@@ -48,7 +48,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Number</mat-label>
-    <input matInput placeholder="Number" [formControl]="numberFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Number" [formControl]="numberFormControl">
     <mat-error *ngIf="numberFormControl.hasError('required')">
       Number is <strong>&nbsp;required</strong>
     </mat-error>
@@ -59,7 +59,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Apartment</mat-label>
-    <input matInput placeholder="Apartment" [formControl]="apartmentFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Apartment" [formControl]="apartmentFormControl">
     <mat-error *ngIf="apartmentFormControl.hasError('maxLength')">
       Apartment cannot be longer than <strong>&nbsp;30 characters</strong>
     </mat-error>
@@ -67,8 +67,9 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Description" label="Description" [formControl]="descriptionFormControl"></textarea>
     <mat-label>Description</mat-label>
+    <textarea [readonly]="!canEdit" matInput placeholder="Description" label="Description"
+      [formControl]="descriptionFormControl"></textarea>
     <mat-error *ngIf="descriptionFormControl.hasError('maxLength')">
       Description cannot be longer than <strong>&nbsp;5000 characters</strong>
     </mat-error>
@@ -77,8 +78,8 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Company</mat-label>
-    <input matInput placeholder="Search for a company" [matAutocomplete]="auto" [formControl]="companyFormControl"
-      (keyup)="updateAutocomplete()">
+    <input [readonly]="!canEdit" matInput placeholder="Search for a company" [matAutocomplete]="auto"
+      [formControl]="companyFormControl" (keyup)="updateAutocomplete()">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectCompany($event)">
       <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion">
         {{suggestion}}
@@ -86,7 +87,7 @@
     </mat-autocomplete>
   </mat-form-field>
   <br>
-  <button mat-raised-button color="primary" (click)="edit()">Edit</button>
-  <button mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
+  <button *ngIf="canEdit" mat-raised-button color="primary" (click)="edit()">Edit</button>
+  <button *ngIf="canEdit" mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
   <button mat-raised-button color="primary" (click)="cancel()">Back</button>
 </form>

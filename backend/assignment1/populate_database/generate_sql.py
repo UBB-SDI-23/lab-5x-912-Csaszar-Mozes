@@ -25,7 +25,7 @@ def generate_all(nr_users=10000, nr_people=3000000, nr_companies=1000000):
     generate_usups(nr_users)
 
 
-generate_all(10000, 1000000, 1000000)
+generate_all(1000, 100000, 100000)
 
 
 

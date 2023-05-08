@@ -72,7 +72,7 @@ def generate(nr, chances_added, reputations, net_values, nr_users, batch_size=10
         if c_id % batch_size == 0:
             print("Finished with " + str(c_id) + " companies!")
     #write out last line as well
-    if nr_written == 0:
+    if nr_written != 0:
         file.write(stmt + ";\n")
     file.write('ALTER TABLE auth_user ENABLE TRIGGER ALL;')
     file.close()

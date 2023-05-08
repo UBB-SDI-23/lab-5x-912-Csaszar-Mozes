@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 
 @Component({
   selector: 'app-list-all-page',
@@ -18,8 +19,7 @@ export class ListAllPageComponent {
   @Input() dynamicColumns: string[] = [];
   @Input() compareFn?: (a: any, b: any) => number;
   @Input() doSort: boolean = false;
-  constructor() {
-  }
+  constructor(protected manageAccountServ: ManageAccountService) { }
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }

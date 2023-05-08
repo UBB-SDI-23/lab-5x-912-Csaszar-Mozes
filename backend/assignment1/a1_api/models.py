@@ -25,12 +25,12 @@ class Company(models.Model):
     def __str__(self):
         return self.name.__str__()
 
-    class Meta:
-        indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
-                   models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
-                   models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
-                   models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id']),
-                   models.Index(name='ind_company_user', fields=['user', 'id'])]
+    # class Meta:
+    #     indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
+    #                models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
+    #                models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
+    #                models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id']),
+    #                models.Index(name='ind_company_user', fields=['user', 'id'])]
 
 
 class Location(models.Model):
@@ -55,8 +55,8 @@ class Location(models.Model):
         return self.country.__str__() + ", " + self.county.null * (self.county.__str__() + ", ") + self.city.__str__() +\
                 ", " + self.street.__str__() + ", " + self.number.__str__() + self.apartment.null * (", " + self.apartment.__str__())
 
-    class Meta:
-        indexes = [models.Index(name='ind_pc_location', fields=['company', 'id'])]
+    # class Meta:
+    #     indexes = [models.Index(name='ind_pc_location', fields=['company', 'id'])]
 
 
 class Person(models.Model):
@@ -68,8 +68,8 @@ class Person(models.Model):
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
 
-    class Meta:
-        indexes = [models.Index(name='ind_person_user', fields=['user', 'id'])]
+    # class Meta:
+    #     indexes = [models.Index(name='ind_person_user', fields=['user', 'id'])]
 
     @property
     def nr_workplaces(self):
@@ -89,11 +89,11 @@ class PersonWorkingAtCompany(models.Model):
 
 
 
-    class Meta:
-        unique_together = [['person', 'company']]
-        indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
-                   models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary']),
-                   models.Index(name='ind_pc_user', fields=['user', 'id'])]
+    # class Meta:
+    #     unique_together = [['person', 'company']]
+    #     indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
+    #                models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary']),
+    #                models.Index(name='ind_pc_user', fields=['user', 'id'])]
 
 
 class UserRoles:

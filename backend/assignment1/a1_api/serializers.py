@@ -22,6 +22,7 @@ import re
 class LoginSerializer(TokenObtainPairSerializer):
 
     def auth(self, attrs):
+
         UserModel = get_user_model()
         try:
             user = UserModel.objects.get(Q(username__iexact=attrs['username']))
@@ -45,6 +46,7 @@ class LoginSerializer(TokenObtainPairSerializer):
         except KeyError:
             pass
         self.user = self.auth(authenticate_kwargs)
+        user_profile = UserProfile.objects.get(user=self.user.id)
         if self.user is None:
             self.error_messages['no_active_account'] = (
                 'No active account found with the given credentials')
@@ -53,7 +55,6 @@ class LoginSerializer(TokenObtainPairSerializer):
                 'no_active_account',
             )
         elif not self.user.is_active:
-            user_profile = UserProfile.objects.get(user=self.user.id)
             user_profile.activation_code = ''.join(random.choice(string.ascii_letters) for i in range(60))
             user_profile.code_requested_at = datetime.now(tz=pytz.utc)
             self.error_messages['no_active_account'] = (
@@ -63,7 +64,10 @@ class LoginSerializer(TokenObtainPairSerializer):
                 self.error_messages['no_active_account'],
                 'no_active_account',
             )
-        return super().validate(attrs)
+
+        to_ret = super().validate(attrs)
+        to_ret['role'] = str(user_profile.role)
+        return to_ret
 
     def create(self, validated_data):
         return super().create(validated_data)

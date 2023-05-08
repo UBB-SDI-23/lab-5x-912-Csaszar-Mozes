@@ -56,7 +56,7 @@ def generate(chances_added, nr_locations_in_comp, nr_companies, batch_size=1000)
             stmt = 'INSERT INTO a1_api_location (country,city,street,apartment,number,description,company_id) VALUES '
         if c_id % batch_size == 0:
             print("Finished with " + str(c_id) + " companies!")
-    if stmt != 'INSERT INTO a1_api_location (country,city,street,apartment,number,description,company_id) VALUES ':
+    if nr_written != 0:
         file.write(stmt + ";\n")
     file.write('ALTER TABLE a1_api_personworkingatcompany ENABLE TRIGGER ALL;')
     file.close()

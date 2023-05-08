@@ -9,7 +9,7 @@ import { APIService } from 'src/app/api/api-service';
 })
 export class ByNrLocationsComponent {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_locations'];
-  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_locations'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_locations', 'username'];
   baseUrl = 'companies/by-nr-locations';
   redirectUrl = 'companies';
   constructor(protected apiServ: APIService, protected router: Router) {

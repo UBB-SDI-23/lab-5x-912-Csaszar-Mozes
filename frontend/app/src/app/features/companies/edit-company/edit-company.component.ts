@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
 import { Company, CompanyDetail, Person, PC, PCDetail } from 'src/app/models/models';
 
@@ -31,7 +32,9 @@ export class EditCompanyComponent implements OnInit {
   peopleColumns: string[] = ["role", "salary", "person.first_name", "person.last_name", "person.age", "person.email", "person.worker_id"];
   locationsColumns: string[] = ["country", "city", "street", "number", "apartment", "description"];
 
-  constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
+  canEdit: boolean = false;
+
+  constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, private actRoute: ActivatedRoute, protected router: Router) { }
 
   cancel() {
     this.router.navigateByUrl(this.baseUrl);
@@ -81,6 +84,9 @@ export class EditCompanyComponent implements OnInit {
 
             this.locations = c_result.locations as Location[];
             this.peopleWorkingHere = c_result.people_working_here as PCDetail[];
+
+            this.canEdit = this.manageAccountServ.isLoggedInAsModerator() || this.manageAccountServ.isLoggedInAsAdmin() ||
+              this.manageAccountServ.isLoggedInAndOwnsObject(c_result.user?.username!);
           }
         )
       }

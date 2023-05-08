@@ -10,6 +10,13 @@ export class RegistrationMessage {
 export class LoginResponse {
     access?: string;
     refresh?: string;
+    role?: string;
+}
+
+export enum UserRoles {
+    NORMAL = '1',
+    MODERATOR = '2',
+    ADMIN = '3'
 }
 
 export class Message {

@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
 import { Company, CompanyDetail, Location, LocationDetail } from 'src/app/models/models';
 
@@ -27,8 +28,10 @@ export class EditLocationComponent implements OnInit {
     autocompleteSize: number = 15;
     companyID: number = -1;
 
+    canEdit: boolean = false;
 
-    constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
+
+    constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, private actRoute: ActivatedRoute, protected router: Router) { }
 
     cancel() {
         this.router.navigateByUrl(this.baseUrl);
@@ -92,6 +95,9 @@ export class EditLocationComponent implements OnInit {
                         this.apartmentFormControl.setValue(this.location.apartment);
                         this.companyFormControl.setValue(this.location.company!.name);
                         this.companyID = this.location.company!.id!;
+
+                        this.canEdit = this.manageAccountServ.isLoggedInAsModerator() || this.manageAccountServ.isLoggedInAsAdmin() ||
+                            this.manageAccountServ.isLoggedInAndOwnsObject(this.location.user?.username!);
                     }
                 )
             }

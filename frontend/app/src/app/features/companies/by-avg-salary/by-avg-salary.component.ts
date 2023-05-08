@@ -9,7 +9,7 @@ import { APIService } from 'src/app/api/api-service';
 })
 export class ByAvgSalaryComponent {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'avg_salary'];
-  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'avg_salary'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'avg_salary', 'username'];
   baseUrl = 'companies/by-avg-salary';
   redirectUrl: string = 'companies';
   constructor(protected apiServ: APIService, protected router: Router) {

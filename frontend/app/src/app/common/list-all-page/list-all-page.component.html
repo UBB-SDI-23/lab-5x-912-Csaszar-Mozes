@@ -1,4 +1,4 @@
-<button mat-raised-button color="primary" (click)="addEntity()">ADD</button>
+<button *ngIf="manageAccountServ.isLoggedIn()" mat-raised-button color="primary" (click)="addEntity()">ADD</button>
 
 <app-dynamic-table [apiServ]="apiServ" [router]="router" [baseUrl]="baseUrl" [displayedColumns]="displayedColumns"
   [dynamicColumns]="dynamicColumns" [compareFn]="compareFn" [doSort]="doSort"></app-dynamic-table>

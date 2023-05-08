@@ -57,6 +57,22 @@ def generate(nr, nr_users, batch_size=1000):
             worker_id += rnd.randint(1, 4)
         file.write(stmt + ";\n")
         print("Finished " + str(b * batch_size) + " with people!")
+    stmt = 'INSERT INTO a1_api_person (first_name,last_name,worker_id,email,age,user_id) VALUES '
+    for i in range(nr % batch_size):
+        if i != 0:
+            stmt += ","
+        person, email = generate_person(worker_id, nr_users)
+        if emails.get(email) is not None:
+            emails[email] += 1
+            old_nr = emails[email]
+            email = email.split('@')
+            email = email[0] + str(old_nr) + "@" + email[1]
+            person = change_email_of_person(person, email)
+        else:
+            emails[email] = 1
+        stmt += person
+        worker_id += rnd.randint(1, 4)
+    file.write(stmt + ";\n")
     file.write('ALTER TABLE a1_api_person ENABLE TRIGGER ALL;')
     file.close()
 

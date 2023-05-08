@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ActivatedRoute, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 import { DeleteConfirmationComponent } from 'src/app/common/delete-confirmation/delete-confirmation.component';
 import { Company, Person, PC, LocationDetail, PCDetail } from 'src/app/models/models';
 
@@ -28,7 +29,9 @@ export class EditPcComponent implements OnInit {
   people: Person[] = [];
   personID: number = -1;
 
-  constructor(protected apiServ: APIService, private actRoute: ActivatedRoute, protected router: Router) { }
+  canEdit: boolean = false;
+
+  constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, private actRoute: ActivatedRoute, protected router: Router) { }
 
   cancel() {
     this.router.navigateByUrl(this.baseUrl);
@@ -70,6 +73,9 @@ export class EditPcComponent implements OnInit {
             this.companyFormControl.setValue(this.pc.company!.name);
             this.companyID = this.pc.company!.id!;
             this.personID = this.pc.person!.id!;
+
+            this.canEdit = this.manageAccountServ.isLoggedInAsModerator() || this.manageAccountServ.isLoggedInAsAdmin() ||
+              this.manageAccountServ.isLoggedInAndOwnsObject(this.pc.user?.username!);
           }
         )
       }

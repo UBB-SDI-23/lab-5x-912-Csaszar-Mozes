@@ -1,12 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Company, CompanyDetail, RegisterUser, UserProfile } from "../models/models";
+import { Company, CompanyDetail, RegisterUser, UserProfile, UserRoles } from "../models/models";
 import { ActivatedRoute } from "@angular/router";
 import { APIService } from "./api-service";
 
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
+const ROLE_KEY = 'auth_role';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,6 @@ export class ManageAccountService {
   constructor(private http: HttpClient) { }
 
   registerUser(user: RegisterUser): Observable<Object> {
-    this.saveUser(user.username!);
     return this.http.post(APIService.url + 'register/', user);
   }
 
@@ -25,7 +25,6 @@ export class ManageAccountService {
   }
 
   logIn(username: string, password: string) {
-    this.saveUser(username);
     return this.http.post(APIService.url + 'token/', { username: username, password: password });
   }
 
@@ -52,6 +51,19 @@ export class ManageAccountService {
     return window.localStorage.getItem(TOKEN_KEY) == undefined;
   }
 
+  isLoggedInAsModerator() {
+    return this.isLoggedIn() && this.getRole() == UserRoles.MODERATOR;
+  }
+
+  isLoggedInAsAdmin() {
+    return this.isLoggedIn() && this.getRole() == UserRoles.ADMIN;
+  }
+
+  isLoggedInAndOwnsObject(obj_user_username: string) {
+    return this.isLoggedIn() && this.getUser() == obj_user_username;
+  }
+
+
   saveToken(token: string) {
     window.localStorage.removeItem(TOKEN_KEY);
     window.localStorage.setItem(TOKEN_KEY, token);
@@ -76,9 +88,20 @@ export class ManageAccountService {
 
   getUser(): string {
     const username = window.localStorage.getItem(USER_KEY);
-    if (username) {
-      return username;
-    }
-    return '';
+    return username == undefined ? '' : username;
+  }
+
+  saveRole(role: string) {
+    window.localStorage.removeItem(ROLE_KEY);
+    window.localStorage.setItem(ROLE_KEY, role);
+  }
+
+  removeRole() {
+    window.localStorage.removeItem(ROLE_KEY);
+  }
+
+  getRole(): string {
+    const role = window.localStorage.getItem(ROLE_KEY)
+    return role == undefined ? '' : role;
   }
 }

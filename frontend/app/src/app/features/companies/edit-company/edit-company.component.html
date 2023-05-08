@@ -1,7 +1,7 @@
 <body>
   <form class="example-form">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" floatLabel="always" [formControl]="nameFormControl">
+      <input [readonly]="!canEdit" matInput placeholder="Name" floatLabel="always" [formControl]="nameFormControl">
       <mat-label>Name</mat-label>
       <mat-error *ngIf="nameFormControl.hasError('required')">
         Name is <strong>&nbsp;required</strong>
@@ -11,8 +11,9 @@
       </mat-error>
       <mat-hint align="end">{{nameFormControl.value.length}} / 200</mat-hint>
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
-      <textarea matInput label="Description" [formControl]="descriptionFormControl"></textarea>
+      <textarea [readonly]="!canEdit" matInput label="Description" [formControl]="descriptionFormControl"></textarea>
       <mat-label>Description</mat-label>
       <mat-error *ngIf="descriptionFormControl.hasError('required')">
         Description is <strong>&nbsp;required</strong>
@@ -22,9 +23,10 @@
       </mat-error>
       <mat-hint align="end">{{descriptionFormControl.value.length}} / 2000</mat-hint>
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
       <mat-label>Net Worth</mat-label>
-      <input matInput placeholder="Net worth" [formControl]="netWorthFormControl">
+      <input [readonly]="!canEdit" matInput placeholder="Net worth" [formControl]="netWorthFormControl">
       <mat-error *ngIf="netWorthFormControl.hasError('required')">
         Net worth is <strong>&nbsp;required</strong>
       </mat-error>
@@ -32,9 +34,10 @@
         Net worth has to be <strong>&nbsp;a positive number</strong>
       </mat-error>
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
       <mat-label>Reputation</mat-label>
-      <input matInput placeholder="Reputation" [formControl]="reputationFormControl">
+      <input [readonly]="!canEdit" matInput placeholder="Reputation" [formControl]="reputationFormControl">
       <mat-error *ngIf="reputationFormControl.hasError('required')">
         Reputation is <strong>&nbsp;required</strong>
       </mat-error>
@@ -42,9 +45,10 @@
         Reputation has to be<strong>&nbsp;an integer between 0 and 100</strong>
       </mat-error>
     </mat-form-field>
+
     <mat-form-field class="example-full-width">
       <mat-label>Start Year</mat-label>
-      <input matInput placeholder="Start Year" [formControl]="startYearFormControl">
+      <input [readonly]="!canEdit" matInput placeholder="Start Year" [formControl]="startYearFormControl">
       <mat-error *ngIf="startYearFormControl.hasError('required')">
         Start year is <strong>&nbsp;required</strong>
       </mat-error>
@@ -52,8 +56,9 @@
         Start year has to be <strong>&nbsp;a positive number</strong>
       </mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="edit()">Edit</button>
-    <button mat-raised-button color="warn" (click)="delete($event)">Delete</button>
+
+    <button *ngIf="canEdit" mat-raised-button color="primary" (click)="edit()">Edit</button>
+    <button *ngIf="canEdit" mat-raised-button color="warn" (click)="delete($event)">Delete</button>
     <button mat-raised-button color="primary" (click)="cancel()">Back</button>
     <br>
   </form>

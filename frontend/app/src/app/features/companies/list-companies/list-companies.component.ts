@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
-import { Company } from '../../../models/models';
+import { Component, OnInit } from '@angular/core';
+import { Company, UserRoles } from '../../../models/models';
 import { APIService } from 'src/app/api/api-service';
 import { Router } from '@angular/router';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 
 @Component({
   selector: 'app-list-companies',
   templateUrl: 'list-companies.component.html',
   styleUrls: ['list-companies.component.css']
 })
-export class ListCompaniesComponent {
+export class ListCompaniesComponent implements OnInit {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
   displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations', 'username', 'delete'];
   baseUrl = 'companies';
   listPageComp?: HTMLElement;
   doSort: boolean = false;
   compareFn?: (a: any, b: any) => number;
-  constructor(protected apiServ: APIService, protected router: Router) { }
+  constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, protected router: Router) { }
   sortCompaniesByReputation() {
     //Change comparte function to be appropriate
     this.compareFn = (a, b) => {
@@ -28,6 +29,12 @@ export class ListCompaniesComponent {
     setTimeout(
       () => { this.doSort = false; }, 100
     );
+  }
+  ngOnInit() {
+    //Remove delete button if there is no log in or the user is only a normal one
+    if (this.manageAccountServ.isLoggedOut() || this.manageAccountServ.getRole() == UserRoles.NORMAL) {
+      this.displayedColumns.pop();
+    }
   }
 }
 

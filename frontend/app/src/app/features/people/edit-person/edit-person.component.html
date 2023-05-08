@@ -11,8 +11,9 @@
 </style>
 <form class="example-form">
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="First Name" floatLabel="always" [formControl]="firstNameFormControl">
     <mat-label>First Name</mat-label>
+    <input [readonly]="!canEdit" matInput placeholder="First Name" floatLabel="always"
+      [formControl]="firstNameFormControl">
     <mat-error *ngIf="firstNameFormControl.hasError('required')">
       First Name is <strong>&nbsp;required</strong>
     </mat-error>
@@ -24,7 +25,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Last Name</mat-label>
-    <input matInput placeholder="Last Name" [formControl]="lastNameFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Last Name" [formControl]="lastNameFormControl">
     <mat-error *ngIf="lastNameFormControl.hasError('required')">
       Last Name is <strong>&nbsp;required</strong>
     </mat-error>
@@ -36,7 +37,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>E-mail</mat-label>
-    <input matInput placeholder="E-mail" [formControl]="emailFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="E-mail" [formControl]="emailFormControl">
     <mat-error *ngIf="emailFormControl.hasError('required')">
       E-mail is <strong>&nbsp;required</strong>
     </mat-error>
@@ -48,7 +49,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Age</mat-label>
-    <input matInput placeholder="Age" [formControl]="ageFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Age" [formControl]="ageFormControl">
     <mat-error *ngIf="ageFormControl.hasError('required')">
       Age is <strong>&nbsp;required</strong>
     </mat-error>
@@ -59,7 +60,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Worker ID</mat-label>
-    <input matInput placeholder="Worker ID" [formControl]="workerIDFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Worker ID" [formControl]="workerIDFormControl">
     <mat-error *ngIf="workerIDFormControl.hasError('required')">
       Worker ID is <strong>&nbsp;required</strong>
     </mat-error>
@@ -68,8 +69,8 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="edit()">Add</button>
-  <button mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
+  <button *ngIf="canEdit" mat-raised-button color="primary" (click)="edit()">Add</button>
+  <button *ngIf="canEdit" mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
   <button mat-raised-button color="primary" (click)="cancel()">Back</button>
 </form>
 

@@ -10,7 +10,7 @@ import { APIService } from 'src/app/api/api-service';
 })
 export class ReputationGreaterThanComponent {
   dynamicColumns = ['name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
-  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations'];
+  displayedColumns = ['position', 'name', 'description', 'net_value', 'reputation', 'nr_workers', 'nr_locations', 'username'];
   baseUrl = 'companies/reputation-greater-than';
   redirectUrl = 'companies';
   reputationFormControl: FormControl = new FormControl(80, [Validators.required, Validators.pattern('^[0-9]?[0-9]$|^100$')]);

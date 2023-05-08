@@ -11,8 +11,8 @@
 </style>
 <form class="example-form">
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Role" floatLabel="always" [formControl]="roleFormControl">
     <mat-label>Role</mat-label>
+    <input [readonly]="!canEdit" matInput placeholder="Role" floatLabel="always" [formControl]="roleFormControl">
     <mat-error *ngIf="roleFormControl.hasError('required')">
       Role is <strong>&nbsp;required</strong>
     </mat-error>
@@ -24,11 +24,10 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Salary</mat-label>
-    <input matInput placeholder="Salary" [formControl]="salaryFormControl">
+    <input [readonly]="!canEdit" matInput placeholder="Salary" [formControl]="salaryFormControl">
     <mat-error *ngIf="salaryFormControl.hasError('required')">
       Salary is <strong>&nbsp;required</strong>
     </mat-error>
-
     <mat-error *ngIf="salaryFormControl.hasError('pattern')">
       Salary has to be <strong>&nbsp;a positive number less than 10000000</strong>
     </mat-error>
@@ -36,8 +35,8 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Person</mat-label>
-    <input matInput placeholder="Search for a person" [matAutocomplete]="auto" [formControl]="personFormControl"
-      (input)="updatePeopleAutocomplete()">
+    <input [readonly]="!canEdit" matInput placeholder="Search for a person" [matAutocomplete]="auto"
+      [formControl]="personFormControl" (input)="updatePeopleAutocomplete()">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectPerson($event)">
       <mat-option *ngFor="let suggestion of peopleSuggestions" [value]="suggestion">
         {{suggestion}}
@@ -50,8 +49,8 @@
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Company</mat-label>
-    <input matInput placeholder="Search for a company" [matAutocomplete]="auto2" [formControl]="companyFormControl"
-      (input)="updateCompaniesAutocomplete()">
+    <input [readonly]="!canEdit" matInput placeholder="Search for a company" [matAutocomplete]="auto2"
+      [formControl]="companyFormControl" (input)="updateCompaniesAutocomplete()">
     <mat-error *ngIf="companyFormControl.hasError('required')">
       Company is <strong>&nbsp;required</strong>
     </mat-error>
@@ -62,8 +61,8 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="edit()">Add</button>
-  <button mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
+  <button *ngIf="canEdit" mat-raised-button color="primary" (click)="edit()">Add</button>
+  <button *ngIf="canEdit" mat-raised-button color="warn" (click)="this.delete($event)">Delete</button>
   <button mat-raised-button color="primary" (click)="cancel()">Back</button>
 
 </form>

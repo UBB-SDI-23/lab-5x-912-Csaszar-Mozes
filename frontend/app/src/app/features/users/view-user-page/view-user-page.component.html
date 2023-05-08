@@ -1,26 +1,43 @@
 <div class="container">
-  <label for="Username">Username:&nbsp;</label>
-  <span id="Username">{{user?.user?.username}}</span>
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input [readonly]="true" matInput placeholder="Username" [formControl]="usernameFormControl">
+  </mat-form-field>
   <br>
-  <label for="Email">E-mail:&nbsp;</label>
-  <span id="Email">{{user?.user?.email}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>E-mail</mat-label>
+    <input [readonly]="true" matInput placeholder="E-mail" [formControl]="emailFormControl">
+  </mat-form-field>
   <br>
-  <label for="NrEntitiesAdded">Number of entities added:&nbsp;</label>
-  <span id="NrEntitiesAdded">{{user?.nr_entities_added}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>First Name</mat-label>
+    <input [readonly]="true" matInput placeholder="First Name" [formControl]="firstNameFormControl">
+  </mat-form-field>
   <br>
-  <label for="FirstName">First Name:&nbsp;</label>
-  <span id="FirstName">{{user?.first_name}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Last Name</mat-label>
+    <input [readonly]="true" matInput placeholder="Last Name" [formControl]="lastNameFormControl">
+  </mat-form-field>
   <br>
-  <label for="LastName">Last Name:&nbsp;</label>
-  <span id="LastName">{{user?.last_name}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>University</mat-label>
+    <input [readonly]="true" id="University" matInput placeholder="University" [formControl]="universityFormControl">
+  </mat-form-field>
   <br>
-  <label for="University">University:&nbsp;</label>
-  <span id="University">{{user?.university}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>High School</mat-label>
+    <input [readonly]="true" id="HighSchool" matInput placeholder="High School" [formControl]="highSchoolFormControl">
+  </mat-form-field>
   <br>
-  <label for="HighSchool">High School:&nbsp;</label>
-  <span id="HighSchool">{{user?.high_school}}</span>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Bio</mat-label>
+    <textarea [readonly]="true" matInput placeholder="Bio" [formControl]="bioFormControl"></textarea>
+  </mat-form-field>
   <br>
-  <label for="Bio">Bio:</label>
-  <br>
-  <textarea disabled id="Bio">{{user?.bio}}</textarea>
 </div>

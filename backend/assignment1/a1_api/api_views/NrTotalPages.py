@@ -1,12 +1,14 @@
+from rest_framework.generics import GenericAPIView
+
 from ..api_views.__init__ import *
 from ..models import Company, Location, Person, PersonWorkingAtCompany
 from math import ceil
-
 from ..permissions import IsSafeToView
 
 
-class NrTotalPages(APIView):
+class NrTotalPages(RetrieveAPIView):
     permissions_classes = [IsSafeToView]
+
     def get(self, request, *kwargs):
         page_size = int(request.query_params.get('size', 15))
         url = request.query_params.get('url', 'companies')
