@@ -93,7 +93,7 @@ export class DynamicTableComponent implements OnChanges {
   constructor(private route: ActivatedRoute) {
   }
   formatColumn(name: string): string {
-    return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
+    return name.split('.').pop()!.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
   }
   getColumnValue(base: any, col: string): string {
     for (let c of col.split('.')) {
@@ -138,6 +138,20 @@ export class DynamicTableComponent implements OnChanges {
       });
     });
 
+  }
+  isRoleChecked(i: number, nr: number) {
+    return this.entities[i].role == nr;
+  }
+  changeRoleTo(event: MouseEvent, i: number, nr: number) {
+    event.stopPropagation();
+    //if the user doesn't select current role
+    if (!this.isRoleChecked(i, nr)) {
+      this.apiServ!.changeUserRole(this.entities[i].user_id, nr).subscribe(
+        (result) => {
+          alert(result);
+        }
+      );
+    }
   }
   goToUser(userNr: number) {
     this.router!.navigateByUrl('users/' + userNr);

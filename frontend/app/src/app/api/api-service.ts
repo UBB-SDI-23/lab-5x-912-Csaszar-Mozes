@@ -26,6 +26,9 @@ export class APIService {
     }
 
     constructor(private http: HttpClient, private route: ActivatedRoute) { }
+    changeUserRole(user_id: number, role: number) {
+        return this.http.put(APIService.url + 'users/edit-role/', { change_user_id: user_id, role: role, to_change_stuff: user_id });
+    }
     getEntities(page_nr: number, page_size: number, base_url: string) {
         if (page_nr >= 0 && page_size >= 1) {
             let comp_url = APIService.url + base_url;

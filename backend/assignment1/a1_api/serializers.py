@@ -19,6 +19,13 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import re
 
 
+class MessageSerializer(serializers.ModelSerializer):
+    message = serializers.CharField(read_only=True, max_length=1000)
+
+    class Meta:
+        fields = ['message']
+
+
 class LoginSerializer(TokenObtainPairSerializer):
 
     def auth(self, attrs):
@@ -133,7 +140,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'first_name', 'last_name', 'bio', 'university', 'high_school', 'user', 'nr_entities_added']
+        fields = ['id', 'first_name', 'last_name', 'bio', 'university', 'high_school', 'user', 'nr_entities_added', 'role']
 
 
 class CompanySerializer(serializers.ModelSerializer):

@@ -13,7 +13,6 @@ export class ListPeopleComponent {
   dynamicColumns = ['first_name', 'last_name', 'email', 'age', 'worker_id', 'nr_workplaces'];
   displayedColumns = ['position', 'first_name', 'last_name', 'email', 'age', 'worker_id', 'nr_workplaces', 'username', 'delete'];
   baseUrl = 'people';
-  listPageComp?: HTMLElement;
   constructor(protected apiServ: APIService, private manageAccountServ: ManageAccountService, protected router: Router) { }
 
   ngOnInit() {

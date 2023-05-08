@@ -25,6 +25,8 @@ from .api_views.PersonalProfileView import PersonalProfileView
 from .api_views.RegisterView import RegisterView
 from .api_views.ConfirmRegisterView import ConfirmRegisterView
 from .api_views.LoginView import LoginView
+from .api_views.UsersView import UsersView
+from .api_views.UsersEditRoleView import UsersEditRoleView
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 
 
@@ -46,6 +48,8 @@ urlpatterns = [
     path('api/pc/<int:id>/', PersonCompanyIDView.as_view(), name="pc_detail"),
     path('api/companies/by-avg-salary/', CompanyByAvgSalaryView.as_view(), name="companies_avg_salary"),
     path('api/companies/by-nr-locations/', CompanyByNrLocationsView.as_view(), name="companies_nr_locations"),
+    path('api/users/', UsersView.as_view(), name="users_view"),
+    path('api/users/edit-role/', UsersEditRoleView.as_view(), name="users_edit_role_view"),
     path('api/users/<int:id>/', UserProfileIDView.as_view(), name="user_by_id"),
     path('api/users/profile/', PersonalProfileView.as_view(), name="user_profile"),
     path('api/register/', RegisterView.as_view(), name="register"),

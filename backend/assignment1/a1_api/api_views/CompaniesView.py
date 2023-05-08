@@ -14,7 +14,6 @@ class CompaniesView(ListCreateAPIView):
 
         page_start = page_nr * page_size
         qs = Company.objects.all()[page_start:page_start + page_size]
-        print(qs.query, 'query')
         return qs
 
     def perform_create(self, serializer):

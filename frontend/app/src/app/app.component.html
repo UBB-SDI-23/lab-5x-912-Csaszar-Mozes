@@ -61,6 +61,9 @@
     <button mat-button routerLink="register">Register</button>
     <button mat-button routerLink="login">Log In</button>
   </div>
+  <div *ngIf="manageAccountServ.isLoggedInAsAdmin()">
+    <button mat-button routerLink="users">Users</button>
+  </div>
 </nav>
 <app-error-messages></app-error-messages>
 

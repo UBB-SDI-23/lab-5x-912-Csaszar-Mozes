@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +43,7 @@ import { AuthInterceptor } from '_helpers/auth.interceptor';
 import { ProfileComponent } from './common/account/profile/profile.component';
 import { ErrorInterceptor } from '_helpers/error.interceptor';
 import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
+import { ListUsersComponent } from './features/users/list-users/list-users.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import { ErrorMessagesComponent } from './common/error-messages/error-messages.c
     RegisterComponent,
     LogInComponent,
     ProfileComponent,
-    ErrorMessagesComponent
+    ErrorMessagesComponent,
+    ListUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import { ErrorMessagesComponent } from './common/error-messages/error-messages.c
     MatIconModule,
     MatOptionModule,
     MatAutocompleteModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule
   ],
   providers: [
     AuthGuard,

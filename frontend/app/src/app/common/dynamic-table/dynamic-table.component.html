@@ -48,6 +48,21 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="edit_role">
+      <th mat-header-cell *matHeaderCellDef>Edit Role</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <mat-radio-group>
+          <mat-radio-button value="1" [checked]="isRoleChecked(i, 1)"
+            (click)="changeRoleTo($event, i, 1)">Normal</mat-radio-button>
+          <mat-radio-button value="2" [checked]="isRoleChecked(i, 2)"
+            (click)="changeRoleTo($event, i, 2)">Moderator</mat-radio-button>
+          <mat-radio-button value="3" [checked]="isRoleChecked(i, 3)"
+            (click)="changeRoleTo($event, i, 3)">Admin</mat-radio-button>
+        </mat-radio-group>
+      </td>
+
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row (click)="goToDetails(element.id)" *matRowDef="let row; columns: displayedColumns; let element;"></tr>
   </table>

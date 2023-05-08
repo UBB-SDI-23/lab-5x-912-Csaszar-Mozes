@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework.generics import GenericAPIView
 
 from ..api_views.__init__ import *
@@ -23,6 +24,8 @@ class NrTotalPages(RetrieveAPIView):
             qs = Person.objects.all().count()
         elif url == 'pc':
             qs = PersonWorkingAtCompany.objects.all().count()
+        elif url == 'users':
+            qs = User.objects.all().count()
         else:
             return Response({"message": "ERROR: Bad URL provided!"}, 404)
         return Response({"nr_total_pages": ceil(qs/page_size), "nr_results": qs}, 200)
