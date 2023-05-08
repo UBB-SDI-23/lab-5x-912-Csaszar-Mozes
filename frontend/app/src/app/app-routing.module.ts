@@ -24,6 +24,7 @@ import { UserProfile } from './models/models';
 import { ProfileComponent } from './common/account/profile/profile.component';
 import { ListUsersComponent } from './features/users/list-users/list-users.component';
 import { GenerateDataComponent } from './features/admin/generate-data/generate-data.component';
+import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-size.component';
 
 const routes: Routes = [
     {
@@ -117,6 +118,10 @@ const routes: Routes = [
     {
         path: "admin/generate-data",
         component: GenerateDataComponent
+    },
+    {
+        path: "admin/set-page-size",
+        component: SetPageSizeComponent
     },
 ];
 

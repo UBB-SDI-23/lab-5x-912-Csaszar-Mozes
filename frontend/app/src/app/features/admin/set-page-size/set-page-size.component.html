@@ -1,0 +1,16 @@
+Set page size to all users.
+<form>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Page size" floatLabel="always" [formControl]="pageSizeFormControl">
+    <mat-label>Page size</mat-label>
+    <mat-error *ngIf="pageSizeFormControl.hasError('min')">
+      Page size cannot be less than <strong>&nbsp;0</strong>
+    </mat-error>
+    <mat-error *ngIf="pageSizeFormControl.hasError('max')">
+      Page size cannot be more than <strong>&nbsp;100</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+
+  <button mat-raised-button color="primary" (click)="edit()">Set</button>
+</form>

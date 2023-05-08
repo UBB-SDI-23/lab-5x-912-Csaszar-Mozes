@@ -39,7 +39,7 @@ class Location(models.Model):
     street = models.CharField(max_length=100, null=False)
     number = models.IntegerField(null=False, validators=[validators.MinValueValidator(0)])
     apartment = models.CharField(max_length=30, null=True, blank=True)
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name="locations")
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True, related_name="locations")
     description = models.CharField(max_length=5000, null=False, default='')
 
     @property
@@ -102,7 +102,6 @@ class UserRoles:
     ADMIN = 3
 
 class UserProfile(models.Model):
-
     first_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     last_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     bio = models.CharField(max_length=1000, blank=True, null=True, default='')
@@ -123,5 +122,12 @@ class UserProfile(models.Model):
         if count_l is None:
             count_l = 0
         return count_c + count_l + count_p + count_pc
+
+
+class IntegerSetting(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, default=1)
+    name = models.CharField(max_length=100, default='')
+    user_role = models.SmallIntegerField(default=1, validators=[validators.MinValueValidator(UserRoles.NORMAL), validators.MaxValueValidator(UserRoles.ADMIN)])
+    value = models.IntegerField()
 
 

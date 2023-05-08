@@ -28,6 +28,8 @@ from .api_views.LoginView import LoginView
 from .api_views.UsersView import UsersView
 from .api_views.UsersEditRoleView import UsersEditRoleView
 from .api_views.GenerateDataView import GenerateDataView
+from .api_views.SetSettingView import SetSettingView
+from .api_views.PageSizeView import PageSizeView
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 
 
@@ -57,8 +59,10 @@ urlpatterns = [
     path('api/register/confirm/<str:token>', ConfirmRegisterView.as_view(), name="register"),
     path('api/token/', LoginView.as_view(), name='token_obtain_pair'),
     path('api/admin/generate-data/', GenerateDataView.as_view(), name='admin_generate_data'),
+    path('api/admin/set-setting/', SetSettingView.as_view(), name='admin_set_global_page_size'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/nr-total-pages/', NrTotalPages.as_view(), name="nr_total_pages"),
+    path('api/page-size', PageSizeView.as_view(), name="page_size"),
     path('api/swagger-plain/', get_schema_view(title='Swagger documentation',description='Guide for the REST API'), name='swagger_plain'),
     path('api/swagger-html/', TemplateView.as_view(template_name='swagger.html',extra_context={'schema_url':'swagger_plain'}), name='swagger_html'),
 ]

@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
-import { Message, NrTotalPages } from 'src/app/models/models';
+import { Message, NrTotalPages, PageSizeModel } from 'src/app/models/models';
 import { ManageAccountService } from 'src/app/api/manage-account-service';
 
 class PaginationButtonNumbersHolder {
@@ -147,29 +147,34 @@ export class DynamicTableComponent implements OnChanges {
     return this.checkBoxes.reduce((p, c) => p + Number(c), 0);
   }
   refresh() {
-    this.apiServ?.getNrTotalPages(this.baseUrl, this.pageSize).subscribe((result) => {
-      let res = result as NrTotalPages;
-      if (res.nr_total_pages! < this.pageNr) {
-        this.pageNr = res.nr_total_pages! - 1;
-      }
-      this.paginationNrs.setTotalPageNr(res.nr_total_pages!);
-      this.paginationNrs.setNrResults(res.nr_results!);
-      this.paginationNrs.setPage(this.pageNr);
+    this.apiServ?.getPageSize().subscribe(
+      (result) => {
+        let res = result as PageSizeModel;
+        this.pageSize = res.page_size!;
+        this.apiServ?.getNrTotalPages(this.baseUrl, this.pageSize).subscribe((result) => {
+          let res = result as NrTotalPages;
+          if (res.nr_total_pages! < this.pageNr) {
+            this.pageNr = res.nr_total_pages! - 1;
+          }
+          this.paginationNrs.setTotalPageNr(res.nr_total_pages!);
+          this.paginationNrs.setNrResults(res.nr_results!);
+          this.paginationNrs.setPage(this.pageNr);
 
-      let queryParams: Params = { pageNr: this.pageNr, pageSize: this.pageSize };
-      this.router!.navigate(
-        [],
-        {
-          queryParams: queryParams,
-          queryParamsHandling: 'merge',
+          let queryParams: Params = { pageNr: this.pageNr, pageSize: this.pageSize };
+          this.router!.navigate(
+            [],
+            {
+              queryParams: queryParams,
+              queryParamsHandling: 'merge',
+            });
+          this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
+            this.entities = result as Array<any>;
+            this.dataSource.data = this.entities;
+            console.log(this.entities);
+          });
         });
-      this.apiServ!.getEntities(this.pageNr, this.pageSize, this.baseUrl).subscribe((result) => {
-        this.entities = result as Array<any>;
-        this.dataSource.data = this.entities;
-        console.log(this.entities);
-      });
-    });
-
+      }
+    );
   }
   isRoleChecked(i: number, nr: number) {
     return this.entities[i].role == nr;

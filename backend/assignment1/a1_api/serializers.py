@@ -9,7 +9,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import AccessToken
 
-from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile
+from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile, IntegerSetting
 import django.db.models as models
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
@@ -24,6 +24,13 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ['message']
+
+
+class PageSizeSerializer(serializers.ModelSerializer):
+    page_size = serializers.IntegerField()
+
+    class Meta:
+        fields = ['page_size']
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -143,6 +150,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['id', 'first_name', 'last_name', 'bio', 'university', 'high_school', 'user', 'nr_entities_added', 'role']
+
+
+class IntegerSettingSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = IntegerSetting
+        fields = ['name', 'value', 'user', 'user_role']
 
 
 class CompanySerializer(serializers.ModelSerializer):

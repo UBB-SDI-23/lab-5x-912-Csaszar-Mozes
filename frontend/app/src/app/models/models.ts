@@ -14,6 +14,16 @@ export class DataGeneration {
     nr_l?: number;
 }
 
+export class PageSizeModel {
+    page_size?: number;
+}
+
+export class IntegerSetting {
+    value?: number;
+    name?: string;
+    user_role?: number;
+}
+
 export class LoginResponse {
     access?: string;
     refresh?: string;

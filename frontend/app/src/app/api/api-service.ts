@@ -1,9 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Company, CompanyDetail, DataGeneration } from "../models/models";
+import { Company, CompanyDetail, DataGeneration, IntegerSetting } from "../models/models";
 import { ActivatedRoute } from "@angular/router";
 import { ManageAccountService } from "./manage-account-service";
+import { SetPageSizeComponent } from "../features/admin/set-page-size/set-page-size.component";
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,9 @@ export class APIService {
             throw "Page number and Page size should be positive integers!";
         }
     }
+    setSetting(data: IntegerSetting) {
+        return this.http.post(APIService.url + "admin/set-setting/", data);
+    }
     getAutocompleteEntity(base_url: string, name: string, size: number) {
         if (size >= 1) {
             return this.http.get(APIService.url + base_url + `/name-autocomplete/?name=${name}&size=${size}`);
@@ -62,6 +66,9 @@ export class APIService {
         comp_url = this.addSearcParamsToUrl(comp_url);
         comp_url += 'url=' + url + "&size=" + page_size;
         return this.http.get(comp_url);
+    }
+    getPageSize() {
+        return this.http.get(APIService.url + 'page-size');
     }
     putEntity(base_url: string, id: number, data: Object) {
         return this.http.put(APIService.url + base_url + '/' + id + '/', data);

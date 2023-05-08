@@ -46,6 +46,7 @@ import { ErrorInterceptor } from '_helpers/error.interceptor';
 import { ErrorMessagesComponent } from './common/error-messages/error-messages.component';
 import { ListUsersComponent } from './features/users/list-users/list-users.component';
 import { GenerateDataComponent } from './features/admin/generate-data/generate-data.component';
+import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-size.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { GenerateDataComponent } from './features/admin/generate-data/generate-d
     ProfileComponent,
     ErrorMessagesComponent,
     ListUsersComponent,
-    GenerateDataComponent
+    GenerateDataComponent,
+    SetPageSizeComponent
   ],
   imports: [
     BrowserModule,
