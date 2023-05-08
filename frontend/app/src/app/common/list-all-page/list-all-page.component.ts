@@ -19,6 +19,7 @@ export class ListAllPageComponent {
   @Input() dynamicColumns: string[] = [];
   @Input() compareFn?: (a: any, b: any) => number;
   @Input() doSort: boolean = false;
+  @Input() showAdd: boolean = true;
   constructor(protected manageAccountServ: ManageAccountService) { }
   formatColumn(name: string): string {
     return name.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');

@@ -130,6 +130,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False)
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'is_active']
@@ -144,7 +146,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserSerializer(required=False)
     class Meta:
         model = Company
         fields = ["id", "name", "description", "start_year", "net_value", "reputation", "nr_workers", "nr_locations", "user"]

@@ -7,6 +7,13 @@ export class RegistrationMessage {
     activation_token?: string;
 }
 
+export class DataGeneration {
+    nr_p?: number;
+    nr_c?: number;
+    nr_pc?: number;
+    nr_l?: number;
+}
+
 export class LoginResponse {
     access?: string;
     refresh?: string;

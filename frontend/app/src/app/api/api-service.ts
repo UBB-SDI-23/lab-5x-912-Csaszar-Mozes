@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Company, CompanyDetail } from "../models/models";
+import { Company, CompanyDetail, DataGeneration } from "../models/models";
 import { ActivatedRoute } from "@angular/router";
+import { ManageAccountService } from "./manage-account-service";
 
 @Injectable({
     providedIn: 'root'
@@ -25,9 +26,14 @@ export class APIService {
         return url;
     }
 
-    constructor(private http: HttpClient, private route: ActivatedRoute) { }
+    constructor(private http: HttpClient, private route: ActivatedRoute, private manageAccountServ: ManageAccountService) { }
+    generateData(data: DataGeneration) {
+        return this.http.post(APIService.url + "admin/generate-data/", data);
+    }
     changeUserRole(user_id: number, role: number) {
-        return this.http.put(APIService.url + 'users/edit-role/', { change_user_id: user_id, role: role, to_change_stuff: user_id });
+        let data = { user_id: user_id, role: role };
+        console.log(data);
+        return this.http.put(APIService.url + 'users/edit-role/', data);
     }
     getEntities(page_nr: number, page_size: number, base_url: string) {
         if (page_nr >= 0 && page_size >= 1) {

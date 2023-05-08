@@ -33,6 +33,7 @@ export class AddCompanyComponent {
         data["description"] = this.descriptionFormControl.value;
         data["net_value"] = this.netWorthFormControl.value;
         data["reputation"] = this.reputationFormControl.value;
+        data["start_year"] = this.startYearFormControl.value;
         if (this.isInputDataValid()) {
             this.apiServ.addEntity('companies', data).subscribe(result => {
                 alert("Updated successfully!");

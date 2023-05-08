@@ -1,0 +1,57 @@
+Please speciy the number of entities you want to create in the inputs below.
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Number of companies" floatLabel="always" [formControl]="nrCFormControl">
+    <mat-label>Number of companies</mat-label>
+    <mat-error *ngIf="nrCFormControl.hasError('min')">
+      Number of companies generated cannot be less than <strong>&nbsp;10</strong>
+    </mat-error>
+    <mat-error *ngIf="nrCFormControl.hasError('max')">
+      Number of companies generated cannot be more than <strong>&nbsp;100</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Number of people" floatLabel="always" [formControl]="nrPFormControl">
+    <mat-label>Number of people</mat-label>
+    <mat-error *ngIf="nrPFormControl.hasError('min')">
+      Number of people generated cannot be less than <strong>&nbsp;10</strong>
+    </mat-error>
+    <mat-error *ngIf="nrPFormControl.hasError('max')">
+      Number of people generated cannot be more than <strong>&nbsp;100</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Number of locations" floatLabel="always" [formControl]="nrLFormControl">
+    <mat-label>Number of locations</mat-label>
+    <mat-error *ngIf="nrLFormControl.hasError('min')">
+      Number of locations generated cannot be less than <strong>&nbsp;0</strong>
+    </mat-error>
+    <mat-error *ngIf="nrLFormControl.hasError('max')">
+      Number of locations generated cannot be more than <strong>&nbsp;100</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Number of people working at companies" floatLabel="always"
+      [formControl]="nrPCFormControl" (keyup)="changePCNr()">
+    <mat-label>Number of people working at companies</mat-label>
+    <mat-error *ngIf="nrPCFormControl.hasError('min')">
+      Number of people working at companies generated cannot be less than <strong>&nbsp;0</strong>
+    </mat-error>
+    <mat-error *ngIf="nrPCFormControl.hasError('max')">
+      Number of people working at companies generated cannot be more than <strong>&nbsp;100</strong>
+    </mat-error>
+    <mat-error *ngIf="nrPCFormControl.hasError('tooManyPC')">
+      Number of people working at companies is <strong>&nbsp;too large</strong> (compared to companies and people)
+    </mat-error>
+  </mat-form-field>
+  <br>
+
+  <button mat-raised-button color="primary" (click)="generate()">Generate</button>
+  <br>
+</form>

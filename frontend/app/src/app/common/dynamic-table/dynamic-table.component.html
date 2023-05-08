@@ -17,6 +17,10 @@
 </div>
 
 <ng-template #table>
+  <button mat-button *ngIf="nrBoxesChecked() > 0 && manageAccountServ.isLoggedInAsAdmin()" color="warn"
+    (click)="deleteSelected()">
+    Delete selected
+  </button>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>#</th>
@@ -48,10 +52,17 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="delete_tick">
+      <th mat-header-cell *matHeaderCellDef>Select</th>
+      <td mat-cell *matCellDef="let element; let i = index;">
+        <mat-checkbox class="example-margin" [checked]="checkBoxes[i]" (click)="flipCheckbox($event, i)"></mat-checkbox>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="edit_role">
       <th mat-header-cell *matHeaderCellDef>Edit Role</th>
       <td mat-cell *matCellDef="let element; let i = index">
-        <mat-radio-group>
+        <mat-radio-group *ngIf="!isSameUserAsLoggedIn(i)">
           <mat-radio-button value="1" [checked]="isRoleChecked(i, 1)"
             (click)="changeRoleTo($event, i, 1)">Normal</mat-radio-button>
           <mat-radio-button value="2" [checked]="isRoleChecked(i, 2)"
@@ -59,8 +70,10 @@
           <mat-radio-button value="3" [checked]="isRoleChecked(i, 3)"
             (click)="changeRoleTo($event, i, 3)">Admin</mat-radio-button>
         </mat-radio-group>
+        <div *ngIf="isSameUserAsLoggedIn(i)">
+          You can't edit your own role.
+        </div>
       </td>
-
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

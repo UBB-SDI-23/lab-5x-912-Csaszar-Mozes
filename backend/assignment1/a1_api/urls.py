@@ -27,6 +27,7 @@ from .api_views.ConfirmRegisterView import ConfirmRegisterView
 from .api_views.LoginView import LoginView
 from .api_views.UsersView import UsersView
 from .api_views.UsersEditRoleView import UsersEditRoleView
+from .api_views.GenerateDataView import GenerateDataView
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 
 
@@ -49,12 +50,13 @@ urlpatterns = [
     path('api/companies/by-avg-salary/', CompanyByAvgSalaryView.as_view(), name="companies_avg_salary"),
     path('api/companies/by-nr-locations/', CompanyByNrLocationsView.as_view(), name="companies_nr_locations"),
     path('api/users/', UsersView.as_view(), name="users_view"),
-    path('api/users/edit-role/', UsersEditRoleView.as_view(), name="users_edit_role_view"),
+    path('api/users/edit-role/', UsersEditRoleView.as_view(), name="users_edit_role"),
     path('api/users/<int:id>/', UserProfileIDView.as_view(), name="user_by_id"),
     path('api/users/profile/', PersonalProfileView.as_view(), name="user_profile"),
     path('api/register/', RegisterView.as_view(), name="register"),
     path('api/register/confirm/<str:token>', ConfirmRegisterView.as_view(), name="register"),
     path('api/token/', LoginView.as_view(), name='token_obtain_pair'),
+    path('api/admin/generate-data/', GenerateDataView.as_view(), name='admin_generate_data'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/nr-total-pages/', NrTotalPages.as_view(), name="nr_total_pages"),
     path('api/swagger-plain/', get_schema_view(title='Swagger documentation',description='Guide for the REST API'), name='swagger_plain'),

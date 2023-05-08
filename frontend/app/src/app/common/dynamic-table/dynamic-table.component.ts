@@ -3,7 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { APIService } from 'src/app/api/api-service';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
-import { NrTotalPages } from 'src/app/models/models';
+import { Message, NrTotalPages } from 'src/app/models/models';
+import { ManageAccountService } from 'src/app/api/manage-account-service';
 
 class PaginationButtonNumbersHolder {
   before_the_dots: number[] = [];
@@ -80,6 +81,7 @@ export class DynamicTableComponent implements OnChanges {
   entities: any[] = [];
   paginationNrs: PaginationButtonNumbersHolder = new PaginationButtonNumbersHolder();
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  checkBoxes: boolean[] = [];
 
   @Input() baseUrl: string = '';
   @Input() redirectUrl: string = '';
@@ -90,7 +92,10 @@ export class DynamicTableComponent implements OnChanges {
   @Input() compareFn?: (a: any, b: any) => number;
   @Input() doSort: boolean = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, protected manageAccountServ: ManageAccountService) {
+    for (let i = 0; i < this.pageSize; i++) {
+      this.checkBoxes.push(false);
+    }
   }
   formatColumn(name: string): string {
     return name.split('.').pop()!.split('_').map((value) => value[0].toUpperCase() + value.slice(1)).join(' ');
@@ -113,6 +118,33 @@ export class DynamicTableComponent implements OnChanges {
     event.stopPropagation();
     DeleteConfirmationComponent.setUpConfirmDelete(this.baseUrl, this.baseUrl, Number(id));
     this.router!.navigateByUrl('delete-confirmation');
+  }
+  deleteSelected() {
+    if (confirm("Are you sure?")) {
+      let nr_to_delete = this.nrBoxesChecked();
+      let nr_deleted = 0;
+      this.checkBoxes.forEach((v, i) => {
+        if (v) {
+          this.checkBoxes[i] = false;
+          this.apiServ?.deleteEntity(this.baseUrl, this.entities[i].id).subscribe(
+            (res) => {
+              nr_deleted++;
+              if (nr_deleted == nr_to_delete) {
+                alert("Succesfully deleted all");
+                this.refresh();
+              }
+            }
+          );
+        }
+      });
+    }
+  }
+  flipCheckbox(event: MouseEvent, i: number) {
+    event.stopPropagation();
+    this.checkBoxes[i] = !this.checkBoxes[i];
+  }
+  nrBoxesChecked() {
+    return this.checkBoxes.reduce((p, c) => p + Number(c), 0);
   }
   refresh() {
     this.apiServ?.getNrTotalPages(this.baseUrl, this.pageSize).subscribe((result) => {
@@ -142,16 +174,23 @@ export class DynamicTableComponent implements OnChanges {
   isRoleChecked(i: number, nr: number) {
     return this.entities[i].role == nr;
   }
-  changeRoleTo(event: MouseEvent, i: number, nr: number) {
+  changeRoleTo(event: MouseEvent, i: number, role: number) {
     event.stopPropagation();
     //if the user doesn't select current role
-    if (!this.isRoleChecked(i, nr)) {
-      this.apiServ!.changeUserRole(this.entities[i].user_id, nr).subscribe(
-        (result) => {
-          alert(result);
-        }
-      );
+    if (!this.isRoleChecked(i, role)) {
+      if (confirm("Are you sure?")) {
+        this.apiServ!.changeUserRole(this.entities[i].user.id, role).subscribe(
+          (result) => {
+            let res = result as Message;
+            alert(res.message);
+            this.entities[i].role = role;
+          }
+        );
+      }
     }
+  }
+  isSameUserAsLoggedIn(i: number) {
+    return this.manageAccountServ.getUser() == this.entities[i].user.username
   }
   goToUser(userNr: number) {
     this.router!.navigateByUrl('users/' + userNr);
@@ -181,6 +220,7 @@ export class DynamicTableComponent implements OnChanges {
     this.route.queryParams.subscribe((params) => {
       this.pageNr = params["pageNr"] == undefined ? 0 : Number(params["pageNr"]);
       this.pageSize = params["pageSize"] == undefined ? 15 : Number(params["pageSize"]);
+
       this.refresh();
     });
 

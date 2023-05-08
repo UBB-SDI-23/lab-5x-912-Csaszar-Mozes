@@ -35,6 +35,9 @@ export class ListCompaniesComponent implements OnInit {
     if (this.manageAccountServ.isLoggedOut() || this.manageAccountServ.getRole() == UserRoles.NORMAL) {
       this.displayedColumns.pop();
     }
+    if (this.manageAccountServ.isLoggedInAsAdmin()) {
+      this.displayedColumns.push('delete_tick');
+    }
   }
 }
 

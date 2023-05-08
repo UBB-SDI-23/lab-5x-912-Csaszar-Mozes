@@ -17,7 +17,7 @@ class UsersEditRoleView(UpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         print(request.data)
-        user_id = int(request.data['change_user_id'])
+        user_id = int(request.data['user_id'])
         role = int(request.data['role'])
         if 0 < role < 4:
             try:
@@ -28,7 +28,7 @@ class UsersEditRoleView(UpdateAPIView):
                 raise ValidationError("No user with given id!")
         else:
             raise ValidationError("Role should be an integer between 1 and 3 (both ends inclusive)!")
-        return {"message": "User role updated successfully!"}
+        return Response({"message": "User role updated successfully!"}, status=200)
 
     def patch(self, request, *args, **kwargs):
         pass

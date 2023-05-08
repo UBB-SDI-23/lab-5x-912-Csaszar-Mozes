@@ -16,12 +16,13 @@ def escape_single_quote(string):
     return new_str
 
 
-def generate_company(net_value, reputation, nr_users):
+def generate_company(net_value, reputation, nr_users, single_user=None):
     name = escape_single_quote(fake.company())
     description = escape_single_quote(fake.catch_phrase())
     start_year = rnd.randint(1750, 2023)
+    user_id = str(rnd.randint(1, nr_users)) if single_user is None else single_user
     return "('" + name + "','" + description + "'," + str(net_value) + "," + str(reputation) + "," + \
-           str(start_year) + "," + str(rnd.randint(1, nr_users)) + ")", name
+           str(start_year) + "," + str(user_id) + ")", name
 
 
 def change_name_of_company(company, name):
@@ -33,10 +34,11 @@ def change_name_of_company(company, name):
     return company_r[:-1]
 
 
-def generate(nr, chances_added, reputations, net_values, nr_users, batch_size=1000):
+def generate(nr, chances_added, reputations, net_values, nr_users, can_truncate=True, single_user=None, batch_size=1000):
     print("GENERATING COMPANIES")
-    file = open('data_generation/insert_c.sql', 'w')
-    file.write('ALTER TABLE a1_api_company DISABLE TRIGGER ALL;TRUNCATE a1_api_company RESTART IDENTITY CASCADE;')
+    file = open('data_generation/insert_c.sql', 'w+')
+    if can_truncate:
+        file.write('ALTER TABLE a1_api_company DISABLE TRIGGER ALL;TRUNCATE a1_api_company RESTART IDENTITY CASCADE;')
 
     i_ca = 1
     nr_written = 0
@@ -54,7 +56,7 @@ def generate(nr, chances_added, reputations, net_values, nr_users, batch_size=10
         reputation = rnd.randint(reputations[i_ca - 1], reputations[i_ca])
         net_value = rnd.randint(net_values[i_ca - 1], net_values[i_ca])
 
-        company, name = generate_company(net_value, reputation, nr_users)
+        company, name = generate_company(net_value, reputation, nr_users, single_user)
         if names.get(name) is not None:
             names[name] += 1
             name = name + ' ' + str(names[name])

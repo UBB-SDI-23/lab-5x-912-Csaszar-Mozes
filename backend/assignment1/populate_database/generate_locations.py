@@ -25,19 +25,20 @@ def generate_location(company_id):
         + "'," + str(company_id) + ")"
 
 
-def generate(chances_added, nr_locations_in_comp, nr_companies, batch_size=1000):
+def generate(chances_added, nr_locations_in_comp, c_id_range, can_truncate=True, batch_size=1000):
     print("GENERATING LOCATIONS")
 
     file = open('data_generation/insert_l.sql', 'w')
-    file.write('ALTER TABLE a1_api_location DISABLE TRIGGER ALL; TRUNCATE a1_api_location RESTART IDENTITY RESTRICT;')
+    if can_truncate:
+        file.write('ALTER TABLE a1_api_location DISABLE TRIGGER ALL;\n TRUNCATE a1_api_location RESTART IDENTITY RESTRICT;')
 
     i_ca = 1
     nr_written = 0
     stmt = 'INSERT INTO a1_api_location (country,city,street,apartment,number,description,company_id) VALUES '
-    for c_id in range(1, nr_companies + 1):
+    for c_id in range(c_id_range[0], c_id_range[1] + 1):
 
         # Determine range of number of locations to generate for a company
-        if c_id > chances_added[i_ca] * nr_companies:
+        if c_id - c_id_range[0] > chances_added[i_ca] * (c_id_range[1] - c_id_range[0] + 1):
             i_ca += 1
 
         #get a random number in the right range of number of locations for current company

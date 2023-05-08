@@ -11,9 +11,11 @@ class PeopleView(ListCreateAPIView):
         page_nr = int(self.request.query_params.get('page', 0))
         page_size = int(self.request.query_params.get('size', 15))
         page_start = page_nr * page_size
-        return Person.objects.all()[page_start:page_start+page_size]
+        return Person.objects.all().order_by('id')[page_start:page_start+page_size]
 
     def perform_create(self, serializer):
+        serializer.validated_data['user_id'] = self.request.user.id
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
