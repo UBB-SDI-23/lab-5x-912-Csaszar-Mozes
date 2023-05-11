@@ -1,0 +1,7 @@
+Django=4.1.7
+Faker=18.4.0
+djangorestframework=3.14.0
+djangorestframework-simplejwt=5.2.2
+uritemplate=4.1.1
+urllib3=1.26.15
+django-rest-swagger 5.2.2

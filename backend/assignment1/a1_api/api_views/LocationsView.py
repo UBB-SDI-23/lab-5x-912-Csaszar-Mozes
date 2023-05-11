@@ -12,4 +12,4 @@ class LocationsView(ListCreateAPIView):
         page_nr = int(self.request.query_params.get('page', 0))
         page_size = int(self.request.query_params.get('size', 15))
         page_start = page_nr * page_size
-        return Location.objects.all()[page_start:page_start + page_size]
+        return Location.objects.all().order_by('id')[page_start:page_start + page_size]

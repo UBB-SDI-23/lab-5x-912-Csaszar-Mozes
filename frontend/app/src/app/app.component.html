@@ -55,17 +55,23 @@
   </mat-menu>
   <div *ngIf="manageAccountServ.isLoggedIn()">
     <button mat-button routerLink="users/profile">Logged in as {{manageAccountServ.getUser()}}</button>
+    <button mat-button *ngIf="manageAccountServ.isLoggedInAsAdmin()" [matMenuTriggerFor]="adminStuff">Admin
+      Actions</button>
+    <mat-menu #adminStuff>
+      <button mat-menu-item routerLink="companies/by-avg-salary">Users</button>
+      <button mat-menu-item routerLink="companies/by-nr-locations">Generate Data</button>
+      <button mat-menu-item routerLink="companies/reputation-greater-than">Set Page Size</button>
+    </mat-menu>
     <button mat-button (click)="logOut()">Log Out</button>
   </div>
+
   <div *ngIf="manageAccountServ.isLoggedOut()">
     <button mat-button routerLink="register">Register</button>
     <button mat-button routerLink="login">Log In</button>
   </div>
-  <div *ngIf="manageAccountServ.isLoggedInAsAdmin()">
-    <button mat-button routerLink="users">Users</button>
-    <button mat-button routerLink="admin/generate-data">Generate</button>
-    <button mat-button routerLink="admin/set-page-size">Set Page Size</button>
-  </div>
+
+
+
 </nav>
 <app-error-messages></app-error-messages>
 
