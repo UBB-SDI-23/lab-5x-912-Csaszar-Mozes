@@ -15,4 +15,4 @@ backend/assignment1/populate_database/data_generation/insert_p.sql
 backend/assignment1/populate_database/data_generation/insert_pc.sql
 backend/assignment1/populate_database/data_generation/insert_l.sql
 backend/assignment1/populate_database/data_generation/insert_l.sql
-*.env
+*.env.*

@@ -43,6 +43,7 @@ export class RegisterComponent {
           let res = resp as RegistrationMessage;
           console.log(resp, res);
           if (confirm('Activate your account now?')) {
+            this.manageAccountServ.saveUser(user.username!);
             this.manageAccountServ.confirmRegistration(res.activation_token!).subscribe(
               (resp) => {
                 let res = resp as Message;

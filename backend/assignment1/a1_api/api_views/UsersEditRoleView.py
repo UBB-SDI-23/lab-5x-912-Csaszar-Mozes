@@ -16,7 +16,6 @@ class UsersEditRoleView(UpdateAPIView):
         return UserProfile.objects.all()
 
     def put(self, request, *args, **kwargs):
-        print(request.data)
         user_id = int(request.data['user_id'])
         role = int(request.data['role'])
         if 0 < role < 4:
