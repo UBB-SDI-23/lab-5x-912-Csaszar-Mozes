@@ -6,9 +6,6 @@ services:
       context: ./assignment1
       dockerfile: Dockerfile.prod
     command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - static_volume:/home/assignment1/web/staticfiles
-      - media_volume:/home/assignment1/web/mediafiles
     expose:
       - 8000
     env_file:
