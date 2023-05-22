@@ -20,7 +20,7 @@ def generate_all(nr_users=10000, nr_people=3000000, nr_companies=1000000):
     #generate_cs(nr_companies, chances_added, reputations, net_values, nr_users)
     #generate_ps(nr_people, nr_users)
     #generate_ls(chances_added, nr_locations_in_comp, [1, nr_companies])
-    generate_pcs(chances_added, salaries, nr_people_in_comp, nr_users, [1, nr_people], [1, nr_companies])
+    #generate_pcs(chances_added, salaries, nr_people_in_comp, nr_users, [1, nr_people], [1, nr_companies])
 
     generate_usups(nr_users)
 
