@@ -10,8 +10,8 @@ import { SetPageSizeComponent } from "../features/admin/set-page-size/set-page-s
     providedIn: 'root'
 })
 export class APIService {
-    static url: string = 'https://mozes-csaszar-sdi-922.strangled.net/api/';
-    //static url: string = 'http://127.0.0.1:8000/api/';
+    //static url: string = 'https://mozes-csaszar-sdi-922.strangled.net/api/';
+    static url: string = 'http://127.0.0.1:8000/api/';
 
     private addSearcParamsToUrl(url: string, exclude: string[] = ['pageSize', 'pageNr']): string {
         url += '/?';
@@ -33,7 +33,6 @@ export class APIService {
     }
     changeUserRole(user_id: number, role: number) {
         let data = { user_id: user_id, role: role };
-        console.log(data);
         return this.http.put(APIService.url + 'users/edit-role/', data);
     }
     getEntities(page_nr: number, page_size: number, base_url: string) {
