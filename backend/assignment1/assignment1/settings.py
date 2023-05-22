@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'a1_api',
-    'corsheaders'
+    'corsheaders',
+    'channels'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -144,4 +145,15 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=15),
     'ROTATE_REFRESH_TOKENS': True,
+}
+
+ASGI_APPLICATION = "assignment1.asgi.application"
+
+CHANNEL_LAYERS = {
+ 'default': {
+ 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+ 'CONFIG': {
+ 'hosts': [('localhost', 6379)],
+ },
+ },
 }

@@ -57,9 +57,9 @@ def generate(chances_added, salaries, nr_people_in_comp, nr_users, p_id_range, c
         for _ in range(nr_to_gen):
             if nr_written != 0:
                 stmt += ","
-            p_id = rnd.randint(p_id_range[0], p_id_range[0])
+            p_id = rnd.randint(p_id_range[0], p_id_range[1])
             while used_people.get(p_id):
-                p_id = rnd.randint(1, p_id_range[0])
+                p_id = rnd.randint(p_id_range[0], p_id_range[1])
             used_people[p_id] = True
             salary = rnd.randint(salaries[i_ca - 1], salaries[i_ca])
             stmt += generate_pc(p_id, c_id, salary, nr_users, single_user)
