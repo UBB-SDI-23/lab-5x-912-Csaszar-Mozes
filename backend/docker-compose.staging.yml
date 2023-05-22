@@ -5,7 +5,7 @@ services:
     build:
       context: ./assignment1
       dockerfile: Dockerfile.prod
-    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn assignment1.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
     env_file:
