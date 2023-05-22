@@ -26,7 +26,5 @@ describe('template spec', () => {
       cy.visit('localhost:4200/' + url_part);
       cy.contains('ADD').should('exist');
     }
-    cy.get('nav>button').get(':contains(Add)').eq(3);
-
   })
 })

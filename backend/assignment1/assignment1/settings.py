@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'a1_api',
     'corsheaders',
-    'channels'
+    'channels',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

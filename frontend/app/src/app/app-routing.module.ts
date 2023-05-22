@@ -25,11 +25,12 @@ import { ProfileComponent } from './common/account/profile/profile.component';
 import { ListUsersComponent } from './features/users/list-users/list-users.component';
 import { GenerateDataComponent } from './features/admin/generate-data/generate-data.component';
 import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-size.component';
+import { ChatComponent } from './common/chat/chat.component';
 
 const routes: Routes = [
     {
         path: "",
-        component: HomeComponent
+        component: ChatComponent
     },
     {
         path: "companies/add",
