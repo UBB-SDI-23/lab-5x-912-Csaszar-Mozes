@@ -7,9 +7,36 @@ from rest_framework import permissions
 from ...permissions import IsSafeToView
 from ...serializers import MessageSerializer
 import tensorflow as tf
+import pickle as pkl
+import numpy as np
 
+class PredictNextWordView(UpdateAPIView):
+    model = tf.keras.models.load_model("a1_api/api_views/AIStuff/nextword3.h5")
+    tokenizer = pkl.load(open("a1_api/api_views/AIStuff/tokenizer1.pkl", "rb"))
+    word_lookup = {v: k for k, v in tokenizer.word_index.items()}
 
-class CompaniesView(RetrieveAPIView):
     serializer_class = MessageSerializer
-    permission_classes = [IsSafeToView | permissions.IsAuthenticated]
+    def predict_next_word(self, text):
+        """
+            In this function we are using the tokenizer and models trained
+            and we are creating the sequence of the text entered and then
+            using our model to predict and return the predicted word.
+
+        """
+        #Pre-process text
+        text = text.split(" ")
+        text = text[-1]
+        try:
+            sequence = PredictNextWordView.tokenizer.texts_to_sequences([text])[0]
+            sequence = np.array(sequence)
+            preds = PredictNextWordView.model.predict(sequence)
+            pred = np.argmax(preds)
+            return PredictNextWordView.word_lookup.get(pred, "")
+        except ValueError:
+            return ""
+
+    def post(self, request, *args, **kwargs):
+        data = request.data["data"].strip()
+        prediction = self.predict_next_word(data)
+        return Response({"message": prediction}, status=200)
 

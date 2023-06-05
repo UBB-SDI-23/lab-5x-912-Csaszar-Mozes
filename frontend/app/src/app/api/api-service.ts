@@ -33,6 +33,9 @@ export class APIService {
     }
 
     constructor(private http: HttpClient, private route: ActivatedRoute, private manageAccountServ: ManageAccountService) { }
+    getSuggestion(data: string) {
+        return this.http.post(APIService.url + "predict-next-word/", { "data": data })
+    }
     generateData(data: DataGeneration) {
         return this.http.post(APIService.url + "admin/generate-data/", data);
     }

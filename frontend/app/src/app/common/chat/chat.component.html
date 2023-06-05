@@ -1,3 +1,21 @@
+<style>
+  .message {
+    position: absolute;
+    left: 50px;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0);
+    width: 50%;
+    height: 100px;
+  }
+
+  .message._2 {
+    position: absolute;
+    left: 50px;
+    z-index: 3;
+    color: rgba(0, 0, 0, 0.75);
+  }
+</style>
+
 <mat-form-field>
   <input [readonly]="!manageAccountServ.isLoggedIn()" (keyup)="saveNickname()" label="Nickname" matInput
     [formControl]="nicknameFormControl">
@@ -10,15 +28,10 @@
 </mat-form-field>
 <div id="MessagesChatBox" readonly style="width: 50%; height: 70%;"></div>
 <br>
-
-<mat-form-field>
-  <input (keyup)="handleMessage($event)" label="Message" matInput [formControl]="messageFormControl">
-  <mat-label>Message</mat-label>
-  <mat-error *ngIf="messageFormControl.hasError('maxLength')">
-    Message cannot be longer than <strong>&nbsp;100 characters</strong>
-  </mat-error>
-  <mat-hint align="end">{{messageFormControl.value.length}} / 100</mat-hint>
-
-</mat-form-field>
-
-<button (click)="sendMessage()">Send</button>
+<div class="message_holder">
+  <label for="message">Message:</label>
+  <br>
+  <textarea label="Message" class="message" id="message"> </textarea>
+  <textarea label="Message" class="message _2" id="message2"></textarea>
+  <button>Send</button>
+</div>
