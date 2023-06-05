@@ -11,7 +11,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +48,8 @@ import { ErrorMessagesComponent } from './common/error-messages/error-messages.c
 import { ListUsersComponent } from './features/users/list-users/list-users.component';
 import { GenerateDataComponent } from './features/admin/generate-data/generate-data.component';
 import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-size.component';
+import { ChatComponent } from './common/chat/chat.component';
+
 
 @NgModule({
   declarations: [
@@ -78,7 +81,8 @@ import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-si
     ErrorMessagesComponent,
     ListUsersComponent,
     GenerateDataComponent,
-    SetPageSizeComponent
+    SetPageSizeComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +100,7 @@ import { SetPageSizeComponent } from './features/admin/set-page-size/set-page-si
     MatAutocompleteModule,
     MatMenuModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [
     AuthGuard,

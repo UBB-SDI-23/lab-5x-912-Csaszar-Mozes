@@ -26,6 +26,9 @@ describe('template spec', () => {
       cy.visit('localhost:4200/' + url_part);
       cy.contains('ADD').should('exist');
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> messaging
   })
 })

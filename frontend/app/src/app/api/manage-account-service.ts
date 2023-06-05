@@ -8,6 +8,7 @@ import { APIService } from "./api-service";
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
 const ROLE_KEY = 'auth_role';
+const NICKNAME_KEY = 'nickname';
 
 @Injectable({
   providedIn: 'root'
@@ -103,5 +104,19 @@ export class ManageAccountService {
   getRole(): string {
     const role = window.localStorage.getItem(ROLE_KEY)
     return role == undefined ? '' : role;
+  }
+
+  saveNickname(nickname: string) {
+    window.localStorage.removeItem(NICKNAME_KEY);
+    window.localStorage.setItem(NICKNAME_KEY, nickname);
+  }
+
+  removeNickname() {
+    window.localStorage.removeItem(NICKNAME_KEY);
+  }
+
+  getNickname(): string {
+    const nickname = window.localStorage.getItem(NICKNAME_KEY);
+    return nickname == undefined ? (this.isLoggedIn() ? this.getUser() : 'Guest') : nickname;
   }
 }
