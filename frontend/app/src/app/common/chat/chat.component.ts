@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { APIService } from 'src/app/api/api-service';
 import { ManageAccountService } from 'src/app/api/manage-account-service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ManageAccountService } from 'src/app/api/manage-account-service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  static socketURL: string = "ws://127.0.0.1:8000/ws/chat/general/"
+  static socketURL: string = "ws://" + APIService.simpeURL() + "/ws/chat/general/";
   public socket: WebSocket = new WebSocket(ChatComponent.socketURL);
   public dataString: string = '';
   private messageBox!: HTMLElement;
