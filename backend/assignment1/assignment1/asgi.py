@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 ASGI config for assignment1 project.
 
@@ -15,7 +14,6 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'assignment1.settings')
 
 application = get_asgi_application()
-=======
 import os
 
 from channels.auth import AuthMiddlewareStack
@@ -37,4 +35,3 @@ application = ProtocolTypeRouter(
                 ),
     }
 )
->>>>>>> messaging

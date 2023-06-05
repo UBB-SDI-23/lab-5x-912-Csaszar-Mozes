@@ -11,11 +11,12 @@ import { SetPageSizeComponent } from "../features/admin/set-page-size/set-page-s
 })
 export class APIService {
     static url: string = 'https://mozes-csaszar-sdi-922.strangled.net/api/';
-
-    static simpeURL(): string {
-        return this.url.split('/')[2];
-    }
     //static url: string = 'http://127.0.0.1:8000/api/';
+
+    static webSocketUrl(): string {
+        return (this.url.includes('127.0.0.1') ? 'ws://' : "wss://") + this.url.split('/')[2];
+    }
+
 
     private addSearcParamsToUrl(url: string, exclude: string[] = ['pageSize', 'pageNr']): string {
         url += '/?';

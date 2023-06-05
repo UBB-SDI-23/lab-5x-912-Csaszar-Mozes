@@ -9,7 +9,7 @@ import { ManageAccountService } from 'src/app/api/manage-account-service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  static socketURL: string = "ws://" + APIService.simpeURL() + "/ws/chat/general/";
+  static socketURL: string = APIService.webSocketUrl() + "/ws/chat/general/";
   public socket: WebSocket = new WebSocket(ChatComponent.socketURL);
   public dataString: string = '';
   private messageBox!: HTMLElement;
