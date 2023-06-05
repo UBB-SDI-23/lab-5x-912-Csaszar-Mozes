@@ -12,7 +12,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SocketIoModule } from 'ngx-socket-io';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -102,7 +101,6 @@ import { ChatComponent } from './common/chat/chat.component';
     MatMenuModule,
     MatRadioModule,
     MatCheckboxModule,
-    //SocketIoModule.forRoot({ url: 'http://localhost:8000/api/', options: {} }),
   ],
   providers: [
     AuthGuard,

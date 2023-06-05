@@ -1,2 +1,24 @@
-<input type="text">
-<!-- <button (click)="sendMessage('Hello')">Send</button> -->
+<mat-form-field>
+  <input [readonly]="!manageAccountServ.isLoggedIn()" (keyup)="saveNickname()" label="Nickname" matInput
+    [formControl]="nicknameFormControl">
+  <mat-label>Nickname</mat-label>
+  <mat-error *ngIf="nicknameFormControl.hasError('maxLength')">
+    Nickname cannot be longer than <strong>&nbsp;100 characters</strong>
+  </mat-error>
+  <mat-hint align="end">{{nicknameFormControl.value.length}} / 100</mat-hint>
+
+</mat-form-field>
+<div id="MessagesChatBox" readonly style="width: 50%; height: 70%;"></div>
+<br>
+
+<mat-form-field>
+  <input (keyup)="handleMessage($event)" label="Message" matInput [formControl]="messageFormControl">
+  <mat-label>Message</mat-label>
+  <mat-error *ngIf="messageFormControl.hasError('maxLength')">
+    Message cannot be longer than <strong>&nbsp;100 characters</strong>
+  </mat-error>
+  <mat-hint align="end">{{messageFormControl.value.length}} / 100</mat-hint>
+
+</mat-form-field>
+
+<button (click)="sendMessage()">Send</button>

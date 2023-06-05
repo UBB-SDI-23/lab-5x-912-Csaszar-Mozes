@@ -18,10 +18,10 @@ from django.urls import path
 
 from django.contrib import admin
 from django.urls import path, include
-from a1_api import urls as people_urls
+from a1_api import urls as app_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('', include(people_urls)),
+    path('', include(app_urls)),
 ]

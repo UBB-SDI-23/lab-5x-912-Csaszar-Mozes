@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y@jri90$^+mqwiu8$p1!l=hhciakd0@%qkiz+kjnydh33w7cvw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -34,6 +34,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -150,10 +151,10 @@ SIMPLE_JWT = {
 ASGI_APPLICATION = "assignment1.asgi.application"
 
 CHANNEL_LAYERS = {
- 'default': {
- 'BACKEND': 'channels_redis.core.RedisChannelLayer',
- 'CONFIG': {
- 'hosts': [('localhost', 6379)],
- },
- },
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
