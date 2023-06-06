@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/app/api/api-service';
 import { ManageAccountService } from 'src/app/api/manage-account-service';
-import { Message } from 'src/app/models/models';
+import { Message, MessageModel } from 'src/app/models/models';
 
 @Component({
   selector: 'app-chat',
@@ -41,17 +41,31 @@ export class ChatComponent implements OnInit {
     });
 
     this.socket.onmessage = function (e) {
-      const data = JSON.parse(e.data)['message'];
-      c_obj.dataString += "<b>" + data['user'] + "</b><br>";
-      c_obj.dataString += data['message'] + '<br>';
-      c_obj.messageBox.innerHTML = c_obj.dataString;
+      const data = JSON.parse(e.data)['message'] as MessageModel;
+      c_obj.addMessageToBox(data);
     }
 
     this.socket.onclose = function (e) {
       alert("Chat server closed unexpectedly.");
     }
-  }
 
+    this.populateMessagebox();
+  }
+  populateMessagebox() {
+    this.apiServ.getMessages(15).subscribe(
+      (ret) => {
+        let messages = ret as MessageModel[];
+        messages.sort((a, b) => a.id! < b.id! ? -1 : 1)
+        for (let m of messages) {
+          this.addMessageToBox(m);
+        }
+      }
+    )
+  }
+  addMessageToBox(m: MessageModel) {
+    this.messageBox.innerHTML += "<b>" + m['nickname'] + "</b><br>";
+    this.messageBox.innerHTML += m['content'] + '<br>';
+  }
   saveNickname() {
     if (this.nicknameFormControl.valid) {
       this.manageAccountServ.saveNickname(this.nicknameFormControl.value);
@@ -66,7 +80,6 @@ export class ChatComponent implements OnInit {
       (value: Message) => {
         this.nextSuggestion = value.message!;
         this.messageInput2!.value = this.messageInput1!.value + this.nextSuggestion;
-        console.log("SUGGESTION", this.nextSuggestion);
       }
     )
   }
@@ -102,17 +115,27 @@ export class ChatComponent implements OnInit {
 
   }
   sendMessage() {
-    let userName: string = this.nicknameFormControl.value;
-    let message: string = this.messageInput1!.value;
-    if (message.trim() != '') {
-      this.socket.send(JSON.stringify({
-        'message': {
-          'message': this.messageInput1!.value,
-          'user': userName
+    let nickname: string = this.nicknameFormControl.value;
+    let content: string = this.messageInput1!.value;
+    if (content.length > 300) {
+      alert("Message too long!")
+    }
+    else if (content.trim() != '' && nickname != '') {
+      let m: MessageModel = new MessageModel();
+      m.content = content;
+      m.nickname = nickname;
+      this.apiServ.addMessage(m).subscribe(
+        () => {
+          this.socket.send(JSON.stringify({
+            'message': {
+              'content': m.content,
+              'nickname': m.nickname
+            }
+          }));
+          this.messageInput1!.value = '';
+          this.messageInput2!.value = '';
         }
-      }));
-      this.messageInput1!.value = '';
-      this.messageInput2!.value = '';
+      );
     }
   }
 }

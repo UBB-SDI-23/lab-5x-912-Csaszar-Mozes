@@ -54,6 +54,12 @@ export class APIService {
             throw "Page number and Page size should be positive integers!";
         }
     }
+    getMessages(page_size: number) {
+        return this.http.get(APIService.url + 'messages/?size=' + page_size);
+    }
+    addMessage(data: any) {
+        return this.http.post(APIService.url + 'messages/', data);
+    }
     setSetting(data: IntegerSetting) {
         return this.http.post(APIService.url + "admin/set-setting/", data);
     }

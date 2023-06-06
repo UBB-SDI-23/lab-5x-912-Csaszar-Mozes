@@ -9,7 +9,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import AccessToken
 
-from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile, IntegerSetting
+from .models import Person, Location, Company, PersonWorkingAtCompany, UserProfile, IntegerSetting, Message
 import django.db.models as models
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
@@ -17,6 +17,12 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 import re
+
+
+class MessageModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['nickname', 'id', 'content']
 
 
 class MessageSerializer(serializers.ModelSerializer):

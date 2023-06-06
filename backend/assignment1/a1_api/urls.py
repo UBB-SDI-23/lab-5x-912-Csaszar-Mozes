@@ -32,6 +32,8 @@ from .api_views.SetSettingView import SetSettingView
 from .api_views.PageSizeView import PageSizeView
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 from .api_views.AIStuff.AIPredictionView import PredictNextWordView
+from .api_views.MessageView import MessageView
+
 
 urlpatterns = [
     path('api/people/', PeopleView.as_view(), name="people_list"),
@@ -55,6 +57,7 @@ urlpatterns = [
     path('api/users/edit-role/', UsersEditRoleView.as_view(), name="users_edit_role"),
     path('api/users/<int:id>/', UserProfileIDView.as_view(), name="user_by_id"),
     path('api/users/profile/', PersonalProfileView.as_view(), name="user_profile"),
+    path('api/messages/', MessageView.as_view(), name="messages"),
     path('api/register/', RegisterView.as_view(), name="register"),
     path('api/register/confirm/<str:token>', ConfirmRegisterView.as_view(), name="register"),
     path('api/token/', LoginView.as_view(), name='token_obtain_pair'),

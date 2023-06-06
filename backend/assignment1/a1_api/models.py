@@ -1,13 +1,11 @@
 from django.db import models
-from django.db.models.functions import Concat
-from django.db.models import Value as V
 from django.db.models import F, Avg
 from django.core import validators
 from django.contrib.auth.models import User
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    nickname = models.CharField(max_length=100, default='')
     content = models.CharField(max_length=300)
 
 
@@ -70,7 +68,6 @@ class Person(models.Model):
     age = models.IntegerField(validators=[validators.MinValueValidator(0)])
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
-
     class Meta:
         indexes = [models.Index(name='ind_person_user', fields=['user', 'id'])]
 
@@ -102,6 +99,7 @@ class UserRoles:
     MODERATOR = 2
     ADMIN = 3
 
+
 class UserProfile(models.Model):
     first_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
     last_name = models.CharField(max_length=70, default='', validators=[validators.RegexValidator('^(?!.*[#$%^&*!]).*$', 'Special characters (#,$,%,^,&,*,!) not permitted.')])
@@ -111,7 +109,6 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, models.CASCADE, default=1)
     activation_code = models.CharField(max_length=100, default='')
     code_requested_at = models.DateTimeField(blank=True, null=True)
-    #roles are 1=normal user, 2=moderator, 3=admin
     role = models.SmallIntegerField(default=1, validators=[validators.MinValueValidator(UserRoles.NORMAL), validators.MaxValueValidator(UserRoles.ADMIN)])
 
     @property

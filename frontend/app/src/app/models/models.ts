@@ -40,6 +40,12 @@ export class Message {
     message?: string;
 }
 
+export class MessageModel {
+    content?: string;
+    id?: number;
+    nickname?: string;
+}
+
 class User {
     id?: number;
     username?: string;
