@@ -33,8 +33,12 @@ export class ChatComponent implements OnInit {
     this.messageInput2 = document.getElementById("message2") as HTMLInputElement;
 
     this.messageInput1.addEventListener('keydown', (e) => {
-      c_obj.handleMessage(e);
-    })
+      c_obj.handleMessageDown(e);
+    });
+
+    this.messageInput1.addEventListener('keyup', (e) => {
+      c_obj.handleMessageUp(e);
+    });
 
     this.socket.onmessage = function (e) {
       const data = JSON.parse(e.data)['message'];
@@ -62,6 +66,7 @@ export class ChatComponent implements OnInit {
       (value: Message) => {
         this.nextSuggestion = value.message!;
         this.messageInput2!.value = this.messageInput1!.value + this.nextSuggestion;
+        console.log("SUGGESTION", this.nextSuggestion);
       }
     )
   }
@@ -69,8 +74,18 @@ export class ChatComponent implements OnInit {
     this.nextSuggestion = "";
     this.messageInput2!.value = this.messageInput1!.value;
   }
+  handleMessageUp(e: KeyboardEvent) {
+    if (e.key != 'Enter') {
+      if (e.key == ' ') {
+        this.getNewSuggestion();
+      }
+      else {
+        this.removeSuggestion();
+      }
+    }
+  }
   // Send message on pressing enter
-  handleMessage(e: KeyboardEvent) {
+  handleMessageDown(e: KeyboardEvent) {
     if (e.key == 'Enter') {
       if (this.nextSuggestion == "") {
         this.handledEnter = false;
@@ -84,12 +99,7 @@ export class ChatComponent implements OnInit {
       }
 
     }
-    else if (e.key == ' ') {
-      this.getNewSuggestion();
-    }
-    else {
-      this.removeSuggestion();
-    }
+
   }
   sendMessage() {
     let userName: string = this.nicknameFormControl.value;

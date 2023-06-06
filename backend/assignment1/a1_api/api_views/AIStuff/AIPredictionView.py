@@ -11,8 +11,8 @@ import pickle as pkl
 import numpy as np
 
 class PredictNextWordView(UpdateAPIView):
-    model = tf.keras.models.load_model("a1_api/api_views/AIStuff/nextword3.h5")
-    tokenizer = pkl.load(open("a1_api/api_views/AIStuff/tokenizer1.pkl", "rb"))
+    model = tf.keras.models.load_model("a1_api/api_views/AIStuff/nextword5.h5")
+    tokenizer = pkl.load(open("a1_api/api_views/AIStuff/tokenizer5.pkl", "rb"))
     word_lookup = {v: k for k, v in tokenizer.word_index.items()}
 
     serializer_class = MessageSerializer
@@ -25,12 +25,15 @@ class PredictNextWordView(UpdateAPIView):
         """
         #Pre-process text
         text = text.split(" ")
-        text = text[-1]
+        # while len(text) < 4:
+        #     text = [""] + text
         try:
             sequence = PredictNextWordView.tokenizer.texts_to_sequences([text])[0]
+            print(sequence)
             sequence = np.array(sequence)
             preds = PredictNextWordView.model.predict(sequence)
-            pred = np.argmax(preds)
+            pred = np.argmax(preds, axis=1)[-1]
+            print(pred)
             return PredictNextWordView.word_lookup.get(pred, "")
         except ValueError:
             return ""

@@ -5,7 +5,10 @@ from django.db.models import F, Avg
 from django.core import validators
 from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Message(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.CharField(max_length=300)
 
 
 class Company(models.Model):
@@ -25,12 +28,12 @@ class Company(models.Model):
     def __str__(self):
         return self.name.__str__()
 
-    # class Meta:
-    #     indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
-    #                models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
-    #                models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
-    #                models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id']),
-    #                models.Index(name='ind_company_user', fields=['user', 'id'])]
+    class Meta:
+        indexes = [models.Index(name='ind_company_name_auto', fields=['name', 'id']),
+                   models.Index(name='ind_company_avg_salary', fields=['avg_salary', 'id']),
+                   models.Index(name='ind_company_reputation', fields=['reputation', 'id']),
+                   models.Index(name='ind_company_nr_locations', fields=['nr_locations', 'id']),
+                   models.Index(name='ind_company_user', fields=['user', 'id'])]
 
 
 class Location(models.Model):
@@ -55,8 +58,8 @@ class Location(models.Model):
         return self.country.__str__() + ", " + self.county.null * (self.county.__str__() + ", ") + self.city.__str__() +\
                 ", " + self.street.__str__() + ", " + self.number.__str__() + self.apartment.null * (", " + self.apartment.__str__())
 
-    # class Meta:
-    #     indexes = [models.Index(name='ind_pc_location', fields=['company', 'id'])]
+    class Meta:
+        indexes = [models.Index(name='ind_pc_location', fields=['company', 'id'])]
 
 
 class Person(models.Model):
@@ -87,13 +90,11 @@ class PersonWorkingAtCompany(models.Model):
     role = models.CharField(max_length=125)
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
-
-
-    # class Meta:
-    #     unique_together = [['person', 'company']]
-    #     indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
-    #                models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary']),
-    #                models.Index(name='ind_pc_user', fields=['user', 'id'])]
+    class Meta:
+        unique_together = [['person', 'company']]
+        indexes = [models.Index(name='ind_pc_company', fields=['company', 'id'], include=['salary']),
+                   models.Index(name='ind_pc_person', fields=['person', 'id'], include=['salary']),
+                   models.Index(name='ind_pc_user', fields=['user', 'id'])]
 
 
 class UserRoles:
