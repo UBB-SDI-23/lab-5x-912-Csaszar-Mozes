@@ -19,20 +19,25 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import re
 
 
+class NrTotalPagesSerializer(serializers.Serializer):
+    class Meta:
+        fields = ['nr_total_pages', 'nr_results']
+
+
 class MessageModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['nickname', 'id', 'content']
 
 
-class MessageSerializer(serializers.ModelSerializer):
+class MessageSerializer(serializers.Serializer):
     message = serializers.CharField(read_only=True, max_length=1000)
 
     class Meta:
         fields = ['message']
 
 
-class PageSizeSerializer(serializers.ModelSerializer):
+class PageSizeSerializer(serializers.Serializer):
     page_size = serializers.IntegerField()
 
     class Meta:

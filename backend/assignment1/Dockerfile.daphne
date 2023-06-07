@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y libpq-dev gcc python3-dev
 RUN pip install --upgrade pip
 
 COPY ./requirements.txt .
-RUN pip wheel --wheel-dir /usr/src/assignment1/wheels -r requirements.txt
+RUN pip wheel --no-cache --wheel-dir /usr/src/assignment1/wheels -r requirements.txt
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .

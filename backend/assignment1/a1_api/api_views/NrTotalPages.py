@@ -5,10 +5,12 @@ from ..api_views.__init__ import *
 from ..models import Company, Location, Person, PersonWorkingAtCompany
 from math import ceil
 from ..permissions import IsSafeToView
+from ..serializers import NrTotalPagesSerializer
 
 
 class NrTotalPages(RetrieveAPIView):
     permissions_classes = [IsSafeToView]
+    serializer_class = NrTotalPagesSerializer
 
     def get(self, request, *kwargs):
         page_size = int(request.query_params.get('size', 15))
