@@ -23,10 +23,7 @@ class PredictNextWordView(UpdateAPIView):
             using our model to predict and return the predicted word.
 
         """
-        #Pre-process text
-        text = text.split(" ")
-        # while len(text) < 4:
-        #     text = [""] + text
+        text = text.lower().split(" ")
         try:
             sequence = PredictNextWordView.tokenizer.texts_to_sequences([text])[0]
             print(sequence)
