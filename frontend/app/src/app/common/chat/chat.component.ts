@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
     }
 
     this.socket.onclose = function (e) {
-      alert("Chat server closed unexpectedly.");
+      alert("Chat server closed unexpectedly. Please reload the page to try to connect to the server again.");
     }
 
     this.populateMessagebox();

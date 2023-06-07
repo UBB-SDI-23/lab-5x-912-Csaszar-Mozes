@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9.6-alpine as builder
+FROM python:3.9.6 as builder
 
 # set work directory
 WORKDIR /usr/src/assignment1
@@ -9,8 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apt-get update && apt-get install -y libpq-dev gcc python3-dev
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -30,13 +29,13 @@ ENTRYPOINT ["/usr/src/assignment1/entrypoint.sh"]
 
 
 # pull official base image
-FROM python:3.9.6-alpine
+FROM python:3.9.6
 
 # create directory for the app user
 RUN mkdir -p /home/assignment1
 
 # create the app user
-RUN addgroup -S app && adduser -S app -G app
+RUN groupadd -r app && useradd -r -g app app
 
 # create the appropriate directories
 ENV HOME=/home/assignment1
@@ -45,7 +44,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apk update && apk add libpq
+RUN apt-get update && apt-get install -y libpq-dev
 COPY --from=builder /usr/src/assignment1/wheels /wheels
 COPY --from=builder /usr/src/assignment1/requirements.txt .
 RUN pip install --no-cache /wheels/*
