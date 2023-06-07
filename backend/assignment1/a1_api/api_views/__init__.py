@@ -6,11 +6,3 @@ from rest_framework import status
 from rest_framework import permissions
 
 from ..permissions import IsSafeToView
-from ..serializers import CompanySerializer
-from ..models import Company
-import tensorflow as tf
-
-
-class CompaniesView(ListCreateAPIView):
-    pass
-

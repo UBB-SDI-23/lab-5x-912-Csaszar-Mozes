@@ -31,7 +31,7 @@ from .api_views.GenerateDataView import GenerateDataView
 from .api_views.SetSettingView import SetSettingView
 from .api_views.PageSizeView import PageSizeView
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
-from .api_views.AIStuff.AIPredictionView import PredictNextWordView
+#from .api_views.AIStuff.AIPredictionView import PredictNextWordView
 from .api_views.MessageView import MessageView
 
 
@@ -68,5 +68,5 @@ urlpatterns = [
     path('api/page-size', PageSizeView.as_view(), name="page_size"),
     path('api/swagger-plain/', get_schema_view(title='Swagger documentation',description='Guide for the REST API'), name='swagger_plain'),
     path('api/swagger-html/', TemplateView.as_view(template_name='swagger.html',extra_context={'schema_url':'swagger_plain'}), name='swagger_html'),
-    path('api/predict-next-word/', PredictNextWordView.as_view(), name='next_word_view')
+    #path('api/predict-next-word/', PredictNextWordView.as_view(), name='next_word_view')
 ]
