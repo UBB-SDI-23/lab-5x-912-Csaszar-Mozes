@@ -11,8 +11,8 @@ import pickle as pkl
 import numpy as np
 
 class PredictNextWordView(UpdateAPIView):
-    model = tf.keras.models.load_model("a1_api/api_views/AIStuff/nextword5.h5")
-    tokenizer = pkl.load(open("a1_api/api_views/AIStuff/tokenizer5.pkl", "rb"))
+    model = tf.keras.models.load_model("a1_api/api_views/AIStuff/nextword7.h5")
+    tokenizer = pkl.load(open("a1_api/api_views/AIStuff/tokenizer7.pkl", "rb"))
     word_lookup = {v: k for k, v in tokenizer.word_index.items()}
 
     serializer_class = MessageSerializer
